@@ -18,54 +18,16 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, October 19 15:16:54 CEST 2017
-#   version : 0.0.1
+#   date    : Thursday, October 19 17:25:33 CEST 2017
+#   version : 0.0.2
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="$(dirname "$SC_SCRIPT")"
 
-
-ROOT_UID=0 
-E_NOTROOT=101
-EXIST=1
-NON_EXIST=0
-
 function pushd { builtin pushd "$@" > /dev/null; }
 function popd  { builtin popd  "$@" > /dev/null; }
-
-
-function compare_strs {
-   
-    local str1=$1
-    local str2=$2
-    local result=""
-    
-    if [ "$str1" = "$str2" ]
-    then
-	# yes, it is the same, 
-	result=$EXIST
-    else
-        # no
-	result=$NON_EXIST
-    fi
-    echo "${result}"	
-}
-
-
-function checkIfVar {
-    local var=$1
-    local result=""
-    if [ -z "$var" ]; then
-	result=$NON_EXIST
-	# doesn't exist
-    else
-	result=$EXIST
-	# exist
-    fi
-    echo "${result}"	 
-}
 
 
 GIT_URL="https://github.com/icshwi"
@@ -78,23 +40,17 @@ function git_clone {
     
 }
 
-declare -ga module_list
+declare -g  env="e3-env"
+declare -ga require_list=("e3-base" "e3-require")
+declare -ga module_list=()
 
-module_list="e3-env";
-module_list+=" " ; module_list+="e3-base";
-module_list+=" " ; module_list+="e3-require";
-module_list+=" " ; module_list+="e3-iocStats";
+module_list+="e3-iocStats";
 module_list+=" " ; module_list+="e3-devlib2";
 #module_list+=" " ; module_list+="e3-mrfioc2";
 
 
-for rep in  ${module_list[@]}; do
+for rep in  ${require_list[@]}; do
     git_clone ${rep}
-done
-
-
-
-for rep in  ${module_list[@]}; do
     pushd ${rep}
     make init
     make env
@@ -105,21 +61,41 @@ for rep in  ${module_list[@]}; do
 done
 
 
-
 sudo -v
 
 
-for rep in  ${module_list[@]}; do
+for rep in  ${require_list[@]}; do
    pushd ${rep}
    make build
+   make install
    popd
 done
 
 
+#
+# Mandatory step in order to compile modules
+# Since we have the global env variables,
+# it should be OK to use them
+#
+git_clone ${env}
+pushd ${env}
+source setE3Env.bash
+popd
+
+
 
 for rep in  ${module_list[@]}; do
-   pushd ${rep}
-   make install
-   popd
+    git_clone ${rep}
+    pushd ${rep}
+    make init
+    make env
+    popd
+done
+
+for rep in  ${module_list[@]}; do
+    pushd ${rep}
+    make build
+    make install
+    popd
 done
 
