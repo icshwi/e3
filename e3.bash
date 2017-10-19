@@ -98,7 +98,6 @@ for rep in  ${module_list[@]}; do
     pushd ${rep}
     make init
     make env
-        
     if [ "${rep}" = "e3-base" ]; then
 	make pkgs
     fi
@@ -107,20 +106,20 @@ done
 
 
 
-sudo -v
+#sudo -v
 
 
-for rep in  ${module_list[@]}; do
-    pushd ${rep}
-    make build
-    popd
-done
+#for rep in  ${module_list[@]}; do
+#    pushd ${rep}
+#    make build
+#    popd
+#done
 
 
 
-for rep in  ${module_list[@]}; do
-    pushd ${rep}
-    make install
-    popd
-done
+#for rep in  ${module_list[@]}; do
+#    pushd ${rep}
+#    make install
+#    popd
+#done
 
