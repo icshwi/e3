@@ -32,9 +32,40 @@ E_NOTROOT=101
 EXIST=1
 NON_EXIST=0
 
-function pushd() { builtin pushd "$@" > /dev/null; }
-function popd()  { builtin popd  "$@" > /dev/null; }
+function pushd { builtin pushd "$@" > /dev/null; }
+function popd  { builtin popd  "$@" > /dev/null; }
 
+
+function compare_strs {
+   
+    local str1=$1
+    local str2=$2
+    local result=""
+    
+    if [ "$str1" = "$str2" ]
+    then
+	# yes, it is the same, 
+	result=$EXIST
+    else
+        # no
+	result=$NON_EXIST
+    fi
+    echo "${result}"	
+}
+
+
+function checkIfVar {
+    local var=$1
+    local result=""
+    if [ -z "$var" ]; then
+	result=$NON_EXIST
+	# doesn't exist
+    else
+	result=$EXIST
+	# exist
+    fi
+    echo "${result}"	 
+}
 
 
 GIT_URL="https://github.com/icshwi"
@@ -54,7 +85,7 @@ module_list+=" " ; module_list+="e3-base";
 module_list+=" " ; module_list+="e3-require";
 module_list+=" " ; module_list+="e3-iocStats";
 module_list+=" " ; module_list+="e3-devlib2";
-module_list+=" " ; module_list+="e3-mrfioc2";
+#module_list+=" " ; module_list+="e3-mrfioc2";
 
 
 for rep in  ${module_list[@]}; do
@@ -67,12 +98,29 @@ for rep in  ${module_list[@]}; do
     pushd ${rep}
     make init
     make env
+        
+    if [ "${rep}" = "e3-base" ]; then
+	make pkgs
+    fi
+    popd
+done
+
+
+
+sudo -v
+
+
+for rep in  ${module_list[@]}; do
+    pushd ${rep}
+    make build
     popd
 done
 
 
 
 for rep in  ${module_list[@]}; do
-    cd ${rep}
-    make build
+    pushd ${rep}
+    make install
+    popd
 done
+
