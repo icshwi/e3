@@ -67,7 +67,9 @@ sudo -v
 for rep in  ${require_list[@]}; do
    pushd ${rep}
    make build
-   make install
+   if [ "${rep}" = "e3-require" ]; then
+	make install
+    fi
    popd
 done
 
