@@ -21,6 +21,7 @@
 #   date    : Thursday, October 19 17:25:33 CEST 2017
 #   version : 0.0.2
 
+set -e
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
