@@ -44,3 +44,11 @@ E3Test:IocStat:IOC_CPU_LOAD    0
 E3Test:IocStat:LOAD            0
 E3Test:IocStat:SYS_CPU_LOAD    33.3701
 ```
+
+The useful options are
+
+```
+$ bash caget_pvs.bash E3Test_PVs.list EPICS_VERS
+$ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
+
+```
