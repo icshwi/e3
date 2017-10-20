@@ -6,4 +6,4 @@ epicsEnvSet("IOC",  ${PREF})
 
 #dbLoadTemplate(moduleversion.template, "IOC=${IOC}")
 dbLoadTemplate(iocAdminSoft.substitutions, "IOC=${PREF}:${IOCST}")
-dbl > "${TOP}/${IOC}_PVs.list"
+dbl > "${IOC}_PVs.list"
