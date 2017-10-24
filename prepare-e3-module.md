@@ -1,23 +1,28 @@
-0) crete e3-devlib2 in github
+* crete e3-devlib2 in github
 
-1) clone in 
+* clone in 
+```
 $ git clone https://github.com/icshwi/e3-devlib2
 
 $ cd e3-devlib2
 
 $ git submodule add https://github.com/icshwi/e3-env
 $ git submodule add https://github.com/epics-modules/devlib2
+```
 
-2) Edit .gitmodule
+* Edit .gitmodule
 
 from
+```
 [submodule "e3-env"]
         path = e3-env
         url = https://github.com/icshwi/e3-env
 [submodule "devlib2"]
         path = devlib2
         url = https://github.com/epics-modules/devlib2
-to        
+```
+to 
+```
 [submodule "e3-env"]
         path = e3-env
         url = https://github.com/icshwi/e3-env
@@ -26,17 +31,20 @@ to
         path = devlib2
         url = https://github.com/epics-modules/devlib2
         ignore=all
+```
 
+* Update submodules
 
+```
 $ git submodule update --init --recursive --recursive
+```
 
-
-3) configure
+* configure
 
 Add the environment variable for these module
 
 
-
+```
 $ mkdir -p configure
 $ emacs configure/CONFIG
 
@@ -47,11 +55,11 @@ ESS_MODULE_MAKEFILE:=$(EPICS_MODULE_NAME).Makefile
 export PROJECT:=$(EPICS_MODULE_NAME)
 export LIBVERSION:=2.9.0
 export E3_ENV_NAME:=e3-env
+```
 
+* prepare devlib2.Makefile
 
-4) prepare devlib2.Makefile
-
-
+```
 include ${REQUIRE_TOOLS}/driver.makefile
 
 
@@ -78,10 +86,11 @@ SOURCES += $(VMEAPP)/vmesh.c
 SOURCES += $(VMEAPP)/devlib_compat.c
 
 DBDS += $(VMEAPP)/epicsvme.dbd
+```
 
 
-5) prepare Makefile (It is the generic one, which is the same as others)
-
+* prepare Makefile (It is the generic one, which is the same as others)
+```
 #
 #  Copyright (c) 2017 - Present  European Spallation Source ERIC
 #
@@ -243,11 +252,13 @@ conf:
 
 
 .PHONY: env $(E3_ENV_NAME) $(EPICS_MODULE_NAME) git-submodule-sync init help help2 build clean install uninstall conf rebuild
+```
 
 
-6) make init
-
-7)$ make env
+* Make
+```
+$ make init
+$ make env
 
 EPICS_MODULE_SRC_PATH       : devlibs2
 ESS_MODULE_MAKEFILE         : devlibs2.Makefile
@@ -269,13 +280,15 @@ REQUIRE_VERSION             : 0.0.1
 REQUIRE_PATH                : /epics/modules/require/0.0.1
 REQUIRE_TOOLS               : /epics/modules/require/0.0.1/tools
 REQUIRE_BIN                 : /epics/modules/require/0.0.1/bin
+```
 
+* 
+```
+$ make rebuild
+```
 
-8) make rebuild
-
-
-9) Check your bulidng systems
-
+* Check your bulidng systems
+```
 $ tree -L 5 /epics/modules/devlib2/
 /epics/modules/devlib2/
 └── [root     4.0K]  2.9.0
@@ -311,9 +324,11 @@ $ tree -L 5 /epics/modules/devlib2/
                 └── [root     180K]  libdevlib2.so
 
 13 directories, 18 files
+```
 
 
-10) add all changes into git repostory, and push them to remote site.
+
+*  add all changes into git repostory, and push them to remote site.
 
 
 
