@@ -8,6 +8,11 @@ $ cd e3-devlib2
 $ git submodule add https://github.com/icshwi/e3-env
 $ git submodule add https://github.com/epics-modules/devlib2
 
+
+
+$ git clone https://github.com/icshwi/e3-ecat2
+
+
 2) Edit .gitmodule
 
 from
