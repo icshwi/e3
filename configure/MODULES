@@ -1,0 +1,10 @@
+#
+# All modules should be ready to be in
+# https://github.com/icshwi 
+#
+e3-iocStats
+e3-devlib2
+e3-mrfioc2
+#
+#e3-ecat2
+#e3-ecat2db
