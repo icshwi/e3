@@ -71,7 +71,7 @@ base:
 
 ## Setup Modules
 modules:
-	$(QUIET) base e3.bash modules
+	$(QUIET) bash e3.bash modules
 
 
 .PHONY: help clean build env base modules
