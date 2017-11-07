@@ -1,10 +1,9 @@
-require require, 0.0.1
 require iocStats, 1856ef5
 
 epicsEnvSet("PREF", "E3Test")
 epicsEnvSet("IOCST", "IocStat")
 epicsEnvSet("IOC",  ${PREF})
 
-#dbLoadRecords("moduleversion.db", "IOC=${IOC}")
-dbLoadRecords("iocAdminSoft.db","IOC=${PREF}:${IOCST}")
+#dbLoadTemplate(moduleversion.template, "IOC=${IOC}")
+dbLoadTemplate(iocAdminSoft.substitutions, "IOC=${PREF}:${IOCST}")
 dbl > "${IOC}_PVs.list"

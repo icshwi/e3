@@ -1,4 +1,5 @@
 #
+#  Copyright (c) 2017 - Present  Jeong Han Lee
 #  Copyright (c) 2017 - Present  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
@@ -16,8 +17,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Friday, October 27 15:37:55 CEST 2017
-# version : 0.0.1
+# Date    : Tuesday, November  7 22:51:22 CET 2017
+# version : 0.0.2
 
 TOP:=$(CURDIR)
 
@@ -58,7 +59,7 @@ clean:
 	$(QUIET) sudo -E bash -c 'rm -rf e3-*'
 #
 ## Build all 
-build:
+build: clean
 	$(QUIET) bash e3.bash all
 
 ## Print modules list
@@ -73,5 +74,14 @@ base:
 modules:
 	$(QUIET) bash e3.bash modules
 
+# Other rules for debugging..
+pull:
+	$(QUIET) bash e3.bash pull
 
-.PHONY: help clean build env base modules
+rebuild:
+	$(QUIET) bash e3.bash rall
+
+rebuildmodule:
+	$(QUIET) bash e3.bash rmod
+
+.PHONY: help clean build env base modules pull rebuild rebuildmodule

@@ -32,7 +32,7 @@ function popd  { builtin popd  "$@" > /dev/null; }
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
-
+GIT_CLONE="TRUE"
 
 declare -g  env="e3-env"
 declare -ga require_list=("e3-base" "e3-require")
@@ -44,8 +44,9 @@ function help
     echo "">&2
     echo " Usage: $0 <arg>  ">&2 
     echo ""
-    echo "          <arg>   : info">&2 
+    echo "          <arg>    : info">&2 
     echo ""
+    echo "           all     : Setup and Build ALL">&2
     echo "           base    : Setup and Build Base and Require">&2
     echo "           modules : Setup and Build all modules">&2
     echo "           env     : Print all modules list">&2
@@ -60,7 +61,6 @@ function git_clone
     ${GIT_CMD} ${GIT_URL}/$rep_name
     
 }
-
 
 function get_module_list
 {
@@ -81,9 +81,11 @@ function get_module_list
 
 function setup_base_require
 {
-
+    local git_status=$1
     for rep in  ${require_list[@]}; do
-	git_clone ${rep}
+	if [ "${GIT_CLONE}" = "$git_status" ]; then
+	    git_clone ${rep}
+	fi
 	pushd ${rep}
 	make init
 	make env
@@ -119,7 +121,10 @@ function build_base_require
   
 function setup_env
 {
-    git_clone ${env}
+    local git_status=$1
+    if [ "${GIT_CLONE}" = "$git_status" ]; then
+	git_clone ${env}
+    fi
     pushd ${env}
     source setE3Env.bash
     popd
@@ -138,8 +143,12 @@ function print_list
 
 function setup_modules
 {
+    local git_status=$1
+    
     for rep in  ${module_list[@]}; do
-	git_clone ${rep}
+	if [ "${GIT_CLONE}" = "$git_status" ]; then
+	    git_clone ${rep}
+	fi
 	pushd ${rep}
 	make init
 	make env
@@ -159,6 +168,22 @@ function build_modules
     done
 }
 
+function git_pull
+{
+    
+    for rep in  ${require_list[@]}; do
+	pushd ${rep}
+	git pull
+	popd
+    done
+    
+    for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	git pull
+	popd
+    done
+}
+   
 
 module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
@@ -170,23 +195,38 @@ module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
 case "$1" in
     all)
+	setup_base_require "TRUE"
+	build_base_require
+	setup_env          "TRUE"
+	setup_modules      "TRUE"
+	build_modules
+	;;
+    base)
+    	setup_base_require "TRUE"
+	build_base_require
+	;;
+    modules)
+	setup_env     "TRUE" 
+	setup_modules "TRUE"
+	build_modules
+	;;
+    env)
+	print_list "${module_list[@]}"
+	;;
+    pull)
+	git_pull
+	;;
+    rall)
 	setup_base_require
 	build_base_require
 	setup_env
 	setup_modules
 	build_modules
 	;;
-    base)
-    	setup_base_require
-	build_base_require
-	;;
-    modules)
+    rmod)
 	setup_env
 	setup_modules
 	build_modules
-	;;
-    env)
-	print_list "${module_list[@]}"
 	;;
     *)
 	help
