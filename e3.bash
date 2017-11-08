@@ -183,14 +183,20 @@ function build_modules
     done
 }
 
+function clean_env
+{
+    echo "Cleaning .... e3-env"
+    sudo rm -rf ${SC_TOP}/e3-env
+}
 
 
 function clean_base_require
 {
-    local rep;
 
+    local rep;
     for rep in  ${require_list[@]}; do
-	sudo -E bash -c 'rm -rf ${rep}'
+	echo "Cleaning .... $rep"
+	sudo rm -rf ${SC_TOP}/${rep}
     done
 }
 
@@ -200,7 +206,8 @@ function clean_modules
 {
     local rep;
     for rep in  ${module_list[@]}; do
-	sudo -E bash -c 'rm -rf ${rep}'
+	echo "Cleaning .... $rep"
+	sudo rm -rf ${SC_TOP}/${rep}
     done
 }
 
@@ -268,6 +275,7 @@ case "$1" in
 	;;
     clean)
 	clean_base_require
+	clean_env
 	clean_modules
 	;;
     db)
