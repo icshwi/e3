@@ -32,12 +32,27 @@ function popd  { builtin popd  "$@" > /dev/null; }
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
-GIT_CLONE="TRUE"
+BOOL_GIT_CLONE="TRUE"
 
 declare -g  env="e3-env"
 declare -ga require_list=("e3-base" "e3-require")
 declare -ga module_list=()
+declare -ga db_module_list=()
 
+db_module_list+=("e3-iocStats");
+db_module_list+=("e3-mrfioc2");
+
+
+function install_db
+{
+    local rep;
+    for rep in  ${db_module_list[@]}; do
+	pushd ${rep}
+	make db
+	make install
+	popd
+    done
+}
 
 function help
 {
@@ -57,7 +72,7 @@ function help
 function git_clone
 {
 
-    local rep_name=$1
+    local rep_name=$1 ; shift;
     ${GIT_CMD} ${GIT_URL}/$rep_name
     
 }
@@ -81,9 +96,9 @@ function get_module_list
 
 function setup_base_require
 {
-    local git_status=$1
+    local git_status=$1; shift;
     for rep in  ${require_list[@]}; do
-	if [ "${GIT_CLONE}" = "$git_status" ]; then
+	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
 	    git_clone ${rep}
 	fi
 	pushd ${rep}
@@ -121,13 +136,13 @@ function build_base_require
   
 function setup_env
 {
-    local git_status=$1
-    if [ "${GIT_CLONE}" = "$git_status" ]; then
+    local git_status=$1;  shift;
+    
+    if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
 	git_clone ${env}
     fi
-    pushd ${env}
-    source setE3Env.bash
-    popd
+
+    source ${env}/setE3Env.bash
 
 }
 
@@ -135,7 +150,7 @@ function setup_env
 
 function print_list
 {
-    local array=$1
+    local array=$1; shift;
     for a_list in ${array[@]}; do
 	printf " %s\n" "$a_list";
     done
@@ -143,10 +158,10 @@ function print_list
 
 function setup_modules
 {
-    local git_status=$1
-    
+    local git_status=$1; shift;
+    local rep;
     for rep in  ${module_list[@]}; do
-	if [ "${GIT_CLONE}" = "$git_status" ]; then
+	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
 	    git_clone ${rep}
 	fi
 	pushd ${rep}
@@ -168,9 +183,32 @@ function build_modules
     done
 }
 
+
+
+function clean_base_require
+{
+    local rep;
+
+    for rep in  ${require_list[@]}; do
+	sudo -E bash -c 'rm -rf ${rep}'
+    done
+}
+
+
+
+function clean_modules
+{
+    local rep;
+    for rep in  ${module_list[@]}; do
+	sudo -E bash -c 'rm -rf ${rep}'
+    done
+}
+
+
+
 function git_pull
 {
-    
+    local rep;
     for rep in  ${require_list[@]}; do
 	pushd ${rep}
 	git pull
@@ -193,11 +231,6 @@ function git_pull
 module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
 
-#module_list+="e3-iocStats";
-#module_list+=" " ; module_list+="e3-devlib2";
-#module_list+=" " ; module_list+="e3-mrfioc2";
-
-
 case "$1" in
     all)
 	setup_base_require "TRUE"
@@ -211,7 +244,7 @@ case "$1" in
 	build_base_require
 	;;
     modules)
-	setup_env     "TRUE" 
+	setup_env     "TRUE"
 	setup_modules "TRUE"
 	build_modules
 	;;
@@ -232,6 +265,13 @@ case "$1" in
 	setup_env
 	setup_modules
 	build_modules
+	;;
+    clean)
+	clean_base_require
+	clean_modules
+	;;
+    db)
+	install_db
 	;;
     *)
 	help

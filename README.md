@@ -7,7 +7,7 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 The following command guides us to lead the first glimpse of E3. SUDO permission is needed to setup it.
 
 ```
- e3 (master)$ bash e3.bash
+ e3 (master)$ make build
 ```
 
 After finishing the installation, source the dynamic environment via
@@ -16,7 +16,15 @@ After finishing the installation, source the dynamic environment via
 e3 (master)$ source e3-env/setE3Env.bash
 ```
 
-Then,
+And install converting DB files into the proper module directory with the current EPICS base setup. (This is the workaround temporarily, we will find the better way to handle them later)
+
+```
+e3 (master)$ make db
+```
+
+
+
+Then, one can run the example ioc through 
 ```
 e3 (master)$ iocsh.bash iocStats.cmd
 ```
@@ -52,3 +60,5 @@ $ bash caget_pvs.bash E3Test_PVs.list EPICS_VERS
 $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
 
 ```
+
+

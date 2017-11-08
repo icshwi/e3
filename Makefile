@@ -56,7 +56,7 @@ default: help
 #
 ## Clean all e3-*
 clean:
-	$(QUIET) sudo -E bash -c 'rm -rf e3-*'
+	$(QUIET) bash e3.bash clean
 #
 ## Build all 
 build: clean
@@ -83,5 +83,8 @@ rebuild:
 
 rebuildmodule:
 	$(QUIET) bash e3.bash rmod
+
+db:
+	$(QUIET) bash e3.bash db
 
 .PHONY: help clean build env base modules pull rebuild rebuildmodule
