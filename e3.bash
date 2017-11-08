@@ -19,7 +19,7 @@
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
 #   date    : Thursday, October 19 17:25:33 CEST 2017
-#   version : 0.0.2
+#   version : 0.0.3
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -176,6 +176,11 @@ function git_pull
 	git pull
 	popd
     done
+
+    pushd ${env}
+    git pull
+    popd
+   
     
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
