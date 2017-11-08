@@ -279,6 +279,7 @@ case "$1" in
 	clean_modules
 	;;
     db)
+	setup_env
 	install_db
 	;;
     *)
