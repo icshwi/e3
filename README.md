@@ -2,6 +2,12 @@
 
 This is the e3 initial setup script. It is now testing while I am working on individual epics modules e3-somethings.
 
+## Tested Platform
+* Debian 8 (Jessie)
+* Debian 9 (Stretch)
+* Raspbian Stretch
+* CentOS 7.4 
+
 ##
 
 The following command guides us to lead the first glimpse of E3. SUDO permission is needed to setup it.
