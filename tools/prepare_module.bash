@@ -19,7 +19,7 @@
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
 #   date    : Wednesday, October 25 13:30:08 CEST 2017
-#   version : 0.0.1
+#   version : 0.0.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -105,6 +105,12 @@ mkdir -p configure
 
 cat > configure/CONFIG <<EOF
 EPICS_MODULE_NAME:=${MODULE_NAME}
+# This is the module source tag
+# *) individual tags
+#    export EPICS_MODULE_TAG:=tags/1.1.1
+# *) master branch 
+#    export EPICS_MODULE_TAG:=master
+# *) individual hash 
 export EPICS_MODULE_TAG:=master
 export EPICS_MODULE_SRC_PATH:=\$(EPICS_MODULE_NAME)
 ESS_MODULE_MAKEFILE:=\$(EPICS_MODULE_NAME).Makefile
@@ -116,7 +122,16 @@ EOF
 
 
 cat > ${MODULE_NAME}.Makefile <<EOF
+
+#where_am_I := \$(dir \$(abspath \$(lastword \$(MAKEFILE_LIST))))
+
 include \${REQUIRE_TOOLS}/driver.makefile
+
+# 
+USR_CFLAGS   += -Wno-unused-variable
+USR_CFLAGS   += -Wno-unused-function
+USR_CPPFLAGS += -Wno-unused-variable
+USR_CPPFLAGS += -Wno-unused-function
 
 #
 #
@@ -128,7 +143,8 @@ include \${REQUIRE_TOOLS}/driver.makefile
 # USR_CFLAGS   += -DDEBUG_PRINT
 # USR_CPPFLAGS += -DDEBUG_PRINT
 # USR_CPPFLAGS += -DUSE_TYPED_RSET
-
+# USR_INCLUDES += -I/usr/include/libusb-1.0
+# USR_LDFLAGS += -lusb-1.0
 
 # USR_LDFLAGS += -L /opt/etherlab/lib
 # USR_LDFLAGS += -lethercat
@@ -188,7 +204,7 @@ TOP:=\$(CURDIR)
 include \$(TOP)/configure/CONFIG
 
 -include \$(TOP)/\$(E3_ENV_NAME)/\$(E3_ENV_NAME)
-
+-include \$(TOP)/\$(E3_ENV_NAME)/epics-community-env
 
 # Keep always the module up-to-date
 define git_update =
@@ -271,13 +287,13 @@ help2:
 
 #
 ## Initialize EPICS BASE and E3 ENVIRONMENT Module
-init: git-submodule-sync \$(EPICS_MODULE_NAME) \$(E3_ENV_NAME)
+init: git-submodule-sync \$(EPICS_MODULE_SRC_PATH) \$(E3_ENV_NAME)
 
 git-submodule-sync:
 	\$(QUIET) git submodule sync
 
 
-\$(EPICS_MODULE_NAME): 
+\$(EPICS_MODULE_SRC_PATH): 
 	\$(QUIET) \$(git_update)
 	cd \$@ && git checkout \$(EPICS_MODULE_TAG)
 
