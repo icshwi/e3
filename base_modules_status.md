@@ -70,6 +70,11 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * https://github.com/epics-modules/modbus
 * Dep : BASE, ASYN
 
+### ipmiComm [&]
+* https://github.com/icshwi/ipmiComm
+* DEP : BASE, ASYN, IOCSTATS
+*
+
 ### LUA [&]
 * https://github.com/epics-modules/lua
 * Dep : BASE, ASYN
