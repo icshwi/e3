@@ -17,8 +17,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Wednesday, November  8 20:23:07 CET 2017
-# version : 0.0.3
+# Date    : Monday, November 20 21:24:08 CET 2017
+# version : 0.0.4
 
 TOP:=$(CURDIR)
 
@@ -84,7 +84,12 @@ rebuild:
 rebuildmodule:
 	$(QUIET) bash e3.bash rmod
 
+## Inflating and install DB files
 db:
 	$(QUIET) bash e3.bash db
+
+## Existent Modules Loading Test
+load:
+	$(QUIET) bash e3.bash load
 
 .PHONY: help clean build env base modules pull rebuild rebuildmodule
