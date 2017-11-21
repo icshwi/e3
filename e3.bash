@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-#  Copyright (c) 2017 - Present European Spallation Source ERIC
+#  Copyright (c) 2017 - Present  Jeong Han Lee
+#  Copyright (c) 2017 - Present  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -18,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, October 19 17:25:33 CEST 2017
-#   version : 0.0.3
+#   date    : Monday, November 20 21:24:23 CET 2017
+#   version : 0.0.4
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -41,7 +42,7 @@ declare -ga db_module_list=()
 
 db_module_list+=("e3-iocStats");
 db_module_list+=("e3-mrfioc2");
-
+db_module_lits+=("e3-ipmiComm");
 
 function install_db
 {
@@ -235,6 +236,41 @@ function git_pull
 }
    
 
+function module_loading_test_on_iocsh
+{
+    source ${SC_TOP}/e3-env/setE3Env.bash
+
+    local IOC_TEST=/tmp/module_loading_test.cmd
+    
+    {
+	local PREFIX_MODULE="e3-"
+	local PREFIX_LIBVERSION="export LIBVERSION:="
+	local mod=""
+	local ver=""
+	printf "var requireDebug 1\n";
+	for rep in  ${module_list[@]}; do
+	    while read line; do
+		if [[ $line =~ "export LIBVERSION:=" ]] ; then
+		    mod=${rep#$PREFIX_MODULE}
+		    ver=${line#$PREFIX_LIBVERSION}
+		    printf "#\n#\n"
+		    printf "# >>>>>\n";
+		    printf "# >>>>> MODULE Loading ........\n";
+		    printf "# >>>>> MODULE NAME ..... ${mod}\n";
+		    printf "# >>>>>        VER  ..... ${ver}\n";
+		    printf "# >>>>>\n";
+		    printf "require ${mod}, ${ver}\n";
+		    printf "# >>>>>\n";
+		    printf "#\n#\n"
+		fi
+	    done < ${SC_TOP}/${rep}/configure/CONFIG
+	done
+	
+    }  > ${IOC_TEST}
+
+    exec iocsh.bash ${IOC_TEST}
+}
+
 module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
 
@@ -281,6 +317,9 @@ case "$1" in
     db)
 	setup_env
 	install_db
+	;;
+    load)
+	module_loading_test_on_iocsh
 	;;
     *)
 	help
