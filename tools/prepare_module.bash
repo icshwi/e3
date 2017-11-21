@@ -19,7 +19,7 @@
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
 #   date    : Wednesday, October 25 13:30:08 CEST 2017
-#   version : 0.0.2
+#   version : 0.0.3
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -70,6 +70,7 @@ MODULE_NAME=$1
 
 env_url=${ICS_GIT_URL}/${ENV_MOD_NAME}
 mod_url=""
+ess_url=${ICS_GIT_URL}/${MODULE_NAME}
 psi_url=${PSI_GIT_URL}/${MODULE_NAME}
 epics_url=${EPICS_GIT_URL}/${MODULE_NAME}
 bessy_url=${BESSY_GIT_URL}
@@ -88,6 +89,8 @@ if [ "${MODULE_NAME}" = "ecat2" ]; then
     mod_url=${psi_url}
 elif [ "${MODULE_NAME}" = "seq" ]; then
     mod_url=${bessy_url}
+elif [ "${MODULE_NAME}" = "ipmiComm" ]; then
+    mod_url=${ess_url};
 else
     mod_url=${epics_url}
 fi
@@ -123,15 +126,31 @@ EOF
 
 cat > ${MODULE_NAME}.Makefile <<EOF
 
+
 #where_am_I := \$(dir \$(abspath \$(lastword \$(MAKEFILE_LIST))))
 
-include \${REQUIRE_TOOLS}/driver.makefile
+include \$(REQUIRE_TOOLS)/driver.makefile
+
+#APP:=modbusApp
+#APPDB:=\$(APP)/Db
+#APPSRC:=\$(APP)/src
+
+#USR_INCLUDES += -I\$(where_am_I)/\$(APPSRC)
+
+#TEMPLATES += \$(wildcard \$(APPDB)/*.template)
+
+
+#SOURCES   += \$(APPSRC)/modbusInterpose.c
+#SOURCES   += \$(APPSRC)/drvModbusAsyn.c
+#DBDS      += \$(APPSRC)/modbusSupport.dbd
+#HEADERS   += \$(APPSRC)/drvModbusAsyn.h
+
 
 # 
-USR_CFLAGS   += -Wno-unused-variable
-USR_CFLAGS   += -Wno-unused-function
-USR_CPPFLAGS += -Wno-unused-variable
-USR_CPPFLAGS += -Wno-unused-function
+#USR_CFLAGS   += -Wno-unused-variable
+#USR_CFLAGS   += -Wno-unused-function
+#USR_CPPFLAGS += -Wno-unused-variable
+#USR_CPPFLAGS += -Wno-unused-function
 
 #
 #
@@ -163,8 +182,8 @@ USR_CPPFLAGS += -Wno-unused-function
 # DBDS += \$(PCIAPP)/epicspci.dbd
 
 # MRMSHARED:= mrmShared
-# MRMSHAREDSRC:=\${MRMSHARED}/src
-# MRMSHAREDDB:=\${MRMSHARED}/Db
+# MRMSHAREDSRC:=\$(MRMSHARED)/src
+# MRMSHAREDDB:=\$(MRMSHARED)/Db
 # TEMPLATES += \$(wildcard \$(MRMSHAREDDB)/*.db)
 # TEMPLATES += \$(wildcard \$(MRMSHAREDDB)/*.template)
 # TEMPLATES += \$(wildcard \$(MRMSHAREDDB)/*.substitutions)
@@ -334,7 +353,16 @@ conf:
 	\$(QUIET) install -m 644 \$(TOP)/\$(ESS_MODULE_MAKEFILE)  \$(EPICS_MODULE_SRC_PATH)/
 
 
-.PHONY: env \$(E3_ENV_NAME) \$(EPICS_MODULE_NAME) git-submodule-sync init help help2 build clean install uninstall conf rebuild
+epics:
+#	\$(QUIET)echo "ASYN=\$(M_ASYN)"                       > \$(TOP)/\$(EPICS_MODULE_SRC_PATH)/configure/RELEASE
+	\$(QUIET)echo "EPICS_BASE=\$(COMMUNITY_EPICS_BASE)"  >> \$(TOP)/\$(EPICS_MODULE_SRC_PATH)/configure/RELEASE
+#	\$(QUIET)echo "INSTALL_LOCATION=\$(M_MODBUS)"         > \$(TOP)/\$(EPICS_MODULE_SRC_PATH)/configure/CONFIG_SITE	
+	sudo -E bash -c "\$(MAKE) -C \$(EPICS_MODULE_SRC_PATH)"
+
+epics-clean:
+	sudo -E bash -c "\$(MAKE) -C \$(EPICS_MODULE_SRC_PATH) clean"
+
+.PHONY: env \$(E3_ENV_NAME) \$(EPICS_MODULE_SRC_PATH) git-submodule-sync init help help2 build clean install uninstall conf rebuild epics epics-clean
 
 
 

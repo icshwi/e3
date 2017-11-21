@@ -24,10 +24,11 @@ https://github.com/icshwi/e3-require
 
 This section show fundamental EPICS modules, which ESS can access through mostly github.com. The first release goal is to implement them all and to do minimal tests with at least minimal HW and SW configuration
 
-* [+] : Implemented
+* [+] : Implemented (at least compiled, and loaded within iocsh.bash without errors)
 * [@] : In progress
 * [&] : Plan
-* [OMG] : Plan with @.@ 
+* [OMG] : Plan with @.@
+* [-] : Not Plan
 
 
 ### ECAT2 [+]
@@ -66,22 +67,25 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * Dep : BASE, ASYN
 * https://github.com/icshwi/e3-busy
 
-### MODBUS [&]
+### MODBUS [+]
 * https://github.com/epics-modules/modbus
 * Dep : BASE, ASYN
+* https://github.com/icshwi/e3-modbus
 
-### ipmiComm [&]
-* https://github.com/icshwi/ipmiComm
-* DEP : BASE, ASYN, IOCSTATS
-*
-
-### LUA [&]
+### LUA [+]
 * https://github.com/epics-modules/lua
 * Dep : BASE, ASYN
+* https://github.com/icshwi/e3-lua
 
-### IPAC [&]
+### ipmiComm [+]
+* https://github.com/icshwi/ipmiComm
+* DEP : BASE, ASYN, IOCSTATS
+* https://github.com/icshwi/e3-ipmiComm
+
+### IPAC [-]
 * https://github.com/epics-modules/ipac
 * Dep : BASE
+
 
 ### SNCSEQ [@]
 * http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git
@@ -105,16 +109,12 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 
 ### DELAYGEN [&]
 *https://github.com/epics-modules/delaygen
-* Dep : BASE, ASYN, CALC, IPAC, IP, AUTOSAVE
+* Dep : BASE, ASYN, CALC, IPAC#, IP, AUTOSAVE
 
 ### IP [&]
 * https://github.com/epics-modules/ip
-* Dep : BASE, ASYN, IPAC, SENSEQ
+* Dep : BASE, ASYN, IPAC#, SENSEQ
 
-
-
-### IPMICOMM [&]
-* https://github.com/icshwi/ipmiComm
 
 ### SNMP2 or SNMP3 [&]
 
