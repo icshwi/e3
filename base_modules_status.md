@@ -6,7 +6,7 @@
 
 ## REQUIRE
 
-https://github.com/icshwi/e3-require
+* https://github.com/icshwi/e3-require
 
 ## Kernel Modules
 
