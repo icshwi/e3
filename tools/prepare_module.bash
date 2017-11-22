@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, October 25 13:30:08 CEST 2017
-#   version : 0.0.3
+#   date    : Wednesday, November 22 14:10:59 CET 2017
+#   version : 0.0.4
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -38,7 +38,8 @@ PSI_GIT_URL="https://github.com/paulscherrerinstitute"
 EPICS_GIT_URL="https://github.com/epics-modules"
 # SEQ is very special module, we cannot access the master one.
 # 
-BESSY_GIT_URL="http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git"
+SEQ22_GIT_URL="http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git"
+SEQ21_GIT_URL="http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-1.git"
 
 GIT_CMD="git"
 ENV_MOD_NAME="e3-env"
@@ -73,8 +74,10 @@ mod_url=""
 ess_url=${ICS_GIT_URL}/${MODULE_NAME}
 psi_url=${PSI_GIT_URL}/${MODULE_NAME}
 epics_url=${EPICS_GIT_URL}/${MODULE_NAME}
-bessy_url=${BESSY_GIT_URL}
-bessy_url+=" ${MODULE_NAME}"
+seq22_url=${SEQ22_GIT_URL}
+seq22_url+=" ${MODULE_NAME}"
+seq21_url=${SEQ21_GIT_URL}
+seq21_url+=" ${MODULE_NAME}"
 
 ${GIT_CMD} clone ${ICS_GIT_URL}/e3-${MODULE_NAME}
 
@@ -88,7 +91,9 @@ submodule_add "${env_url}"
 if [ "${MODULE_NAME}" = "ecat2" ]; then
     mod_url=${psi_url}
 elif [ "${MODULE_NAME}" = "seq" ]; then
-    mod_url=${bessy_url}
+    mod_url=${seq22_url}
+elif [ "${MODULE_NAME}" = "sequencer" ]; then
+    mod_url=${seq21_url}
 elif [ "${MODULE_NAME}" = "ipmiComm" ]; then
     mod_url=${ess_url};
 else
