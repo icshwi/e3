@@ -82,38 +82,44 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * DEP : BASE, ASYN, IOCSTATS
 * https://github.com/icshwi/e3-ipmiComm
 
-### IPAC [-]
-* https://github.com/epics-modules/ipac
+### SNCSEQ2.1 [+]
+* http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-1.git
 * Dep : BASE
+* https://github.com/icshwi/e3-sequencer
 
-
-### SNCSEQ [@]
+### SNCSEQ2.2 [&]
 * http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git
 * https://github.com/icshwi/e3-seq
 
-### SSCAN [&]
+### SSCAN [@]
 * https://github.com/epics-modules/sscan
 * Dep : BASE, SNCSEQ
+* https://github.com/icshwi/e3-sscan
 
-### MOTOR [&]
+### MOTOR [@]
 * https://github.com/epics-modules/motor
 * Dep : BASE, ASYN, SNCSEQ#, BUSY#, IPAC# 
+* https://github.com/icshwi/e3-motor
 
-### STREAM [&]
+### STREAM [@]
 * https://github.com/epics-modules/stream
 * Dep : BASE, ASYN, SSCAN, CALC
+* https://github.com/icshwi/e3-stream
 
-### CALC [&]
+### CALC [@]
 * https://github.com/epics-modules/calc
 * Dep : BASE, SSCAN# , SNCSEQ#
+* https://github.com/icshwi/e3-calc
 
-### DELAYGEN [&]
-*https://github.com/epics-modules/delaygen
+### DELAYGEN [@]
+* https://github.com/epics-modules/delaygen
 * Dep : BASE, ASYN, CALC, IPAC#, IP, AUTOSAVE
+* https://github.com/icshwi/e3-delaygen
 
-### IP [&]
+### IP [@]
 * https://github.com/epics-modules/ip
 * Dep : BASE, ASYN, IPAC#, SENSEQ
+* https://github.com/icshwi/e3-ip
 
 
 ### SNMP2 or SNMP3 [&]
@@ -249,6 +255,14 @@ https://github.com/areaDetector/areaDetector
 ```
 
 
+
+
 ### IOxOS [OMG]
 
 ### ESS Site-Specific MODULES [OMG]
+
+
+
+### IPAC [-]
+* https://github.com/epics-modules/ipac
+* Dep : BASE
