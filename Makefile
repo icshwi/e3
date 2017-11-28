@@ -78,10 +78,8 @@ modules:
 pull:
 	$(QUIET) bash e3.bash pull
 
-rebuild:
-	$(QUIET) bash e3.bash rall
-
-rebuildmodule:
+## Rebuild modules from scratch 
+rmodule:
 	$(QUIET) bash e3.bash rmod
 
 ## Inflating and install DB files
@@ -92,4 +90,6 @@ db:
 load:
 	$(QUIET) bash e3.bash load
 
-.PHONY: help clean build env base modules pull rebuild rebuildmodule
+
+
+.PHONY: help clean build env base modules pull  rmodule

@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, November 20 21:24:23 CET 2017
-#   version : 0.0.4
+#   date    : Tuesday, November 28 17:32:06 CET 2017
+#   version : 0.0.5
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -236,6 +236,14 @@ function git_pull
 }
    
 
+
+#
+# module name, configure/MODULES,
+# sometimes is different in EPICS_MODULE_NAME in module/configure/CONFIG
+# for example, sequencer
+# module name       is sequencer
+# EPICS_MODULE_NAME is seq
+
 function module_loading_test_on_iocsh
 {
     source ${SC_TOP}/e3-env/setE3Env.bash
@@ -243,27 +251,28 @@ function module_loading_test_on_iocsh
     local IOC_TEST=/tmp/module_loading_test.cmd
     
     {
-	local PREFIX_MODULE="e3-"
+	local PREFIX_MODULE="EPICS_MODULE_NAME:="
 	local PREFIX_LIBVERSION="export LIBVERSION:="
 	local mod=""
 	local ver=""
 	printf "var requireDebug 1\n";
 	for rep in  ${module_list[@]}; do
 	    while read line; do
-		if [[ $line =~ "export LIBVERSION:=" ]] ; then
-		    mod=${rep#$PREFIX_MODULE}
+		if [[ $line =~ "${PREFIX_LIBVERSION}" ]] ; then
 		    ver=${line#$PREFIX_LIBVERSION}
-		    printf "#\n#\n"
-		    printf "# >>>>>\n";
-		    printf "# >>>>> MODULE Loading ........\n";
-		    printf "# >>>>> MODULE NAME ..... ${mod}\n";
-		    printf "# >>>>>        VER  ..... ${ver}\n";
-		    printf "# >>>>>\n";
-		    printf "require ${mod}, ${ver}\n";
-		    printf "# >>>>>\n";
-		    printf "#\n#\n"
+		elif [[ $line =~ "${PREFIX_MODULE}" ]] ; then
+		    mod=${line#$PREFIX_MODULE}
 		fi
 	    done < ${SC_TOP}/${rep}/configure/CONFIG
+	    printf "#\n#\n"
+	    printf "# >>>>>\n";
+	    printf "# >>>>> MODULE Loading ........\n";
+	    printf "# >>>>> MODULE NAME ..... ${mod}\n";
+	    printf "# >>>>>        VER  ..... ${ver}\n";
+	    printf "# >>>>>\n";
+	    printf "require ${mod}, ${ver}\n";
+	    printf "# >>>>>\n";
+	    printf "#\n#\n"
 	done
 	
     }  > ${IOC_TEST}
@@ -297,21 +306,18 @@ case "$1" in
     pull)
 	git_pull
 	;;
-    rall)
-	setup_base_require
-	build_base_require
-	setup_env
-	setup_modules
-	build_modules
-	;;
     rmod)
-	setup_env
-	setup_modules
+	clean_modules
+	setup_env      "TRUE"
+	setup_modules  "TRUE"
 	build_modules
 	;;
     clean)
 	clean_base_require
 	clean_env
+	clean_modules
+	;;
+    cmod)
 	clean_modules
 	;;
     db)
