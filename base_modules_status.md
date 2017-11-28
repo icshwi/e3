@@ -91,7 +91,7 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git
 * https://github.com/icshwi/e3-seq
 
-### SSCAN [@]
+### SSCAN [+]
 * https://github.com/epics-modules/sscan
 * Dep : BASE, SNCSEQ
 * https://github.com/icshwi/e3-sscan
