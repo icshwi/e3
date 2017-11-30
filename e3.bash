@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Tuesday, November 28 17:32:06 CET 2017
-#   version : 0.0.5
+#   date    : Thursday, November 30 21:51:11 CET 2017
+#   version : 0.0.6
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -206,8 +206,12 @@ function clean_base_require
 function clean_modules
 {
     local rep;
+    sudo -v;
     for rep in  ${module_list[@]}; do
 	echo "Cleaning .... $rep"
+	pushd ${rep}
+	make uninstall
+	popd
 	sudo rm -rf ${SC_TOP}/${rep}
     done
 }
@@ -235,6 +239,44 @@ function git_pull
     done
 }
    
+
+
+function git_add
+{
+    local rep;
+    local git_add_file=$1; shift;
+    for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	git add ${git_add_file}
+	popd
+    done
+}
+   
+
+function git_commit
+{
+    local rep;
+    local git_commit_comment=$1; shift;
+    for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	git commit -m "${git_commit_comment}"
+	popd
+    done
+}
+
+
+function git_push
+{
+    local rep;
+    for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	git push
+	popd
+    done
+}
+
+
+
 
 
 #
@@ -290,6 +332,8 @@ case "$1" in
 	setup_env          "TRUE"
 	setup_modules      "TRUE"
 	build_modules
+	setup_env
+	install_db
 	;;
     base)
     	setup_base_require "TRUE"
@@ -305,6 +349,15 @@ case "$1" in
 	;;
     pull)
 	git_pull
+	;;
+    add)
+	git_add "$2"
+	;;
+    commit)
+	git_commit "$2"
+	;;
+    push)
+	git_push
 	;;
     rmod)
 	clean_modules

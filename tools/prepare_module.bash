@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+#  Copyright (c) 2017 - Present Jeong Han Lee
 #  Copyright (c) 2017 - Present European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
@@ -18,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, November 30 13:02:01 CET 2017
-#   version : 0.0.5
+#   date    : Thursday, November 30 20:51:18 CET 2017
+#   version : 0.0.6
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -363,6 +364,8 @@ git-submodule-sync:
 	\$(QUIET) \$(git_update)
 	cd \$@ && git checkout \$(EPICS_MODULE_TAG)
 
+checkout: 
+	cd \$(EPICS_MODULE_SRC_PATH) && git checkout \$(EPICS_MODULE_TAG)
 
 \$(E3_ENV_NAME): 
 	\$(QUIET) \$(git_update)
@@ -409,7 +412,7 @@ epics:
 epics-clean:
 	sudo -E bash -c "\$(MAKE) -C \$(EPICS_MODULE_SRC_PATH) clean"
 
-.PHONY: env \$(E3_ENV_NAME) \$(EPICS_MODULE_SRC_PATH) git-submodule-sync init help help2 build clean install uninstall conf rebuild epics epics-clean
+.PHONY: env \$(E3_ENV_NAME) \$(EPICS_MODULE_SRC_PATH) git-submodule-sync init help help2 build clean install uninstall conf rebuild epics epics-clean checkout
 
 
 
