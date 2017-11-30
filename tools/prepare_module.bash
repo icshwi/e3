@@ -93,11 +93,13 @@ printf "${env_url} is adding as submodule...\n";
 submodule_add "${env_url}"
 
 if [ "${MODULE_NAME}" = "ecat2" ]; then
-    mod_url=${psi_url}
+    mod_url=${psi_url};
+elif [ "${MODULE_NAME}" = "StreamDevice" ]; then
+    mod_url=${psi_url};
 elif [ "${MODULE_NAME}" = "seq" ]; then
-    mod_url=${seq22_url}
+    mod_url=${seq22_url};
 elif [ "${MODULE_NAME}" = "sequencer" ]; then
-    mod_url=${seq21_url}
+    mod_url=${seq21_url};
 elif [ "${MODULE_NAME}" = "ipmiComm" ]; then
     mod_url=${ess_url};
 elif [ "${MODULE_NAME}" = "opcUaUnifiedAutomation" ]; then
@@ -137,16 +139,16 @@ EOF
 
 cat > ${MODULE_NAME}.Makefile <<EOF
 
-#where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+#where_am_I := \$(dir \$(abspath \$(lastword \$(MAKEFILE_LIST))))
 
 include \$(REQUIRE_TOOLS)/driver.makefile
 
 # APP:=calcApp
-# APPDB:=$(APP)/Db
-# APPSRC:=$(APP)/src
+# APPDB:=\$(APP)/Db
+# APPSRC:=\$(APP)/src
 
 
-# USR_INCLUDES += -I$(where_am_I)/$(APPSRC)
+# USR_INCLUDES += -I\$(where_am_I)/\$(APPSRC)
 
 # USR_CFLAGS   += -Wno-unused-variable
 # USR_CFLAGS   += -Wno-unused-function
@@ -155,51 +157,51 @@ include \$(REQUIRE_TOOLS)/driver.makefile
 # USR_CPPFLAGS += -Wno-unused-function
 # USR_CPPFLAGS += -Wno-unused-but-set-variable
 
-# TEMPLATES += $(wildcard $(APPDB)/*.db)
+# TEMPLATES += \$(wildcard \$(APPDB)/*.db)
 
-# DBDINC_SRCS += $(APPSRC)/swaitRecord.c
-# DBDINC_SRCS += $(APPSRC)/sseqRecord.c
-# DBDINC_SRCS += $(APPSRC)/aCalcoutRecord.c
-# DBDINC_SRCS += $(APPSRC)/sCalcoutRecord.c
-# DBDINC_SRCS += $(APPSRC)/transformRecord.c
+# DBDINC_SRCS += \$(APPSRC)/swaitRecord.c
+# DBDINC_SRCS += \$(APPSRC)/sseqRecord.c
+# DBDINC_SRCS += \$(APPSRC)/aCalcoutRecord.c
+# DBDINC_SRCS += \$(APPSRC)/sCalcoutRecord.c
+# DBDINC_SRCS += \$(APPSRC)/transformRecord.c
 
-# DBDINC_DBDS = $(subst .c,.dbd,   $(DBDINC_SRCS:$(APPSRC)/%=%))
-# DBDINC_HDRS = $(subst .c,.h,     $(DBDINC_SRCS:$(APPSRC)/%=%))
-# DBDINC_DEPS = $(subst .c,$(DEP), $(DBDINC_SRCS:$(APPSRC)/%=%))
-
-
-# HEADERS += $(APPSRC)/sCalcPostfix.h
-# HEADERS += $(APPSRC)/aCalcPostfix.h
-# HEADERS += $(DBDINC_HDRS)
+# DBDINC_DBDS = \$(subst .c,.dbd,   \$(DBDINC_SRCS:\$(APPSRC)/%=%))
+# DBDINC_HDRS = \$(subst .c,.h,     \$(DBDINC_SRCS:\$(APPSRC)/%=%))
+# DBDINC_DEPS = \$(subst .c,\$(DEP), \$(DBDINC_SRCS:\$(APPSRC)/%=%))
 
 
-# SOURCES += $(APPSRC)/sCalcPostfix.c
-# SOURCES += $(APPSRC)/sCalcPerform.c
-# SOURCES += $(APPSRC)/aCalcPostfix.c
-# SOURCES += $(APPSRC)/aCalcPerform.c
+# HEADERS += \$(APPSRC)/sCalcPostfix.h
+# HEADERS += \$(APPSRC)/aCalcPostfix.h
+# HEADERS += \$(DBDINC_HDRS)
 
-# SOURCES += $(APPSRC)/calcUtil.c
-# SOURCES += $(APPSRC)/myFreeListLib.c
-# SOURCES += $(APPSRC)/devsCalcoutSoft.c
-# SOURCES += $(APPSRC)/devaCalcoutSoft.c
-# SOURCES += $(APPSRC)/subAve.c
-# SOURCES += $(APPSRC)/swaitRecord.c
-# SOURCES += $(APPSRC)/editSseq.st
-# SOURCES += $(APPSRC)/interp.c
-# SOURCES += $(APPSRC)/arrayTest.c
-# SOURCES += $(APPSRC)/aCalcMonitorMem.c
+
+# SOURCES += \$(APPSRC)/sCalcPostfix.c
+# SOURCES += \$(APPSRC)/sCalcPerform.c
+# SOURCES += \$(APPSRC)/aCalcPostfix.c
+# SOURCES += \$(APPSRC)/aCalcPerform.c
+
+# SOURCES += \$(APPSRC)/calcUtil.c
+# SOURCES += \$(APPSRC)/myFreeListLib.c
+# SOURCES += \$(APPSRC)/devsCalcoutSoft.c
+# SOURCES += \$(APPSRC)/devaCalcoutSoft.c
+# SOURCES += \$(APPSRC)/subAve.c
+# SOURCES += \$(APPSRC)/swaitRecord.c
+# SOURCES += \$(APPSRC)/editSseq.st
+# SOURCES += \$(APPSRC)/interp.c
+# SOURCES += \$(APPSRC)/arrayTest.c
+# SOURCES += \$(APPSRC)/aCalcMonitorMem.c
 # # DBDINC_SRCS should be last of the series of SOURCES
-# SOURCES += $(DBDINC_SRCS)
+# SOURCES += \$(DBDINC_SRCS)
 
-# DBDS += $(APPSRC)/calcSupport_LOCAL.dbd
-# DBDS += $(APPSRC)/calcSupport_withSNCSEQ.dbd
-# DBDS += $(APPSRC)/calcSupport_withSSCAN.dbd
+# DBDS += \$(APPSRC)/calcSupport_LOCAL.dbd
+# DBDS += \$(APPSRC)/calcSupport_withSNCSEQ.dbd
+# DBDS += \$(APPSRC)/calcSupport_withSSCAN.dbd
 
 
-# $(DBDINC_DEPS): $(DBDINC_HDRS)
+# \$(DBDINC_DEPS): \$(DBDINC_HDRS)
 
 # .dbd.h:
-# 	$(DBTORECORDTYPEH)  $(USR_DBDFLAGS) -o $@ $<
+# 	\$(DBTORECORDTYPEH)  \$(USR_DBDFLAGS) -o $@ $<
 
 
 # The following lines could be useful if one uses the external lib
