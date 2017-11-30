@@ -120,6 +120,13 @@ ${GIT_CMD} submodule update --init --recursive --recursive
 mkdir -p configure
 
 cat > configure/CONFIG <<EOF
+unexport EPICS_MODULE_TAG
+unexport EPICS_MODULE_SRC_PATH
+unexport PROJECT
+unexport LIBVERSION
+unexport E3_ENV_NAME
+unexport USR_DEPENDENCIES
+
 EPICS_MODULE_NAME:=${MODULE_NAME}
 # This is the module source tag
 # *) individual tags
