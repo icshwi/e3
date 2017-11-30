@@ -263,6 +263,19 @@ https://github.com/areaDetector/areaDetector
 
 ### ESS Site-Specific MODULES [OMG]
 
+#### s7plc
+* https://bitbucket.org/europeanspallationsource/m-epics-s7plc
+
+### Motion Group
+
+#### axis [&]
+* https://bitbucket.org/europeanspallationsource/m-epics-axis
+
+#### axiscore [&]
+https://bitbucket.org/europeanspallationsource/m-epics-axiscore
+
+#### ecmc [&]
+https://bitbucket.org/europeanspallationsource/m-epics-ecmc
 
 
 ### IPAC [-]

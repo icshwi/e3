@@ -41,7 +41,7 @@ EPICS_GIT_URL="https://github.com/epics-modules"
 SEQ22_GIT_URL="http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-2.git"
 SEQ21_GIT_URL="http://www-csr.bessy.de/control/SoftDist/sequencer/repo/branch-2-1.git"
 OPC_GIT_URL="http://github.com/bkuner"
-
+ICSBITBUCKET_GIT_URL="https://bitbucket.org/europeanspallationsource"
 
 GIT_CMD="git"
 ENV_MOD_NAME="e3-env"
@@ -81,7 +81,7 @@ seq22_url+=" ${MODULE_NAME}"
 seq21_url=${SEQ21_GIT_URL}
 seq21_url+=" ${MODULE_NAME}"
 opc_url=${OPC_GIT_URL}/${MODULE_NAME}
-
+ess2_url=${ICSBITBUCKET_GIT_URL}/m-epics-${MODULE_NAME}
 
 ${GIT_CMD} clone ${ICS_GIT_URL}/e3-${MODULE_NAME}
 
@@ -102,6 +102,14 @@ elif [ "${MODULE_NAME}" = "sequencer" ]; then
     mod_url=${seq21_url};
 elif [ "${MODULE_NAME}" = "ipmiComm" ]; then
     mod_url=${ess_url};
+elif [ "${MODULE_NAME}" = "axis" ]; then
+    mod_url=${ess2_url};
+elif [ "${MODULE_NAME}" = "s7plc" ]; then
+    mod_url=${ess2_url};
+elif [ "${MODULE_NAME}" = "ecmc" ]; then
+    mod_url=${ess2_url};
+elif [ "${MODULE_NAME}" = "axiscore" ]; then
+    mod_url=${ess2_url};
 elif [ "${MODULE_NAME}" = "opcUaUnifiedAutomation" ]; then
     mod_url=${opc_url};  
 else
