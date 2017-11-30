@@ -106,20 +106,22 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * Dep : BASE, ASYN, SSCAN, CALC
 * https://github.com/icshwi/e3-stream
 
-### CALC [@]
+### CALC [+]
 * https://github.com/epics-modules/calc
 * Dep : BASE, SSCAN# , SNCSEQ#
 * https://github.com/icshwi/e3-calc
+
+### IP [+]
+* https://github.com/epics-modules/ip
+* Dep : BASE, ASYN, IPAC#, SENSEQ
+* https://github.com/icshwi/e3-ip
+
+
 
 ### DELAYGEN [@]
 * https://github.com/epics-modules/delaygen
 * Dep : BASE, ASYN, CALC, IPAC#, IP, AUTOSAVE
 * https://github.com/icshwi/e3-delaygen
-
-### IP [@]
-* https://github.com/epics-modules/ip
-* Dep : BASE, ASYN, IPAC#, SENSEQ
-* https://github.com/icshwi/e3-ip
 
 
 ### SNMP2 or SNMP3 [&]
