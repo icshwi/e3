@@ -96,12 +96,13 @@ This section show fundamental EPICS modules, which ESS can access through mostly
 * Dep : BASE, SNCSEQ
 * https://github.com/icshwi/e3-sscan
 
-### MOTOR [@]
+### MOTOR [+]
 * https://github.com/epics-modules/motor
 * Dep : BASE, ASYN, SNCSEQ#, BUSY#, IPAC# 
 * https://github.com/icshwi/e3-motor
+* Only basic lib
 
-### STREAM [@]
+### STREAM [+]
 * https://github.com/epics-modules/stream
 * Dep : BASE, ASYN, SSCAN, CALC
 * https://github.com/icshwi/e3-stream

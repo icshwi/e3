@@ -6,7 +6,8 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 * Debian 8 (Jessie)
 * Debian 9 (Stretch)
 * Raspbian Stretch
-* CentOS 7.4 
+* CentOS 7.4
+* Ubuntu 16.04.3 LTS (Xenial Xerus)
 
 ##
 
