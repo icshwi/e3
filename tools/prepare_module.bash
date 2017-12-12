@@ -20,7 +20,7 @@
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
 #   date    : Tuesday, December 12 17:44:34 CET 2017
-#   version : 0.1.1
+#   version : 0.1.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -181,7 +181,7 @@ else
 include \$(TOP)/configure/CONFIG
 endif
 
--include \$(TOP)/\$(E3_ENV_NAME)/\$(E3_ENV_NAME)
+-include \$(TOP)/\$(E3_ENV_PATH)/\$(E3_ENV_NAME)
 
 include \$(TOP)/configure/MK_DEFINES
 
@@ -218,7 +218,9 @@ export EPICS_MODULE_SRC_PATH:=${MODULE_SRC_PATH}-dev
 export ESS_MODULE_MAKEFILE:=\$(EPICS_MODULE_NAME).Makefile
 export PROJECT:=\$(EPICS_MODULE_NAME)
 export LIBVERSION:=develop
+export E3_ENV_PATH:=e3-env
 export E3_ENV_NAME:=e3-env
+#export E3_ENV_NAME:=E3_ENV_CONF
 export E3_ENV_TAG:=master
 # 
 #export DEV_GIT_URL:="https://where your git repo"
@@ -240,7 +242,9 @@ export EPICS_MODULE_SRC_PATH:=${MODULE_SRC_PATH}
 export ESS_MODULE_MAKEFILE:=\$(EPICS_MODULE_NAME).Makefile
 export PROJECT:=\$(EPICS_MODULE_NAME)
 export LIBVERSION:=0.0.1
+export E3_ENV_PATH:=e3-env
 export E3_ENV_NAME:=e3-env
+#export E3_ENV_NAME:=E3_ENV_CONF
 #export E3_ENV_TAG:=v0.1
 EOF
 
@@ -454,7 +458,7 @@ devinit: git-submodule-sync  \$(E3_ENV_NAME)
 	cd \$(EPICS_MODULE_SRC_PATH) && git checkout \$(EPICS_MODULE_TAG)
 
 devenv: env
-	cd \$(E3_ENV_NAME) && git checkout \$(E3_ENV_TAG)
+	cd \$(E3_ENV_PATH) && git checkout \$(E3_ENV_TAG)
 
 devbuild: build
 devclean: clean
