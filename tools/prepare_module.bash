@@ -302,7 +302,7 @@ M_OPTIONS += DEFAULT_EPICS_VERSIONS="\$(DEFAULT_EPICS_VERSIONS)"
 M_OPTIONS += BUILDCLASSES="Linux"
 
 
-.PHONY: help defalut install uninstall build rebuild clean help2 init git-submodule-sync \$(EPICS_MODULE_SRC_PATH) cehckout \$(E3_ENV_NAME) env conf
+.PHONY: help default install uninstall build rebuild clean help2 init git-submodule-sync \$(EPICS_MODULE_SRC_PATH) cehckout \$(E3_ENV_NAME) env conf
 
 
 # # help is defined in 
