@@ -469,6 +469,7 @@ cat > configure/BUILD_DEV <<EOF
 #
 devinit: git-submodule-sync  \$(E3_ENV_NAME)
 	git clone \$(DEV_GIT_URL) \$(EPICS_MODULE_SRC_PATH)
+	cd \$(EPICS_MODULE_SRC_PATH) && git checkout \$(EPICS_MODULE_TAG)
 
 devenv: env
 devbuild: build
