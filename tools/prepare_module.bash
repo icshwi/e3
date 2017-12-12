@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, December 11 01:03:30 CET 2017
-#   version : 0.1.0
+#   date    : Tuesday, December 12 17:44:34 CET 2017
+#   version : 0.1.1
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -107,27 +107,9 @@ fi
 # echo ${MODULE_URL}
 
 
-#exit
-
 mod_url=${MODULE_URL}/${MODULE_SRC_PATH}
 
 echo "${mod_url}"
-
-
-# ess_url=${ICS_GIT_URL}/${MODULE_NAME}
-# psi_url=${PSI_GIT_URL}/${MODULE_NAME}
-# epics_url=${EPICS_GIT_URL}/${MODULE_NAME}
-# opc_url=${OPC_GIT_URL}/${MODULE_NAME}
-
-
-# seq22_url=${SEQ22_GIT_URL}
-# seq22_url+=" ${MODULE_NAME}"
-# seq21_url=${SEQ21_GIT_URL}
-# seq21_url+=" ${MODULE_NAME}"
-
-
-
-# ess2_url=${ICSBITBUCKET_GIT_URL}/m-epics-${MODULE_NAME}
 
 
 ${GIT_CMD} clone ${ICS_GIT_URL}/e3-${MODULE_NAME}
@@ -237,7 +219,7 @@ export ESS_MODULE_MAKEFILE:=\$(EPICS_MODULE_NAME).Makefile
 export PROJECT:=\$(EPICS_MODULE_NAME)
 export LIBVERSION:=develop
 export E3_ENV_NAME:=e3-env
-#export E3_ENV_TAG:=v0.1
+export E3_ENV_TAG:=master
 # 
 #export DEV_GIT_URL:="https://where your git repo"
 export DEV_GIT_URL:="${mod_url}"
@@ -472,6 +454,8 @@ devinit: git-submodule-sync  \$(E3_ENV_NAME)
 	cd \$(EPICS_MODULE_SRC_PATH) && git checkout \$(EPICS_MODULE_TAG)
 
 devenv: env
+	cd \$(E3_ENV_NAME) && git checkout \$(E3_ENV_TAG)
+
 devbuild: build
 devclean: clean
 devrebuild: rebuild
