@@ -44,6 +44,25 @@ db_module_list+=("e3-iocStats");
 db_module_list+=("e3-mrfioc2");
 db_module_lits+=("e3-ipmiComm");
 
+
+
+function yes_or_no_to_go() {
+
+    printf "\n";
+    printf  ">>>> $1\n";
+    read -p ">>>> Do you want to continue (y/n)? " answer
+    case ${answer:0:1} in
+	y|Y )
+	    printf ">>>> We are installing modules ...... ";
+	    ;;
+	* )
+            printf "Stop here.\n";
+	    exit;
+    ;;
+    esac
+
+}
+
 function install_db
 {
     local rep;
@@ -175,11 +194,13 @@ function setup_modules
 
 function build_modules
 {
+    yes_or_no_to_go "SUDO is required"
 
+    sudo -v
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
 	make build
-	make install
+	sudo make install
 	popd
     done
 }
