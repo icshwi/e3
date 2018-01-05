@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, November 30 21:51:11 CET 2017
-#   version : 0.0.6
+#   date    : Friday, January  5 10:24:38 CET 2018
+#   version : 0.0.7
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -53,7 +53,7 @@ function yes_or_no_to_go() {
     read -p ">>>> Do you want to continue (y/n)? " answer
     case ${answer:0:1} in
 	y|Y )
-	    printf ">>>> We are installing modules ...... ";
+	    printf ">>>> We are installing modules ...... \n";
 	    ;;
 	* )
             printf "Stop here.\n";
@@ -367,6 +367,10 @@ case "$1" in
 	;;
     env)
 	print_list "${module_list[@]}"
+	;;
+    bmod)
+	setup_env  
+	build_modules
 	;;
     pull)
 	git_pull

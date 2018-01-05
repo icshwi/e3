@@ -17,8 +17,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Monday, November 20 21:24:08 CET 2017
-# version : 0.0.4
+# Date    : Friday, January  5 10:24:47 CET 2018
+# version : 0.0.5
 
 TOP:=$(CURDIR)
 
@@ -78,6 +78,11 @@ modules:
 pull:
 	$(QUIET) bash e3.bash pull
 
+
+## ONLY Build modules
+bmodule:
+	$(QUIET) bash e3.bash bmod
+
 ## Rebuild modules from scratch 
 rmodule:
 	$(QUIET) bash e3.bash rmod
@@ -92,4 +97,4 @@ load:
 
 
 
-.PHONY: help clean build env base modules pull  rmodule
+.PHONY: help clean build env base modules pull  rmodule bmodule
