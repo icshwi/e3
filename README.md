@@ -1,4 +1,4 @@
-# e3 
+# e3 : European Spallation Source EPICS Environment
 
 This is the e3 initial setup script. It is now testing while I am working on individual epics modules e3-somethings.
 
@@ -9,6 +9,7 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 * CentOS 7.4
 * Ubuntu 16.04.3 LTS (Xenial Xerus)
 * Ubuntu 17.10 (Artful Aardvark)
+* LinuxMint 18.3 (sylvia)
 
 ##
 
