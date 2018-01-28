@@ -10,6 +10,7 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 * Ubuntu 16.04.3 LTS (Xenial Xerus)
 * Ubuntu 17.10 (Artful Aardvark)
 * LinuxMint 18.3 (sylvia)
+* Fedora 27 (Workstation Edition)
 
 ##
 
@@ -19,21 +20,17 @@ The following command guides us to lead the first glimpse of E3. SUDO permission
  e3 (master)$ make build
 ```
 
-After finishing the installation, source the dynamic environment via
+After finishing the installation, one can test all compiled modules loading via
+```
+ e3 (master)$ make load
+```
+
+If one see the clean ioc shell, the enviornment is ready to use. However, one should source the dynamic environment via
 
 ```
 e3 (master)$ source e3-env/setE3Env.bash
 ```
-
-And install converting DB files into the proper module directory with the current EPICS base setup. (This is the workaround temporarily, we will find the better way to handle them later)
-
-```
-e3 (master)$ make db
-```
-
-
-
-Then, one can run the example ioc through 
+, because it gives us more flexiable way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through 
 ```
 e3 (master)$ iocsh.bash iocStats.cmd
 ```
