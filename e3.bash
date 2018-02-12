@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, January  5 10:24:38 CET 2018
-#   version : 0.0.7
+#   date    : Monday, February 12 15:39:11 CET 2018
+#   version : 0.0.8
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -43,6 +43,22 @@ declare -ga db_module_list=()
 db_module_list+=("e3-iocStats");
 db_module_list+=("e3-mrfioc2");
 db_module_lits+=("e3-ipmiComm");
+
+
+
+function env_reset {
+    
+    PATH=/usr/local/bin:/usr/bin:/bin
+    unset EPICS_MODULES_PATH
+    unset EPICS_ENV_PATH
+    unset EPICS_BASE
+    unset EPICS_BASES_PATH
+    unset EPICS_HOST_ARCH
+    unset PYTHONPATH
+    
+    unset EPICS_CA_AUTO_ADDR_LIST
+}
+
 
 
 
@@ -342,6 +358,9 @@ function module_loading_test_on_iocsh
 
     exec iocsh.bash ${IOC_TEST}
 }
+
+
+env_reset
 
 module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
