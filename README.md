@@ -14,6 +14,12 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 
 ##
 
+NOTE that if one has the pre-existed EPICS environment, please run the following command first:
+```
+ e3 (master)$ source env_reset.sh 
+```
+
+
 The following command guides us to lead the first glimpse of E3. SUDO permission is needed to setup it.
 
 ```
