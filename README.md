@@ -1,8 +1,12 @@
 # e3 : European Spallation Source EPICS Environment
 
-This is the e3 initial setup script. It is now testing while I am working on individual epics modules e3-somethings.
+This is the setup script for testing and developing ESS EPICS Envrionment (aka E3), and it is not the production release.
+
 
 ## Tested Platforms
+The following Linux distribution were tested with the physical installation. And the Virtual Image on the VirtualBox as well. However, we DO NOT support any container yet, for example Docker now. Please understand our resouces, since we don't have any resources on the container support now. However, you are always welcome to try them with them. If one would like to contribute, please contact us. We are happy to merge any contributions.
+
+
 * Debian 8 (Jessie)
 * Debian 9 (Stretch)
 * Raspbian Stretch
@@ -11,6 +15,8 @@ This is the e3 initial setup script. It is now testing while I am working on ind
 * Ubuntu 17.10 (Artful Aardvark)
 * LinuxMint 18.3 (sylvia)
 * Fedora 27 (Workstation Edition)
+
+
 
 ##
 
