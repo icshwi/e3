@@ -77,3 +77,23 @@ git submodule update --init --recursive epics-base
 make env
 make build || die 3 "$BUILD ERROR : ${rep} "  ;
 make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
+
+cd ..
+
+
+git clone ${GIT_URL}/e3-require
+cd e3-require
+git submodule init e3-env
+git submodule update --init --recursive e3-env
+git submodule update --remote --merge e3-env
+
+git submodule init require-ess
+git submodule update --init --recursive require-ess
+
+
+make env
+make build || die 3 "$BUILD ERROR : ${rep} "  ;
+make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
+
+
+cd..
