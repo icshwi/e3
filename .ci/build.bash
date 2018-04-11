@@ -57,7 +57,7 @@ function setup_base_require
     local git_status=$1; shift;
     for rep in  ${require_list[@]}; do
 	echo ${rep}
-	git clone ${rep}
+	git clone ${GIT_URL}/${rep}
 	cd ${rep}
 	ls 
 	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
