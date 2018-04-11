@@ -56,10 +56,10 @@ function setup_base_require
 {
     local git_status=$1; shift;
     for rep in  ${require_list[@]}; do
-	echo "git clone ${rep}"
-	git_clone ${rep}
+	echo ${rep}
+	git clone ${rep}
 	cd ${rep}
-	echo "is it real"
+	ls 
 	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
 	make env
 	if [ "${rep}" = "e3-base" ]; then
