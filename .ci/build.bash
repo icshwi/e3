@@ -76,6 +76,19 @@ module_list=$(get_module_list configure/MODULES)
 
 print_list "${module_list[@]}"
 
-setup_base_require
+git clone ${GIT_URL}/e3-base
+cd e3-base
+git submodule init e3-env
+git submodule update --init --recursive e3-env
+git submodule update --remote --merge e3-env
+
+git submodule init pkg_automation
+git submodule update --init --recursive pkg_automation
+git submodule update --remote --merge pkg_automation
 
 
+git submodule init epics-base
+git submodule update --init --recursive epics-base
+
+make env
+make pkgs  || die 2 "PKGS ERROR : Please check your pkgs "  ;
