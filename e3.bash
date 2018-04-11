@@ -44,6 +44,15 @@ db_module_list+=("e3-iocStats");
 db_module_list+=("e3-mrfioc2");
 db_module_lits+=("e3-ipmiComm");
 
+function die()
+{
+    error=${1:-1}
+    ## exits with 1 if error number not given
+    shift
+    [ -n "$*" ] &&
+	printf "%s%s: %s\n" "$scriptname" ${version:+" ($version)"} "$*" >&2
+    exit "$error"
+}
 
 
 function env_reset {
@@ -138,10 +147,10 @@ function setup_base_require
 	    git_clone ${rep}
 	fi
 	pushd ${rep}
-	make init
+	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
 	make env
 	if [ "${rep}" = "e3-base" ]; then
-	    make pkgs
+	    make pkgs || die 2 "PKGS ERROR : Please check your pkgs "  ;
 	fi
 	popd
     done
@@ -155,9 +164,9 @@ function build_base_require
     
     for rep in  ${require_list[@]}; do
 	pushd ${rep}
-	make build
+	make build || die 3 "$BUILD ERROR : ${rep} "  ;
 	if [ "${rep}" = "e3-require" ]; then
-	    make install
+	    make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
 	fi
 	popd
     done
@@ -201,7 +210,7 @@ function setup_modules
 	    git_clone ${rep}
 	fi
 	pushd ${rep}
-	make init
+	make init ||  die 1 "Init ERROR : Please check your ${rep}"  ;  
 	make env
 	popd
     done
@@ -215,8 +224,8 @@ function build_modules
     sudo -v
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
-	make build
-	sudo make install
+	make build || die 3 "$BUILD ERROR : ${rep} "  ;
+	sudo make install  || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
 	popd
     done
 }
