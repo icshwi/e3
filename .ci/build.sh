@@ -3,6 +3,6 @@ set -e -x
 
 make env
 # without asking any interactive questions
-make travis
+bash e3.bash travis
 
 

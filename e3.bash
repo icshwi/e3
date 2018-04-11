@@ -383,7 +383,7 @@ function module_loading_test_on_iocsh
 }
 
 
-env_reset
+#env_reset
 
 module_list=$(get_module_list ${SC_TOP}/configure/MODULES)
 
