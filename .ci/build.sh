@@ -2,6 +2,7 @@
 set -e -x
 
 make env
-make build
+# without asking any interactive questions
+make travis
 
 

@@ -17,8 +17,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Friday, January  5 10:24:47 CET 2018
-# version : 0.0.5
+# Date    : Wednesday, April 11 09:30:29 CEST 2018
+# version : 0.0.6
 
 TOP:=$(CURDIR)
 
@@ -61,6 +61,10 @@ clean:
 ## Build all 
 build: 
 	$(QUIET) bash e3.bash all
+
+## Build all 
+travis: 
+	$(QUIET) bash e3.bash travis
 
 ## Print modules list
 env:

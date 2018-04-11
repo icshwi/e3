@@ -221,6 +221,20 @@ function build_modules
     done
 }
 
+function build_modules_without_question
+{
+
+    sudo -v
+    for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	make build
+	sudo make install
+	popd
+    done
+}
+
+
+
 function clean_env
 {
     echo "Cleaning .... e3-env"
@@ -372,6 +386,15 @@ case "$1" in
 	setup_env          "TRUE"
 	setup_modules      "TRUE"
 	build_modules
+	setup_env
+	install_db
+	;;
+    travis)
+	setup_base_require "TRUE"
+	build_base_require
+	setup_env          "TRUE"
+	setup_modules      "TRUE"
+	build_modules_without_question
 	setup_env
 	install_db
 	;;
