@@ -59,7 +59,9 @@ function setup_base_require
 	echo ${rep}
 	git clone ${GIT_URL}/${rep}
 	cd ${rep}
-	ls 
+	ls
+	pwd
+	
 	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
 	make env
 	if [ "${rep}" = "e3-base" ]; then
@@ -73,7 +75,6 @@ function setup_base_require
 module_list=$(get_module_list configure/MODULES)
 
 print_list "${module_list[@]}"
-
 
 setup_base_require
 
