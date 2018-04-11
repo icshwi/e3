@@ -1,8 +1,10 @@
 sudo: required
 dist: trusty
+language: generic
 
+git:
+submodules: false
 
-    
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y realpath
