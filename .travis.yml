@@ -8,5 +8,6 @@ git:
 before_install:
   - bash -c 'echo $BASH_VERSION'
   - sudo apt-get -qq update
-  - sudo apt-get install -y realpath build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6  libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs  python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev  libusb-1.0-0-dev remake libudev-dev libsystemd-dev linux-source fonts-liberation logrotate curl net-tools symlinks
+  - sudo apt-get install -y screen nano unzip tree ipmitool libtool automake re2c tclx realpath aptitude
+  - sudo aptitude install -y build-essential libreadline-dev
   - ./.ci/build.bash
