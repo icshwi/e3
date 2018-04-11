@@ -2,5 +2,6 @@
 set -e -x
 
 make env
-make all
+make build
+
 
