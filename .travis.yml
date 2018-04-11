@@ -1,6 +1,6 @@
-sudo: true
+sudo: required
 dist: trusty
-language: c
+
 
     
 before_install:
