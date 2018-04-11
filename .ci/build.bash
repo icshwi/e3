@@ -60,7 +60,7 @@ module_list=$(get_module_list configure/MODULES)
 print_list "${module_list[@]}"
 
 git clone ${GIT_URL}/e3-base
-cd e3-base
+pushd e3-base
 git submodule init e3-env
 git submodule update --init --recursive e3-env
 git submodule update --remote --merge e3-env
@@ -78,11 +78,13 @@ make env
 make build || die 3 "$BUILD ERROR : ${rep} "  ;
 make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
 
-cd ..
+popd
+
 
 
 git clone ${GIT_URL}/e3-require
-cd e3-require
+
+pushd e3-require
 git submodule init e3-env
 git submodule update --init --recursive e3-env
 git submodule update --remote --merge e3-env
@@ -95,5 +97,4 @@ make env
 make build || die 3 "$BUILD ERROR : ${rep} "  ;
 make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
 
-
-cd..
+popd
