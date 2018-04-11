@@ -90,5 +90,4 @@ git submodule update --remote --merge pkg_automation
 git submodule init epics-base
 git submodule update --init --recursive epics-base
 
-make env
-make pkgs  || die 2 "PKGS ERROR : Please check your pkgs "  ;
+bash pkg_automation/pkg_automation.bash -y 
