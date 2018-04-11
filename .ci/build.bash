@@ -73,4 +73,5 @@ function setup_base_require
 module_list=$(get_module_list configure/MODULES)
 
 print_list "${module_list[@]}"
-#setup_base_require "TRUE"
+
+setup_base_require "TRUE"
