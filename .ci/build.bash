@@ -52,24 +52,7 @@ function print_list
     done
 }
 
-function setup_base_require
-{
-    local git_status=$1; shift;
-    for rep in  ${require_list[@]}; do
-	echo ${rep}
-	git clone ${GIT_URL}/${rep}
-	cd ${rep}
-	ls
-	pwd
-	
-	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
-	make env
-	if [ "${rep}" = "e3-base" ]; then
-	    make pkgs || die 2 "PKGS ERROR : Please check your pkgs "  ;
-	fi
-	cd ..
-    done
-}
+
 
 
 module_list=$(get_module_list configure/MODULES)
@@ -90,4 +73,7 @@ git submodule update --remote --merge pkg_automation
 git submodule init epics-base
 git submodule update --init --recursive epics-base
 
-bash pkg_automation/pkg_automation.bash -y 
+
+make env
+make build || die 3 "$BUILD ERROR : ${rep} "  ;
+make install || die 4 "INSTALLL ERROR : Please check ${rep} "  ;
