@@ -56,16 +56,16 @@ function setup_base_require
 {
     local git_status=$1; shift;
     for rep in  ${require_list[@]}; do
-	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
-	    git_clone ${rep}
-	fi
-	pushd ${rep}
+	echo "git clone ${rep}"
+	git_clone ${rep}
+	cd ${rep}
+	echo "is it real"
 	make init || die 1 "Init ERROR : Please check your ${rep}"  ;
 	make env
 	if [ "${rep}" = "e3-base" ]; then
 	    make pkgs || die 2 "PKGS ERROR : Please check your pkgs "  ;
 	fi
-	popd
+	cd ..
     done
 }
 
@@ -74,4 +74,7 @@ module_list=$(get_module_list configure/MODULES)
 
 print_list "${module_list[@]}"
 
-setup_base_require "TRUE"
+
+setup_base_require
+
+
