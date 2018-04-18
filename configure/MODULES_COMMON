@@ -8,7 +8,6 @@ e3-sequencer
 e3-sscan
 e3-ip
 e3-calc
-e3-pcre
-e3-StreamDevice
+e3-stream
 e3-s7plc
 e3-recsync

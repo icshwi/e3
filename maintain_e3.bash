@@ -47,8 +47,40 @@ function pushd { builtin pushd "$@" > /dev/null; }
 function popd  { builtin popd  "$@" > /dev/null; }
 
 
-declare -ga require_list=("e3-base" "e3-require")
+declare -ga base_list=("e3-base")
+declare -ga require_list=("e3-require")
+
 declare -ga module_list=()
+
+
+function die
+{
+    error=${1:-1}
+    ## exits with 1 if error number not given
+    shift
+    [ -n "$*" ] &&
+	printf "%s%s: %s\n" "$scriptname" ${version:+" ($version)"} "$*" >&2
+    exit "$error"
+}
+
+EXIST=1
+NON_EXIST=0
+
+
+function checkIfDir
+{
+    
+    local dir=$1
+    local result=""
+    if [ ! -d "$dir" ]; then
+	result=$NON_EXIST
+	# doesn't exist
+    else
+	result=$EXIST
+	# exist
+    fi
+    echo "${result}"
+};
 
 
 function read_file_get_string
@@ -83,6 +115,157 @@ function get_module_list
     done < $1
     echo ${entry[@]}
 }
+
+
+function read_file_get_string
+{
+    local FILENAME=$1
+    local PREFIX=$2
+
+    local val=""
+    while read line; do
+	if [[ $line =~ "${PREFIX}" ]] ; then
+	    val=${line#$PREFIX}
+	fi
+    done < ${FILENAME}
+
+    echo "$val"
+}
+
+
+function git_branch_tag_status
+{
+    printf "\n\n"
+    printf ">> Branch info : \n"
+    git branch -v
+    printf "\n>> Tag info  : \n"
+    git tag -l
+    printf "\n"
+}
+
+# git checkout ${release_branch}
+# $ git push origin ${release_branch}
+# $ git tag -a ${release_tag} -m "${release_comment} ${release_branch}
+# $git push origin ${release_tag}
+
+function release_base
+{
+    local release_file="${1}"; 
+    local delete_release="${2}"; 
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    
+    for rep in  ${base_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    echo "${rep}"
+	    printf "Release Branch : %40s\n"  "${release_branch}"
+	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release comment: %40s\n"  "${release_comments}"
+	    if [[ ${delete_release} == "delete" ]]; then
+		git checkout master
+		git tag -d ${release_tags}
+		git branch -d ${release_branch}
+		git_branch_tag_status
+	    else
+		git checkout -b ${release_branch}
+		git tag -a ${release_tags} -m "${release_comments}"
+		git_branch_tag_status
+	    fi
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	
+    done
+}
+
+
+
+function release_require
+{
+    local release_file="${1}";
+    local delete_release="${2}"; 
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    
+    for rep in  ${require_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    echo "${rep}"
+	    printf "Release Branch : %40s\n"  "${release_branch}"
+	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release comment: %40s\n"  "${release_comments}"
+	    if [[ ${delete_release} == "delete" ]]; then
+		git checkout master
+		git tag -d ${release_tags}
+		git branch -d ${release_branch}
+		git_branch_tag_status
+	    else
+		git checkout -b ${release_branch}
+		git tag -a ${release_tags} -m "${release_comments}"
+		git_branch_tag_status
+	    fi
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	
+    done
+}
+
+
+function release_modules
+{
+    local release_file="${1}";
+    local delete_release="${2}";
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    echo "${rep}"
+	    printf "Release Branch : %40s\n"  "${release_branch}"
+	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release comment: %40s\n"  "${release_comments}"
+	    if [[ ${delete_release} == "delete" ]]; then
+		git checkout master
+		git tag -d ${release_tags}
+		git branch -d ${release_branch}
+		git_branch_tag_status
+	    else
+		git checkout -b ${release_branch}
+		git tag -a ${release_tags} -m "${release_comments}"
+		git_branch_tag_status
+	    fi
+	    
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	
+    done
+}
+
+
+
+
 
 # this function has some issue to print array, beaware it.
 
@@ -305,8 +488,14 @@ case "${GROUP_NAME}" in
     test)
 	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
 	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
+	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
 #	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	;;
+    test2)
+	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
+	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
+#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
+	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
 	;;
     jhlee)
 	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
@@ -330,9 +519,26 @@ case "${GROUP_NAME}" in
 esac
 
 
-echo ">> Selected Modules are :"
-echo ${module_list[@]}
-echo ""
+
+case "$1" in
+    *base)
+	echo ""
+	;;
+    *req)
+	echo ""
+	;;
+    clean)
+	echo ""
+	;;
+    *) 
+	echo ">> Selected Modules are :"
+	echo ${module_list[@]}
+	echo ""
+	;;
+
+esac
+
+
 
 
 
@@ -404,6 +610,26 @@ case "$1" in
 	# print epics tags and e3 version for selected modules
 	print_version_info
 	;;
+    r_base)
+	release_base "$2" 
+	;;
+    r_req)
+	release_require "$2" 
+	;;
+    r_mod)
+	release_modules "$2" 
+	;;
+    rd_base)
+	release_base "$2" "delete"
+	;;
+    rd_req)
+	release_require "$2" "delete"
+	;;
+    rd_mod)
+
+	release_modules "$2" "delete"
+	;;
+    
     *)
 	usage
 	;;
