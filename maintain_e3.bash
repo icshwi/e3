@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, April 16 00:14:59 CEST 2018
-#   version : 0.0.4
+#   date    : Wednesday, April 18 22:29:16 CEST 2018
+#   version : 0.0.5
 
 
 # Example, how to use
@@ -158,23 +158,23 @@ function release_base
     local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
     local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
     local release_branch=R${e3_version}.${e3_revision};
-    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
     
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    echo "${rep}"
 	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release tag    : %40s\n"  "${release_tag}"
 	    printf "Release comment: %40s\n"  "${release_comments}"
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
-		git tag -d ${release_tags}
+		git tag -d ${release_tag}
 		git branch -d ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
-		git tag -a ${release_tags} -m "${release_comments}"
+		git tag -a ${release_tag} -m "${release_comments}"
 		git_branch_tag_status
 	    fi
 	    popd
@@ -197,23 +197,23 @@ function release_require
     local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
     local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
     local release_branch=R${e3_version}.${e3_revision};
-    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
     
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    echo "${rep}"
 	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release tag    : %40s\n"  "${release_tag}"
 	    printf "Release comment: %40s\n"  "${release_comments}"
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
-		git tag -d ${release_tags}
+		git tag -d ${release_tag}
 		git branch -d ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
-		git tag -a ${release_tags} -m "${release_comments}"
+		git tag -a ${release_tag} -m "${release_comments}"
 		git_branch_tag_status
 	    fi
 	    popd
@@ -235,23 +235,23 @@ function release_modules
     local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
     local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
     local release_branch=R${e3_version}.${e3_revision};
-    local release_tags=${release_branch}.${e3_modification}.${e3_patch_level}
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
     
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    echo "${rep}"
 	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tags   : %40s\n"  "${release_tags}"
+	    printf "Release tag    : %40s\n"  "${release_tag}"
 	    printf "Release comment: %40s\n"  "${release_comments}"
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
-		git tag -d ${release_tags}
+		git tag -d ${release_tag}
 		git branch -d ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
-		git tag -a ${release_tags} -m "${release_comments}"
+		git tag -a ${release_tag} -m "${release_comments}"
 		git_branch_tag_status
 	    fi
 	    
@@ -265,6 +265,151 @@ function release_modules
 
 
 
+function git_push_release_base
+{
+    local release_file="${1}";
+    #    local delete_release="${2}";
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    #   local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
+
+    local i;
+    let i=0
+	
+    for rep in  ${base_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch : %20s\n"  "${release_branch}"
+	    printf "  Tag    : %20s\n"  "${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Remote Information :\n";
+	    git remote -v
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_branch}";
+	    echo "git push origin ${release_branch}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_tag}";
+	    echo "git push origin ${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    popd
+	    ((++i))
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+    done
+    
+}
+
+
+
+
+
+
+function git_push_release_require
+{
+    local release_file="${1}";
+    #    local delete_release="${2}";
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    #   local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
+
+    local i;
+    let i=0
+    
+    for rep in  ${require_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch : %20s\n"  "${release_branch}"
+	    printf "  Tag    : %20s\n"  "${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Remote Information :\n";
+	    git remote -v
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_branch}";
+	    echo "git push origin ${release_branch}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_tag}";
+	    echo "git push origin ${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    popd
+	    ((++i))
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+    done
+    
+}
+
+
+
+
+function git_push_release_modules
+{
+    local release_file="${1}";
+    #    local delete_release="${2}";
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    #   local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
+
+    local i;
+    let i=0
+	
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch : %20s\n"  "${release_branch}"
+	    printf "  Tag    : %20s\n"  "${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Remote Information :\n";
+	    git remote -v
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_branch}";
+	    echo "git push origin ${release_branch}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf " * cmd : git push origin %s\n" "${release_tag}";
+	    echo "git push origin ${release_tag}"
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    popd
+	    ((++i))
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+    done
+    
+}
 
 
 # this function has some issue to print array, beaware it.
@@ -613,23 +758,30 @@ case "$1" in
     r_base)
 	release_base "$2" 
 	;;
-    r_req)
-	release_require "$2" 
-	;;
-    r_mod)
-	release_modules "$2" 
-	;;
     rd_base)
 	release_base "$2" "delete"
+	;;
+    gpr_base)
+	git_push_release_base "$2"
+	;;
+    r_req)
+	release_require "$2" 
 	;;
     rd_req)
 	release_require "$2" "delete"
 	;;
+    gpr_req)
+	git_push_release_require "$2"
+	;;
+    r_mod)
+	release_modules "$2" 
+	;;
     rd_mod)
-
 	release_modules "$2" "delete"
 	;;
-    
+    gpr_mod)
+	git_push_release_modules "$2"
+	;;
     *)
 	usage
 	;;
