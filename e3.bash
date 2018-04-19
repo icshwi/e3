@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, April 18 09:36:32 CEST 2018
-#   version : 0.2.3
+#   date    : Thursday, April 19 09:52:51 CEST 2018
+#   version : 0.2.4
 
 
 
@@ -456,9 +456,9 @@ function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [ -g <group_name> ] <option> ";
+	echo "Usage    : $0 [ -g <module_group_name> ] <option> ";
 	echo "";
-	echo " < group_name > ";
+	echo " < module_group_name > ";
 	echo ""
 	echo "           common : epics modules"
 	echo "           timing : mrf timing    related modules";
@@ -470,10 +470,16 @@ function usage
 	echo "           jhlee  : common, timing, ifc, area modules";
 	echo "           all    : common, timing, ifc, ecat, area modules";
 	echo "";
+	echo "";
 	echo " < option > ";
 	echo "";
-      
-	echo "           env    : Print enabled Modules";
+      	echo "           env    : Print enabled Modules";
+	echo ""
+	echo "           call   : Clean all (base, require, selected module group)";
+	echo "           iall   : Init  all (base, require, selected module group)";
+	echo "           ball   : Build, Install all (base, require, selected module group)";
+	echo "            all   : call, iall, ball";
+	echo "          clean   : call";
 	echo ""
 	echo "           cbase  : Clean Base";
 	echo "           ibase  : Init  Base ";
@@ -487,9 +493,9 @@ function usage
 	echo "            req   : creq, ireq, breq";
 	echo ""           
 	echo ""
-	echo "           cmod   : Clean Modules";
-	echo "           imod   : Init  Modules";
-	echo "           bmod   : Build, Install Modules";
+	echo "           cmod   : Clean Modules (selected module group)";
+	echo "           imod   : Init  Modules (selected module group)";
+	echo "           bmod   : Build, Install Modules (selected module group)";
 	echo "            mod   : cmod, imod, bmod";
 	echo ""
 	echo "           load   : Load all installed Modules into iocsh.bash";
@@ -497,8 +503,9 @@ function usage
 	echo ""    
 	
 	echo "  Examples : ";
-	echo ""    
-	echo "          $0 env";
+	echo ""
+	echo "          $0 -g all env";
+	echo "          $0 -g all iall";
 	echo "          $0 -g timing env";
 	echo "          $0 base";
         echo "          $0 req";
@@ -567,7 +574,7 @@ case "${GROUP_NAME}" in
 	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
 	;;
     * )
-	module_list+=( "e3-iocStats" )
+	module_list+=( "" )
 	;;
 esac
 
@@ -592,21 +599,32 @@ esac
 
 
 case "$1" in
-    all)
-	base_all;
-	req_all;
-	mod_all;
-	;;
-    clean)
-	clean_base;
-	clean_require;
-	clean_modules;
-	;;
     env)
 	echo ">> Vertical display for the selected modules :"
 	echo ""
 	print_list
 	echo ""
+	;;
+    
+    call)
+	clean_base;
+	clean_require;
+	clean_modules;
+	;;
+    iall)
+	setup_base "TRUE";
+	setup_require "TRUE";
+	setup_modules  "TRUE"
+	;;
+    ball)
+	build_base;
+	build_require;
+	build_modules;
+	;;
+    all)
+	base_all;
+	req_all;
+	mod_all;
 	;;
     cbase)
 	clean_base;

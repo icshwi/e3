@@ -1,0 +1,2490 @@
+>> Selected Modules are :
+e3-iocStats e3-autosave e3-asyn e3-busy e3-modbus e3-ipmiComm e3-sequencer e3-sscan e3-ip e3-calc e3-stream e3-s7plc e3-recsync e3-devlib2 e3-mrfioc2 e3-keypress e3-sysfs e3-symbolname e3-memDisplay e3-regdev e3-i2cDev e3-tosca e3-tsclib e3-ifcdaqdrv2 e3-nds3 e3-nds3epics e3-ifc14edrv e3-ifcfastint e3-ecat2 e3-ecmc e3-axiscore e3-ethercatmc e3-ADSupport e3-ADCore e3-ADSimDetector e3-ADAndor e3-ADAndor3 e3-ADPointGrey
+
+
+>> e3-base
+   EPICS_BASE_TAG  : R3.15.5
+   E3_BASE_VERSION : R3.15.5
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-require
+   EPICS_MODULE_TAG  : 
+   E3_MODULE_VERSION : 2.5.4
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-iocStats
+   EPICS_MODULE_TAG  : 1856ef5
+   E3_MODULE_VERSION : 1856ef5
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-autosave
+   EPICS_MODULE_TAG  : tags/R5-8
+   E3_MODULE_VERSION : 5.8.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-asyn
+   EPICS_MODULE_TAG  : tags/R4-32
+   E3_MODULE_VERSION : 4.32.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-busy
+   EPICS_MODULE_TAG  : c8ea03e
+   E3_MODULE_VERSION : c8ea03e
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-modbus
+   EPICS_MODULE_TAG  : R2-10-1
+   E3_MODULE_VERSION : 2.10.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ipmiComm
+   EPICS_MODULE_TAG  : tags/SLAC-R4-0-2-with-edl
+   E3_MODULE_VERSION : 4.0.2
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-sequencer
+   EPICS_MODULE_TAG  : R2-1-21
+   E3_MODULE_VERSION : 2.1.21
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-sscan
+   EPICS_MODULE_TAG  : tags/R2-11
+   E3_MODULE_VERSION : 2.11.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ip
+   EPICS_MODULE_TAG  : 2f6f732
+   E3_MODULE_VERSION : 2f6f732
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-calc
+   EPICS_MODULE_TAG  : 4aab3c
+   E3_MODULE_VERSION : 4aab3c
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-stream
+   EPICS_MODULE_TAG  : tags/R2-7-7
+   E3_MODULE_VERSION : 2.7.7
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-s7plc
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-recsync
+   EPICS_MODULE_TAG  : tags/1.3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-devlib2
+   EPICS_MODULE_TAG  : tags/2.9
+   E3_MODULE_VERSION : 2.9.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-mrfioc2
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-keypress
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-sysfs
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-symbolname
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-memDisplay
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-regdev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-i2cDev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-tosca
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-tsclib
+   EPICS_MODULE_TAG  : tags/v1.4.5
+   E3_MODULE_VERSION : 1.4.5
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ifcdaqdrv2
+   EPICS_MODULE_TAG  : v2.0.0
+   E3_MODULE_VERSION : 2.0.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-nds3
+   EPICS_MODULE_TAG  : tags/v3.0
+   E3_MODULE_VERSION : 3.0.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-nds3epics
+   EPICS_MODULE_TAG  : tags/v1.0
+   E3_MODULE_VERSION : 1.0.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ifc14edrv
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ifcfastint
+   EPICS_MODULE_TAG  : f9429fe
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ecat2
+   EPICS_MODULE_TAG  : tags/v3.0.1
+   E3_MODULE_VERSION : 3.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ecmc
+   EPICS_MODULE_TAG  : tags/v4.2.0
+   E3_MODULE_VERSION : 4.2.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-axiscore
+   EPICS_MODULE_TAG  : tags/v10.2.1
+   E3_MODULE_VERSION : 10.2.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ethercatmc
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADSupport
+   EPICS_MODULE_TAG  : tags/R1-3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADCore
+   EPICS_MODULE_TAG  : tags/R3-2
+   E3_MODULE_VERSION : 3.2.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADSimDetector
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADAndor
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADAndor3
+   EPICS_MODULE_TAG  : tags/R2-2
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+>> e3-ADPointGrey
+   EPICS_MODULE_TAG  : tags/R2-6
+   E3_MODULE_VERSION : 2.6.0
+   E3 Branch         : master
+   E3 Tag            : 
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-base
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+M	pkg_automation
+
+
+>> Branch info : 
+* R0.1   b8897ad remove defalut branch
+  master b8897ad remove defalut branch
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-base
+> -------------------------------------------------------------
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-require
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   9d66ded re-enable iocInit
+  master 9d66ded re-enable iocInit
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-require
+> -------------------------------------------------------------
+>> Selected Modules are :
+e3-iocStats e3-autosave e3-asyn e3-busy e3-modbus e3-ipmiComm e3-sequencer e3-sscan e3-ip e3-calc e3-stream e3-s7plc e3-recsync e3-devlib2 e3-mrfioc2 e3-keypress e3-sysfs e3-symbolname e3-memDisplay e3-regdev e3-i2cDev e3-tosca e3-tsclib e3-ifcdaqdrv2 e3-nds3 e3-nds3epics e3-ifc14edrv e3-ifcfastint e3-ecat2 e3-ecmc e3-axiscore e3-ethercatmc e3-ADSupport e3-ADCore e3-ADSimDetector e3-ADAndor e3-ADAndor3 e3-ADPointGrey
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-iocStats
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   2f517d9 update build rules
+  master 2f517d9 update build rules
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-iocStats
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-autosave
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   4982c66 cleanup and enable autosaveBuild
+  master 4982c66 cleanup and enable autosaveBuild
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-autosave
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-asyn
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   ba2505c update Makefile for checkout
+  master ba2505c update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-asyn
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-busy
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   dda9e9c update Makefile for checkout
+  master dda9e9c update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-busy
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-modbus
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   c6d80cb update Makefile for checkout
+  master c6d80cb update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-modbus
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ipmiComm
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   2b6251b add Development Mode, and make ioc running
+  master 2b6251b add Development Mode, and make ioc running
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ipmiComm
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-sequencer
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   2560375 update Makefile for checkout
+  master 2560375 update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-sequencer
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-sscan
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   7a127b1 add checkout feature
+  master 7a127b1 add checkout feature
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-sscan
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ip
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   b109220 update Makefile for checkout
+  master b109220 update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ip
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-calc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   482519d update Makefile for checkout
+  master 482519d update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-calc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-stream
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   3bc7617 compiled epics community
+  master 3bc7617 compiled epics community
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-stream
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-s7plc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   9c5e233 init
+  master 9c5e233 init
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-s7plc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-recsync
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   07a42a3 fixed epics build
+  master 07a42a3 fixed epics build
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-recsync
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-devlib2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   bb2efaf update Makefile for checkout
+  master bb2efaf update Makefile for checkout
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-devlib2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-mrfioc2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   f0e078b Added cmds/TCLKB.cmd
+  master f0e078b Added cmds/TCLKB.cmd
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-mrfioc2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-keypress
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   6757a2e Update Makefile
+  master 6757a2e Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-keypress
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-sysfs
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   4f411f9 Update Makefile
+  master 4f411f9 Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-sysfs
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-symbolname
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   260a42f Update Makefile
+  master 260a42f Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-symbolname
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-memDisplay
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   2e1aee8 Update Makefile
+  master 2e1aee8 Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-memDisplay
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-regdev
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   6ef92f2 Update Makefile
+  master 6ef92f2 Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-regdev
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-i2cDev
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   d0497d8 Update Makefile
+  master d0497d8 Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-i2cDev
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-tosca
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   ee07952 Update Makefile
+  master ee07952 Update Makefile
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-tosca
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-tsclib
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   4aaacc8 Revert "Adding .git suffix on submodule URL"
+  master 4aaacc8 Revert "Adding .git suffix on submodule URL"
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-tsclib
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ifcdaqdrv2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   0afc0d2 new meta layer for version 2.0.0
+  master 0afc0d2 new meta layer for version 2.0.0
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ifcdaqdrv2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-nds3
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   658a13a fix to workaround include/nds3/*.h
+  master 658a13a fix to workaround include/nds3/*.h
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-nds3
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-nds3epics
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   a6c2003 Makefile fixup
+  master a6c2003 Makefile fixup
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-nds3epics
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ifc14edrv
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+M	e3-env
+
+
+>> Branch info : 
+* R0.1   d5b752f New makefile and meta information for v1.0.1
+  master d5b752f New makefile and meta information for v1.0.1
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ifc14edrv
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ifcfastint
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   998f7ae init ifcfastint
+  master 998f7ae init ifcfastint
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ifcfastint
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ecat2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   b1893f6 make db is working under the one base assumption
+  master b1893f6 make db is working under the one base assumption
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ecat2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ecmc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   607dee9 add dbd
+  master 607dee9 add dbd
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ecmc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-axiscore
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   bd0c2e8 compiled in E3
+  master bd0c2e8 compiled in E3
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-axiscore
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ethercatmc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   ba4acb3 E3
+  master ba4acb3 E3
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ethercatmc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADSupport
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   2acaf5c back to default options
+  master 2acaf5c back to default options
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADSupport
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADCore
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   dc7e928 re-arrange the initial setup, and prepare for E3+
+  master dc7e928 re-arrange the initial setup, and prepare for E3+
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADCore
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADSimDetector
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   cd2f86c E3, load test
+  master cd2f86c E3, load test
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADSimDetector
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADAndor
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   6b958d6 loaded with limitation
+  master 6b958d6 loaded with limitation
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADAndor
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADAndor3
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   19d044b E3, load test
+  master 19d044b E3, load test
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADAndor3
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-ADPointGrey
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1   a86e6d7 E3, load test
+  master a86e6d7 E3, load test
+
+>> Tag info  : 
+R0.1.0.0
+
+> -------------------------------------------------------------
+>> Exiting from e3-ADPointGrey
+> -------------------------------------------------------------
+>> Selected Modules are :
+e3-iocStats e3-autosave e3-asyn e3-busy e3-modbus e3-ipmiComm e3-sequencer e3-sscan e3-ip e3-calc e3-stream e3-s7plc e3-recsync e3-devlib2 e3-mrfioc2 e3-keypress e3-sysfs e3-symbolname e3-memDisplay e3-regdev e3-i2cDev e3-tosca e3-tsclib e3-ifcdaqdrv2 e3-nds3 e3-nds3epics e3-ifc14edrv e3-ifcfastint e3-ecat2 e3-ecmc e3-axiscore e3-ethercatmc e3-ADSupport e3-ADCore e3-ADSimDetector e3-ADAndor e3-ADAndor3 e3-ADPointGrey
+
+
+>> e3-base
+   EPICS_BASE_TAG  : R3.15.5
+   E3_BASE_VERSION : R3.15.5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-require
+   EPICS_MODULE_TAG  : 
+   E3_MODULE_VERSION : 2.5.4
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-iocStats
+   EPICS_MODULE_TAG  : 1856ef5
+   E3_MODULE_VERSION : 1856ef5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-autosave
+   EPICS_MODULE_TAG  : tags/R5-8
+   E3_MODULE_VERSION : 5.8.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-asyn
+   EPICS_MODULE_TAG  : tags/R4-32
+   E3_MODULE_VERSION : 4.32.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-busy
+   EPICS_MODULE_TAG  : c8ea03e
+   E3_MODULE_VERSION : c8ea03e
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-modbus
+   EPICS_MODULE_TAG  : R2-10-1
+   E3_MODULE_VERSION : 2.10.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ipmiComm
+   EPICS_MODULE_TAG  : tags/SLAC-R4-0-2-with-edl
+   E3_MODULE_VERSION : 4.0.2
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sequencer
+   EPICS_MODULE_TAG  : R2-1-21
+   E3_MODULE_VERSION : 2.1.21
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sscan
+   EPICS_MODULE_TAG  : tags/R2-11
+   E3_MODULE_VERSION : 2.11.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ip
+   EPICS_MODULE_TAG  : 2f6f732
+   E3_MODULE_VERSION : 2f6f732
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-calc
+   EPICS_MODULE_TAG  : 4aab3c
+   E3_MODULE_VERSION : 4aab3c
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-stream
+   EPICS_MODULE_TAG  : tags/R2-7-7
+   E3_MODULE_VERSION : 2.7.7
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-s7plc
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-recsync
+   EPICS_MODULE_TAG  : tags/1.3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-devlib2
+   EPICS_MODULE_TAG  : tags/2.9
+   E3_MODULE_VERSION : 2.9.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-mrfioc2
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-keypress
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sysfs
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-symbolname
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-memDisplay
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-regdev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-i2cDev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-tosca
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-tsclib
+   EPICS_MODULE_TAG  : tags/v1.4.5
+   E3_MODULE_VERSION : 1.4.5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifcdaqdrv2
+   EPICS_MODULE_TAG  : v2.0.0
+   E3_MODULE_VERSION : 2.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-nds3
+   EPICS_MODULE_TAG  : tags/v3.0
+   E3_MODULE_VERSION : 3.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-nds3epics
+   EPICS_MODULE_TAG  : tags/v1.0
+   E3_MODULE_VERSION : 1.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifc14edrv
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifcfastint
+   EPICS_MODULE_TAG  : f9429fe
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ecat2
+   EPICS_MODULE_TAG  : tags/v3.0.1
+   E3_MODULE_VERSION : 3.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ecmc
+   EPICS_MODULE_TAG  : tags/v4.2.0
+   E3_MODULE_VERSION : 4.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-axiscore
+   EPICS_MODULE_TAG  : tags/v10.2.1
+   E3_MODULE_VERSION : 10.2.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ethercatmc
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADSupport
+   EPICS_MODULE_TAG  : tags/R1-3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADCore
+   EPICS_MODULE_TAG  : tags/R3-2
+   E3_MODULE_VERSION : 3.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADSimDetector
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADAndor
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADAndor3
+   EPICS_MODULE_TAG  : tags/R2-2
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADPointGrey
+   EPICS_MODULE_TAG  : tags/R2-6
+   E3_MODULE_VERSION : 2.6.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+
+
+jhlee@kaffee: e3 (master)$ ./maintain_e3.bash gpr_base  release_defs/R0100_20180419.def 
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-base
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-base (fetch)
+origin  https://github.com/icshwi/e3-base (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Username for 'https://github.com': jeonghanlee
+Password for 'https://jeonghanlee@github.com': 
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-base
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-base
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-base
+> -------------------------------------------------------------
+
+
+$ ./maintain_e3.bash gpr_req release_defs/R0100_20180419.def 
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-require
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-require (fetch)
+origin  https://github.com/icshwi/e3-require (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-require
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-require
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-require
+> -------------------------------------------------------------
+
+
+
+
+jhlee@kaffee: e3 (master)$ ./maintain_e3.bash -g all gpr_mod release_defs/R0100_20180419.def 
+>> Selected Modules are :
+e3-iocStats e3-autosave e3-asyn e3-busy e3-modbus e3-ipmiComm e3-sequencer e3-sscan e3-ip e3-calc e3-stream e3-s7plc e3-recsync e3-devlib2 e3-mrfioc2 e3-keypress e3-sysfs e3-symbolname e3-memDisplay e3-regdev e3-i2cDev e3-tosca e3-tsclib e3-ifcdaqdrv2 e3-nds3 e3-nds3epics e3-ifc14edrv e3-ifcfastint e3-ecat2 e3-ecmc e3-axiscore e3-ethercatmc e3-ADSupport e3-ADCore e3-ADSimDetector e3-ADAndor e3-ADAndor3 e3-ADPointGrey
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into e3-iocStats
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-iocStats (fetch)
+origin  https://github.com/icshwi/e3-iocStats (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-iocStats
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-iocStats
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-iocStats
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  1 : Entering into e3-autosave
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-autosave (fetch)
+origin  https://github.com/icshwi/e3-autosave (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-autosave
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-autosave
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-autosave
+> -------------------------------------------------------------
+
+
+> -------------------------------------------------------------
+>>  2 : Entering into e3-asyn
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-asyn (fetch)
+origin  https://github.com/icshwi/e3-asyn (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-asyn
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-asyn
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-asyn
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  3 : Entering into e3-busy
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-busy (fetch)
+origin  https://github.com/icshwi/e3-busy (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-busy
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-busy
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-busy
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  4 : Entering into e3-modbus
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-modbus (fetch)
+origin  https://github.com/icshwi/e3-modbus (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-modbus
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-modbus
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-modbus
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  5 : Entering into e3-ipmiComm
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ipmiComm (fetch)
+origin  https://github.com/icshwi/e3-ipmiComm (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ipmiComm
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ipmiComm
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ipmiComm
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>>  6 : Entering into e3-sequencer
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-sequencer (fetch)
+origin  https://github.com/icshwi/e3-sequencer (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sequencer
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sequencer
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-sequencer
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  7 : Entering into e3-sscan
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-sscan (fetch)
+origin  https://github.com/icshwi/e3-sscan (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sscan
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sscan
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-sscan
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  8 : Entering into e3-ip
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ip (fetch)
+origin  https://github.com/icshwi/e3-ip (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ip
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ip
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ip
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>>  9 : Entering into e3-calc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-calc (fetch)
+origin  https://github.com/icshwi/e3-calc (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-calc
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-calc
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-calc
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 10 : Entering into e3-stream
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-stream (fetch)
+origin  https://github.com/icshwi/e3-stream (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-stream
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-stream
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-stream
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 11 : Entering into e3-s7plc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-s7plc (fetch)
+origin  https://github.com/icshwi/e3-s7plc (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-s7plc
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-s7plc
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-s7plc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 12 : Entering into e3-recsync
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-recsync (fetch)
+origin  https://github.com/icshwi/e3-recsync (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-recsync
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 180 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-recsync
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-recsync
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 13 : Entering into e3-devlib2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-devlib2 (fetch)
+origin  https://github.com/icshwi/e3-devlib2 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-devlib2
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-devlib2
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-devlib2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 14 : Entering into e3-mrfioc2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-mrfioc2 (fetch)
+origin  https://github.com/icshwi/e3-mrfioc2 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Counting objects: 16, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (16/16), 11.29 KiB | 0 bytes/s, done.
+Total 16 (delta 10), reused 13 (delta 8)
+remote: Resolving deltas: 100% (10/10), completed with 7 local objects.
+To https://github.com/icshwi/e3-mrfioc2
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-mrfioc2
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-mrfioc2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 15 : Entering into e3-keypress
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-keypress (fetch)
+origin  https://github.com/icshwi/e3-keypress (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-keypress
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-keypress
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-keypress
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 16 : Entering into e3-sysfs
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-sysfs (fetch)
+origin  https://github.com/icshwi/e3-sysfs (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sysfs
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-sysfs
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-sysfs
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 17 : Entering into e3-symbolname
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-symbolname (fetch)
+origin  https://github.com/icshwi/e3-symbolname (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-symbolname
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-symbolname
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-symbolname
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 18 : Entering into e3-memDisplay
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-memDisplay (fetch)
+origin  https://github.com/icshwi/e3-memDisplay (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-memDisplay
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 180 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-memDisplay
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-memDisplay
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 19 : Entering into e3-regdev
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-regdev (fetch)
+origin  https://github.com/icshwi/e3-regdev (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-regdev
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-regdev
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-regdev
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 20 : Entering into e3-i2cDev
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-i2cDev (fetch)
+origin  https://github.com/icshwi/e3-i2cDev (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-i2cDev
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-i2cDev
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-i2cDev
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 21 : Entering into e3-tosca
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-tosca (fetch)
+origin  https://github.com/icshwi/e3-tosca (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-tosca
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-tosca
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-tosca
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 22 : Entering into e3-tsclib
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-tsclib (fetch)
+origin  https://github.com/icshwi/e3-tsclib (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-tsclib
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-tsclib
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-tsclib
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 23 : Entering into e3-ifcdaqdrv2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ifcdaqdrv2 (fetch)
+origin  https://github.com/icshwi/e3-ifcdaqdrv2 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifcdaqdrv2
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifcdaqdrv2
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ifcdaqdrv2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 24 : Entering into e3-nds3
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-nds3 (fetch)
+origin  https://github.com/icshwi/e3-nds3 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-nds3
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-nds3
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-nds3
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 25 : Entering into e3-nds3epics
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-nds3epics (fetch)
+origin  https://github.com/icshwi/e3-nds3epics (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-nds3epics
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-nds3epics
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-nds3epics
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 26 : Entering into e3-ifc14edrv
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ifc14edrv (fetch)
+origin  https://github.com/icshwi/e3-ifc14edrv (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifc14edrv
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifc14edrv
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ifc14edrv
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 27 : Entering into e3-ifcfastint
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ifcfastint (fetch)
+origin  https://github.com/icshwi/e3-ifcfastint (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifcfastint
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ifcfastint
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ifcfastint
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 28 : Entering into e3-ecat2
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ecat2 (fetch)
+origin  https://github.com/icshwi/e3-ecat2 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ecat2
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ecat2
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ecat2
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 29 : Entering into e3-ecmc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ecmc (fetch)
+origin  https://github.com/icshwi/e3-ecmc (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ecmc
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ecmc
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ecmc
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 30 : Entering into e3-axiscore
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-axiscore (fetch)
+origin  https://github.com/icshwi/e3-axiscore (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-axiscore
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-axiscore
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-axiscore
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 31 : Entering into e3-ethercatmc
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ethercatmc (fetch)
+origin  https://github.com/icshwi/e3-ethercatmc (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ethercatmc
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 183 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ethercatmc
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ethercatmc
+> -------------------------------------------------------------
+> -------------------------------------------------------------
+>> 32 : Entering into e3-ADSupport
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADSupport (fetch)
+origin  https://github.com/icshwi/e3-ADSupport (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADSupport
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADSupport
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADSupport
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 33 : Entering into e3-ADCore
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADCore (fetch)
+origin  https://github.com/icshwi/e3-ADCore (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADCore
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADCore
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADCore
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 34 : Entering into e3-ADSimDetector
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADSimDetector (fetch)
+origin  https://github.com/icshwi/e3-ADSimDetector (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADSimDetector
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADSimDetector
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADSimDetector
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 35 : Entering into e3-ADAndor
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADAndor (fetch)
+origin  https://github.com/icshwi/e3-ADAndor (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADAndor
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 181 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADAndor
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADAndor
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 36 : Entering into e3-ADAndor3
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADAndor3 (fetch)
+origin  https://github.com/icshwi/e3-ADAndor3 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADAndor3
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 184 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADAndor3
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADAndor3
+> -------------------------------------------------------------
+
+> -------------------------------------------------------------
+>> 37 : Entering into e3-ADPointGrey
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  https://github.com/icshwi/e3-ADPointGrey (fetch)
+origin  https://github.com/icshwi/e3-ADPointGrey (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADPointGrey
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To https://github.com/icshwi/e3-ADPointGrey
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from e3-ADPointGrey
+> -------------------------------------------------------------

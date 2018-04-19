@@ -83,15 +83,38 @@ function checkIfDir
 };
 
 
+
+function checkIfFile
+{
+    local file=$1
+    local result=""
+    if [ ! -e "$file" ]; then
+	result=$NON_EXIST
+	# doesn't exist
+    else
+	result=$EXIST
+	# exist
+    fi
+    echo "${result}"	 
+};
+
+
+# Usage :
+# e3_version="$(read_file_get_string  "${file_name}" "E3_VERSION:=")";
+# It ignores the # character
+# 
 function read_file_get_string
 {
     local FILENAME=$1
     local PREFIX=$2
 
     local val=""
-    while read line; do
-	if [[ $line =~ "${PREFIX}" ]] ; then
-	    val=${line#$PREFIX}
+    while IFS= read -r line; do
+	if [ "$line" ]; then
+	    [[ "$line" =~ ^#.*$ ]] && continue
+	    if [[ $line =~ "${PREFIX}" ]] ; then
+	     	val=${line#$PREFIX}
+	    fi
 	fi
     done < ${FILENAME}
 
@@ -117,21 +140,6 @@ function get_module_list
 }
 
 
-function read_file_get_string
-{
-    local FILENAME=$1
-    local PREFIX=$2
-
-    local val=""
-    while read line; do
-	if [[ $line =~ "${PREFIX}" ]] ; then
-	    val=${line#$PREFIX}
-	fi
-    done < ${FILENAME}
-
-    echo "$val"
-}
-
 
 function git_branch_tag_status
 {
@@ -150,7 +158,12 @@ function git_branch_tag_status
 
 function release_base
 {
-    local release_file="${1}"; 
+    local release_file="${1}";
+    
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+    
     local delete_release="${2}"; 
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -163,10 +176,15 @@ function release_base
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    echo "${rep}"
-	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tag    : %40s\n"  "${release_tag}"
-	    printf "Release comment: %40s\n"  "${release_comments}"
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch  : %20s\n"  "${release_branch}"
+	    printf "  Tag     : %20s\n"  "${release_tag}"
+	    printf "  Comment : %40s\n"  "${release_comments}"
+	    printf "  Delete  : %20s\n"  "${delete_release}"
+	    printf "> -------------------------------------------------------------\n";
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
@@ -178,6 +196,9 @@ function release_base
 		git_branch_tag_status
 	    fi
 	    popd
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
 	fi
@@ -190,6 +211,10 @@ function release_base
 function release_require
 {
     local release_file="${1}";
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+	
     local delete_release="${2}"; 
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -202,10 +227,15 @@ function release_require
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    echo "${rep}"
-	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tag    : %40s\n"  "${release_tag}"
-	    printf "Release comment: %40s\n"  "${release_comments}"
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch  : %20s\n"  "${release_branch}"
+	    printf "  Tag     : %20s\n"  "${release_tag}"
+	    printf "  Comment : %40s\n"  "${release_comments}"
+	    printf "  Delete  : %20s\n"  "${delete_release}"
+	    printf "> -------------------------------------------------------------\n";
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
@@ -217,6 +247,9 @@ function release_require
 		git_branch_tag_status
 	    fi
 	    popd
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
 	fi
@@ -228,6 +261,9 @@ function release_require
 function release_modules
 {
     local release_file="${1}";
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
     local delete_release="${2}";
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -240,10 +276,16 @@ function release_modules
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    echo "${rep}"
-	    printf "Release Branch : %40s\n"  "${release_branch}"
-	    printf "Release tag    : %40s\n"  "${release_tag}"
-	    printf "Release comment: %40s\n"  "${release_comments}"
+	    printf "\n> -------------------------------------------------------------\n";
+	    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
+	    printf "* Release Branch and Tag to the remote .... \n";
+	    printf "  Branch  : %20s\n"  "${release_branch}"
+	    printf "  Tag     : %20s\n"  "${release_tag}"
+	    printf "  Comment : %40s\n"  "${release_comments}"
+	    printf "  Delete  : %20s\n"  "${delete_release}"
+	    printf "> -------------------------------------------------------------\n";
+
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
@@ -256,6 +298,10 @@ function release_modules
 	    fi
 	    
 	    popd
+
+	    printf "> -------------------------------------------------------------\n";
+	    printf ">> Exiting from %s\n" "${rep}";
+	    printf "> -------------------------------------------------------------\n";
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
 	fi
@@ -268,6 +314,11 @@ function release_modules
 function git_push_release_base
 {
     local release_file="${1}";
+
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+    
     #    local delete_release="${2}";
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -295,10 +346,10 @@ function git_push_release_base
 	    git remote -v
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_branch}";
-	    echo "git push origin ${release_branch}"
+	    git push origin ${release_branch}
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_tag}";
-	    echo "git push origin ${release_tag}"
+	    git push origin ${release_tag}
 	    printf "> -------------------------------------------------------------\n";
 	    printf ">> Exiting from %s\n" "${rep}";
 	    printf "> -------------------------------------------------------------\n";
@@ -319,6 +370,10 @@ function git_push_release_base
 function git_push_release_require
 {
     local release_file="${1}";
+
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
     #    local delete_release="${2}";
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -346,10 +401,10 @@ function git_push_release_require
 	    git remote -v
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_branch}";
-	    echo "git push origin ${release_branch}"
+	    git push origin ${release_branch}
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_tag}";
-	    echo "git push origin ${release_tag}"
+	    git push origin ${release_tag}
 	    printf "> -------------------------------------------------------------\n";
 	    printf ">> Exiting from %s\n" "${rep}";
 	    printf "> -------------------------------------------------------------\n";
@@ -368,6 +423,11 @@ function git_push_release_require
 function git_push_release_modules
 {
     local release_file="${1}";
+
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+	
     #    local delete_release="${2}";
     local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
     local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
@@ -395,10 +455,10 @@ function git_push_release_modules
 	    git remote -v
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_branch}";
-	    echo "git push origin ${release_branch}"
+	    git push origin ${release_branch}
 	    printf "> -------------------------------------------------------------\n";
 	    printf " * cmd : git push origin %s\n" "${release_tag}";
-	    echo "git push origin ${release_tag}"
+	    git push origin ${release_tag}
 	    printf "> -------------------------------------------------------------\n";
 	    printf ">> Exiting from %s\n" "${rep}";
 	    printf "> -------------------------------------------------------------\n";
@@ -537,20 +597,112 @@ function append_afile_to_bfile
 }
 
 
-function print_version_info
+
+function print_version_info_base
 {
     local rep;
-    local conf_mod="configure/CONFIG_MODULE";
+    local conf_mod="";
+    local epics_base_tag=""
+    local e3_base_version="";
+    local base_prefix="R";
+    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+	conf_mod="e3-env/e3-env";
+    else
+	conf_mod="configure/CONFIG_BASE";
+    fi	
+
+    for rep in  ${base_list[@]}; do
+	pushd ${rep}
+	if [[ $(checkIfFile "configure/CONFIG_BASE") -eq "$NON_EXIST" ]]; then
+	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG=")"
+	    e3_base_version=${epics_base_tag%${base_prefix}}
+	else
+	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG:=")"
+	    e3_base_version="$(read_file_get_string    "${conf_mod}" "E3_BASE_VERSION:=")"
+	fi	    					    
+	printf "\n"
+	printf ">> %s\n" "${rep}"
+	printf "   EPICS_BASE_TAG  : %s\n" "${epics_base_tag}"
+	printf "   E3_BASE_VERSION : %s\n" "${e3_base_version}"
+	branch_info=$(git rev-parse --abbrev-ref HEAD);
+	printf "   E3 Branch         : %s\n" "${branch_info}"
+	tag_info=$(git tag --points-at HEAD)
+	printf "   E3 Tag            : %s\n" "${tag_info}"
+	popd
+    done
+}
+
+
+
+
+function print_version_info_require
+{
+    local rep;
+    local conf_mod="";
     local epics_version=""
+    local epics_module_tag=""
+    local e3_version="0";
+    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+	conf_mod="e3-env/e3-env";
+    else
+	conf_mod="configure/CONFIG_MODULE";
+    fi	
+
+    for rep in  ${require_list[@]}; do
+	pushd ${rep}
+	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$NON_EXIST" ]]; then
+	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "REQUIRE_MODULE_TAG:=")"
+	    e3_version="$(read_file_get_string      "${conf_mod}" "REQUIRE_VERSION:=")"
+	else
+	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
+	    e3_version="$(read_file_get_string      "${conf_mod}" "E3_MODULE_VERSION:=")"
+	fi	    					    
+	printf "\n"
+	printf ">> %s\n" "${rep}"
+	printf "   EPICS_MODULE_TAG  : %s\n" "${e3_module_tag}"
+	printf "   E3_MODULE_VERSION : %s\n" "${e3_version}"
+	branch_info=$(git rev-parse --abbrev-ref HEAD);
+	printf "   E3 Branch         : %s\n" "${branch_info}"
+	tag_info=$(git tag --points-at HEAD)
+	printf "   E3 Tag            : %s\n" "${tag_info}"
+	popd
+    done
+}
+
+
+
+
+
+function print_version_info_modules
+{
+    local rep;
+    local conf_mod="";
+    local epics_module_tag=""
     local e3_version=""
+    local e3_version="0";
+    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+	conf_mod="configure/CONFIG";
+    else
+	conf_mod="configure/CONFIG_MODULE";
+    fi	
+
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
-	epics_version="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
-	e3_version="$(read_file_get_string      "${conf_mod}" "E3_MODULE_VERSION:=")"
-	echo ""
-	echo ">> ${rep}"
-	echo "   EPICS_MODULE_TAG  : ${epics_version}"
-	echo "   E3_MODULE_VERSION : ${e3_version}"
+	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$NON_EXIST" ]]; then
+	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "export EPICS_MODULE_TAG:=")"
+	    e3_version="$(read_file_get_string      "${conf_mod}" "export LIBVERSION:=")"
+	else
+	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
+	    e3_version="$(read_file_get_string      "${conf_mod}" "E3_MODULE_VERSION:=")"
+	fi	    					    
+	printf "\n"
+	printf ">> %s\n" "${rep}"
+	printf "   EPICS_MODULE_TAG  : %s\n" "${epics_module_tag}"
+	printf "   E3_MODULE_VERSION : %s\n" "${e3_version}"
+	branch_info=$(git rev-parse --abbrev-ref HEAD);
+	printf "   E3 Branch         : %s\n" "${branch_info}"
+	tag_info=$(git tag --points-at HEAD)
+	printf "   E3 Tag            : %s\n" "${tag_info}"
 	popd
     done
 }
@@ -560,24 +712,26 @@ function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [ -g <group_name> ] <option> ";
+	echo "Usage    : $0 [ -g <module_group_name> ] <option> ";
 	echo "";
-	echo " < group_name > ";
+	echo " < module_group_name > ";
 	echo ""
 	echo "           common : epics modules"
-	echo "           timing : mrf timing    modules";
+	echo "           timing : mrf timing    related modules";
 	echo "           ifc    : ifc platform  related modules";
 	echo "           ecat   : ethercat      related modules";
 	echo "           area   : area detector related modules";
 	echo "           test   : common, timing, ifc modules";
+	echo "           test2  : common, timing, area modules";
 	echo "           jhlee  : common, timing, ifc, area modules";
 	echo "           all    : common, timing, ifc, ecat, area modules";
 	echo "";
 	
+	
 	echo " < option > ";
 	echo "";
       
-	echo "           env     : Print all modules";
+	echo "           env     : Print enabled Modules";
 	echo "           version : Print all module versions";
        	echo "           pull    : git pull in all modules"           
 	echo "           push    : git push in all modules"
@@ -588,8 +742,8 @@ function usage
 	echo ""    
 	echo "          $0 env";
 	echo "          $0 -g all env";
-	echo "          $0 version";
-	echo "          $0 -g common version";
+	echo "          $0 ver";
+	echo "          $0 -g common ver";
 	echo "   ";       
 	echo "";
 	
@@ -657,7 +811,7 @@ case "${GROUP_NAME}" in
 	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
 	;;
     * )
-	module_list+=( "e3-iocStats" )
+	module_list+=( "" )
     #  	usage
 	;;
     # ;;
@@ -751,9 +905,20 @@ case "$1" in
 	# $ ./maintain_e3.bash -g ecat push
 	append_afile_to_bfile "$2" "$3"
 	;;
-    version)
+    ver)
 	# print epics tags and e3 version for selected modules
-	print_version_info
+	print_version_info_base
+	print_version_info_require
+	print_version_info_modules
+	;;
+    ver_base)
+	print_version_info_base
+	;;
+    ver_req)
+	print_version_info_require
+	;;
+    ver_mod)
+	print_version_info_modules
 	;;
     r_base)
 	release_base "$2" 

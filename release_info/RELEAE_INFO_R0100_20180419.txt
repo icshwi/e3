@@ -1,0 +1,243 @@
+>> Selected Modules are :
+e3-iocStats e3-autosave e3-asyn e3-busy e3-modbus e3-ipmiComm e3-sequencer e3-sscan e3-ip e3-calc e3-stream e3-s7plc e3-recsync e3-devlib2 e3-mrfioc2 e3-keypress e3-sysfs e3-symbolname e3-memDisplay e3-regdev e3-i2cDev e3-tosca e3-tsclib e3-ifcdaqdrv2 e3-nds3 e3-nds3epics e3-ifc14edrv e3-ifcfastint e3-ecat2 e3-ecmc e3-axiscore e3-ethercatmc e3-ADSupport e3-ADCore e3-ADSimDetector e3-ADAndor e3-ADAndor3 e3-ADPointGrey
+
+
+>> e3-base
+   EPICS_BASE_TAG  : R3.15.5
+   E3_BASE_VERSION : R3.15.5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-require
+   EPICS_MODULE_TAG  : 
+   E3_MODULE_VERSION : 2.5.4
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-iocStats
+   EPICS_MODULE_TAG  : 1856ef5
+   E3_MODULE_VERSION : 1856ef5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-autosave
+   EPICS_MODULE_TAG  : tags/R5-8
+   E3_MODULE_VERSION : 5.8.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-asyn
+   EPICS_MODULE_TAG  : tags/R4-32
+   E3_MODULE_VERSION : 4.32.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-busy
+   EPICS_MODULE_TAG  : c8ea03e
+   E3_MODULE_VERSION : c8ea03e
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-modbus
+   EPICS_MODULE_TAG  : R2-10-1
+   E3_MODULE_VERSION : 2.10.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ipmiComm
+   EPICS_MODULE_TAG  : tags/SLAC-R4-0-2-with-edl
+   E3_MODULE_VERSION : 4.0.2
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sequencer
+   EPICS_MODULE_TAG  : R2-1-21
+   E3_MODULE_VERSION : 2.1.21
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sscan
+   EPICS_MODULE_TAG  : tags/R2-11
+   E3_MODULE_VERSION : 2.11.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ip
+   EPICS_MODULE_TAG  : 2f6f732
+   E3_MODULE_VERSION : 2f6f732
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-calc
+   EPICS_MODULE_TAG  : 4aab3c
+   E3_MODULE_VERSION : 4aab3c
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-stream
+   EPICS_MODULE_TAG  : tags/R2-7-7
+   E3_MODULE_VERSION : 2.7.7
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-s7plc
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-recsync
+   EPICS_MODULE_TAG  : tags/1.3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-devlib2
+   EPICS_MODULE_TAG  : tags/2.9
+   E3_MODULE_VERSION : 2.9.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-mrfioc2
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-keypress
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-sysfs
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-symbolname
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-memDisplay
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-regdev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-i2cDev
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-tosca
+   EPICS_MODULE_TAG  : master
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-tsclib
+   EPICS_MODULE_TAG  : tags/v1.4.5
+   E3_MODULE_VERSION : 1.4.5
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifcdaqdrv2
+   EPICS_MODULE_TAG  : v2.0.0
+   E3_MODULE_VERSION : 2.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-nds3
+   EPICS_MODULE_TAG  : tags/v3.0
+   E3_MODULE_VERSION : 3.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-nds3epics
+   EPICS_MODULE_TAG  : tags/v1.0
+   E3_MODULE_VERSION : 1.0.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifc14edrv
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ifcfastint
+   EPICS_MODULE_TAG  : f9429fe
+   E3_MODULE_VERSION : 0.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ecat2
+   EPICS_MODULE_TAG  : tags/v3.0.1
+   E3_MODULE_VERSION : 3.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ecmc
+   EPICS_MODULE_TAG  : tags/v4.2.0
+   E3_MODULE_VERSION : 4.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-axiscore
+   EPICS_MODULE_TAG  : tags/v10.2.1
+   E3_MODULE_VERSION : 10.2.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ethercatmc
+   EPICS_MODULE_TAG  : tags/v1.0.1
+   E3_MODULE_VERSION : 1.0.1
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADSupport
+   EPICS_MODULE_TAG  : tags/R1-3
+   E3_MODULE_VERSION : 1.3.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADCore
+   EPICS_MODULE_TAG  : tags/R3-2
+   E3_MODULE_VERSION : 3.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADSimDetector
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADAndor
+   EPICS_MODULE_TAG  : tags/R2-7
+   E3_MODULE_VERSION : 2.7.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADAndor3
+   EPICS_MODULE_TAG  : tags/R2-2
+   E3_MODULE_VERSION : 2.2.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+
+>> e3-ADPointGrey
+   EPICS_MODULE_TAG  : tags/R2-6
+   E3_MODULE_VERSION : 2.6.0
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
