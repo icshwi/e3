@@ -1,0 +1,8 @@
+# Release Note
+# 
+E3_VERSION:=0
+E3_REVISION:=2
+E3_MODIFICATION:=0
+E3_PATCH_LEVEL:=0
+RELEASE_COMMENTS:=First E3+ Release (aka target_path_test branch)
+

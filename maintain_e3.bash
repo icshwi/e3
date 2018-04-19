@@ -118,7 +118,7 @@ function release_base
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
-		git branch -d ${release_branch}
+		git branch -D ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
@@ -169,7 +169,7 @@ function release_require
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
-		git branch -d ${release_branch}
+		git branch -D ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
@@ -219,7 +219,7 @@ function release_modules
 	    if [[ ${delete_release} == "delete" ]]; then
 		git checkout master
 		git tag -d ${release_tag}
-		git branch -d ${release_branch}
+		git branch -D ${release_branch}
 		git_branch_tag_status
 	    else
 		git checkout -b ${release_branch}
@@ -537,33 +537,34 @@ function append_afile_to_bfile
 function print_version_info_base
 {
     local rep;
-    local conf_mod="";
+    local conf_mod="configure/CONFIG_BASE";
     local epics_base_tag=""
     local e3_base_version="";
     local base_prefix="R";
-    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-	conf_mod="e3-env/e3-env";
-    else
-	conf_mod="configure/CONFIG_BASE";
-    fi	
+    # Since R0.1, we don't need to check e3-env, because we drop it forever.
+    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+    # 	conf_mod="e3-env/e3-env";
+    # else
+    # 	conf_mod="configure/CONFIG_BASE";
+    # fi	
 
     for rep in  ${base_list[@]}; do
 	pushd ${rep}
-	if [[ $(checkIfFile "configure/CONFIG_BASE") -eq "$NON_EXIST" ]]; then
+	if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
 	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG=")"
 	    e3_base_version=${epics_base_tag%${base_prefix}}
 	else
 	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG:=")"
-	    e3_base_version="$(read_file_get_string    "${conf_mod}" "E3_BASE_VERSION:=")"
+	    e3_base_version="$(read_file_get_string  "${conf_mod}" "E3_BASE_VERSION:=")"
 	fi	    					    
 	printf "\n"
 	printf ">> %s\n" "${rep}"
 	printf "   EPICS_BASE_TAG  : %s\n" "${epics_base_tag}"
 	printf "   E3_BASE_VERSION : %s\n" "${e3_base_version}"
 	branch_info=$(git rev-parse --abbrev-ref HEAD);
-	printf "   E3 Branch         : %s\n" "${branch_info}"
+	printf "   E3 Branch       : %s\n" "${branch_info}"
 	tag_info=$(git tag --points-at HEAD)
-	printf "   E3 Tag            : %s\n" "${tag_info}"
+	printf "   E3 Tag          : %s\n" "${tag_info}"
 	popd
     done
 }
@@ -574,28 +575,26 @@ function print_version_info_base
 function print_version_info_require
 {
     local rep;
-    local conf_mod="";
-    local epics_version=""
+    local conf_mod="configure/CONFIG_MODULE";
     local epics_module_tag=""
-    local e3_version="0";
-    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-	conf_mod="e3-env/e3-env";
-    else
-	conf_mod="configure/CONFIG_MODULE";
-    fi	
+    local e3_version="";
+    # Since R0.1, we don't need to check e3-env, because we drop it forever.
+    #
+    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+    # 	conf_mod="e3-env/e3-env";
+    # else
+    # 	conf_mod="configure/CONFIG_MODULE";
+    # fi	
 
     for rep in  ${require_list[@]}; do
 	pushd ${rep}
-	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$NON_EXIST" ]]; then
-	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "REQUIRE_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string      "${conf_mod}" "REQUIRE_VERSION:=")"
-	else
+	if [[ $(checkIfFile "${conf_mod}") -eq "$EXIST" ]]; then
 	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string      "${conf_mod}" "E3_MODULE_VERSION:=")"
+	    e3_version="$(read_file_get_string         "${conf_mod}" "E3_MODULE_VERSION:=")"
 	fi	    					    
 	printf "\n"
 	printf ">> %s\n" "${rep}"
-	printf "   EPICS_MODULE_TAG  : %s\n" "${e3_module_tag}"
+	printf "   EPICS_MODULE_TAG  : %s\n" "${epics_module_tag}"
 	printf "   E3_MODULE_VERSION : %s\n" "${e3_version}"
 	branch_info=$(git rev-parse --abbrev-ref HEAD);
 	printf "   E3 Branch         : %s\n" "${branch_info}"
@@ -612,24 +611,21 @@ function print_version_info_require
 function print_version_info_modules
 {
     local rep;
-    local conf_mod="";
+    local conf_mod="configure/CONFIG_MODULE";
     local epics_module_tag=""
     local e3_version=""
     local e3_version="0";
-    if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-	conf_mod="configure/CONFIG";
-    else
-	conf_mod="configure/CONFIG_MODULE";
-    fi	
+    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
+    # 	conf_mod="configure/CONFIG";
+    # else
+    # 	conf_mod="configure/CONFIG_MODULE";
+    # fi	
 
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
-	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$NON_EXIST" ]]; then
-	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "export EPICS_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string      "${conf_mod}" "export LIBVERSION:=")"
-	else
+	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$EXIST" ]]; then
 	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string      "${conf_mod}" "E3_MODULE_VERSION:=")"
+	    e3_version="$(read_file_get_string         "${conf_mod}" "E3_MODULE_VERSION:=")"
 	fi	    					    
 	printf "\n"
 	printf ">> %s\n" "${rep}"
