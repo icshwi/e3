@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, April 18 22:29:16 CEST 2018
-#   version : 0.0.5
+#   date    : Thursday, April 19 17:17:25 CEST 2018
+#   version : 0.1.0
 
 
 # Example, how to use
@@ -43,101 +43,31 @@ declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="$(dirname "$SC_SCRIPT")"
 
-function pushd { builtin pushd "$@" > /dev/null; }
-function popd  { builtin popd  "$@" > /dev/null; }
 
 
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
-
 declare -ga module_list=()
 
 
-function die
+. ${SC_TOP}/.e3_functions.cfg
+. ${SC_TOP}/.e3_modules_list.cfg
+
+   
+
+function git_diff
 {
-    error=${1:-1}
-    ## exits with 1 if error number not given
-    shift
-    [ -n "$*" ] &&
-	printf "%s%s: %s\n" "$scriptname" ${version:+" ($version)"} "$*" >&2
-    exit "$error"
+    local rep;
+    local git_add_file=$1; shift;
+     for rep in  ${module_list[@]}; do
+	pushd ${rep}
+	echo ""
+	echo ">> git diff in ${rep}"
+	git diff ${git_add_file}
+	popd
+    done
 }
 
-EXIST=1
-NON_EXIST=0
-
-
-function checkIfDir
-{
-    
-    local dir=$1
-    local result=""
-    if [ ! -d "$dir" ]; then
-	result=$NON_EXIST
-	# doesn't exist
-    else
-	result=$EXIST
-	# exist
-    fi
-    echo "${result}"
-};
-
-
-
-function checkIfFile
-{
-    local file=$1
-    local result=""
-    if [ ! -e "$file" ]; then
-	result=$NON_EXIST
-	# doesn't exist
-    else
-	result=$EXIST
-	# exist
-    fi
-    echo "${result}"	 
-};
-
-
-# Usage :
-# e3_version="$(read_file_get_string  "${file_name}" "E3_VERSION:=")";
-# It ignores the # character
-# 
-function read_file_get_string
-{
-    local FILENAME=$1
-    local PREFIX=$2
-
-    local val=""
-    while IFS= read -r line; do
-	if [ "$line" ]; then
-	    [[ "$line" =~ ^#.*$ ]] && continue
-	    if [[ $line =~ "${PREFIX}" ]] ; then
-	     	val=${line#$PREFIX}
-	    fi
-	fi
-    done < ${FILENAME}
-
-    echo "$val"
-}
-
-
-
-
-function get_module_list
-{
-    local i;
-    let i=0
-    while IFS= read -r line_data; do
-	if [ "$line_data" ]; then
-	    # Skip command #
-	    [[ "$line_data" =~ ^#.*$ ]] && continue
-	    entry[i]="${line_data}"
-	    ((++i))
-	fi
-    done < $1
-    echo ${entry[@]}
-}
 
 
 
@@ -310,6 +240,54 @@ function release_modules
 }
 
 
+function release_e3
+{
+    local release_file="${1}";
+    
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+    
+    local delete_release="${2}"; 
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    local release_comments="$(read_file_get_string "${release_file}" "RELEASE_COMMENTS:=")";
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
+    local dep=${SC_TOP};
+    
+    pushd ${dep}
+    printf "\n> -------------------------------------------------------------\n";
+    printf ">> %2d : Entering into %s\n" "$i" "${dep}";
+    printf "> -------------------------------------------------------------\n";
+    printf "* Release Branch and Tag to the remote .... \n";
+    printf "  Branch  : %20s\n"  "${release_branch}"
+    printf "  Tag     : %20s\n"  "${release_tag}"
+    printf "  Comment : %40s\n"  "${release_comments}"
+    printf "  Delete  : %20s\n"  "${delete_release}"
+    printf "> -------------------------------------------------------------\n";
+    if [[ ${delete_release} == "delete" ]]; then
+	git checkout master
+	git tag -d ${release_tag}
+	git branch -d ${release_branch}
+	git_branch_tag_status
+    else
+	git checkout -b ${release_branch}
+	git tag -a ${release_tag} -m "${release_comments}"
+	git_branch_tag_status
+    fi
+    popd
+    printf "> -------------------------------------------------------------\n";
+    printf ">> Exiting from %s\n" "${dep}";
+    printf "> -------------------------------------------------------------\n";
+
+}
+
+
+
+
 
 function git_push_release_base
 {
@@ -472,91 +450,49 @@ function git_push_release_modules
 }
 
 
-# this function has some issue to print array, beaware it.
-
-# function print_list
-# {
-#     local array=$1; shift;
-#     for a_list in ${array[@]}; do
-# 	printf " %s\n" "$a_list";
-#     done
-# }
 
 
-function print_list
+function git_push_release_e3
 {
-    local a_list;
-    for a_list in ${module_list[@]}; do
-	printf " %s\n" "$a_list";
-    done
-}
+    local release_file="${1}";
 
-function git_pull
-{
-    local rep;
-    for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git pull in ${rep}"
-	git pull
-	popd
-    done
-}
-   
-
-
-function git_add
-{
-    local rep;
-    local git_add_file=$1; shift;
-    for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git add ${git_add_file} in ${rep}"
-	git add ${git_add_file}
-	popd
-    done
-}
-   
-function git_diff
-{
-    local rep;
-    local git_add_file=$1; shift;
-     for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git diff in ${rep}"
-	git diff ${git_add_file}
-	popd
-    done
+    if [[ $(checkIfFile "${release_file}") -eq "$NON_EXIST" ]]; then
+	die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+    fi
+    
+    local e3_version="$(read_file_get_string       "${release_file}" "E3_VERSION:=")";
+    local e3_revision="$(read_file_get_string      "${release_file}" "E3_REVISION:=")";
+    local e3_modification="$(read_file_get_string  "${release_file}" "E3_MODIFICATION:=")";
+    local e3_patch_level="$(read_file_get_string   "${release_file}" "E3_PATCH_LEVEL:=")";
+    
+    local release_branch=R${e3_version}.${e3_revision};
+    local release_tag=${release_branch}.${e3_modification}.${e3_patch_level}
+    local rep=${SC_TOP};
+    
+    pushd ${rep}
+    printf "\n> -------------------------------------------------------------\n";
+    printf ">> %2d : Entering into %s\n" "$i" "${rep}";
+    printf "> -------------------------------------------------------------\n";
+    printf "* Release Branch and Tag to the remote .... \n";
+    printf "  Branch : %20s\n"  "${release_branch}"
+    printf "  Tag    : %20s\n"  "${release_tag}"
+    printf "> -------------------------------------------------------------\n";
+    printf "* Remote Information :\n";
+    git remote -v
+    printf "> -------------------------------------------------------------\n";
+    printf " * cmd : git push origin %s\n" "${release_branch}";
+    git push origin ${release_branch}
+    printf "> -------------------------------------------------------------\n";
+    printf " * cmd : git push origin %s\n" "${release_tag}";
+    git push origin ${release_tag}
+    printf "> -------------------------------------------------------------\n";
+    printf ">> Exiting from %s\n" "${rep}";
+    printf "> -------------------------------------------------------------\n";
+    popd
+    
 }
 
 
-function git_commit
-{
-    local rep;
-    local git_commit_comment=$1; shift;
-    for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git commit -m ${git_commit_comment} in $rep"
-	git commit -m "${git_commit_comment}"
-	popd
-    done
-}
-
-
-function git_push
-{
-    local rep;
-    for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git push in $rep"
-	git push
-	popd
-    done
-}
 
 # Mantatory 'afile' should be in e3 directory
 # input arg should 'target_path/afile'
@@ -708,25 +644,31 @@ function print_version_info_modules
 }
 
 
+
+function print_version_info_e3
+{
+    local rep=${SC_TOP};
+    
+    pushd ${rep}
+    printf ">> %s\n" "${rep}"
+    branch_info=$(git rev-parse --abbrev-ref HEAD);
+    printf "   E3 Branch         : %s\n" "${branch_info}"
+    tag_info=$(git tag --points-at HEAD)
+    printf "   E3 Tag            : %s\n" "${tag_info}"
+    printf "   E3 Release        : \n";
+    tree -L 2 release_*
+    popd
+}
+
+
+
+
+
 function usage
 {
+    usage_title;
+    usage_mod;
     {
-	echo "";
-	echo "Usage    : $0 [ -g <module_group_name> ] <option> ";
-	echo "";
-	echo " < module_group_name > ";
-	echo ""
-	echo "           common : epics modules"
-	echo "           timing : mrf timing    related modules";
-	echo "           ifc    : ifc platform  related modules";
-	echo "           ecat   : ethercat      related modules";
-	echo "           area   : area detector related modules";
-	echo "           test   : common, timing, ifc modules";
-	echo "           test2  : common, timing, area modules";
-	echo "           jhlee  : common, timing, ifc, area modules";
-	echo "           all    : common, timing, ifc, ecat, area modules";
-	echo "";
-	
 	
 	echo " < option > ";
 	echo "";
@@ -766,72 +708,62 @@ done
 shift $((OPTIND-1))
 
 
-
-
 case "${GROUP_NAME}" in
     common)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
+	module_list+=( "${modules_common}" )
 	;;
     timing*)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
+	module_list+=( "${modules_timing}" )
 	;;
     ifc)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)" )
+	module_list+=( "${modules_ifc}"    )
 	;;
     ecat)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_ECAT)" )
+	module_list+=( "${modules_ecat}"   )
 	;;
     area)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)" )
+	module_list+=( "${modules_area}"   )
 	;;
     test)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
 	;;
     test2)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_area}"   )
 	;;
     jhlee)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
-	echo ""
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_area}"   )
 	;;
     all)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_ECAT)"   )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_area}"   )
+	module_list+=( "${modules_ecat}"   )
 	;;
     * )
 	module_list+=( "" )
-    #  	usage
+	
 	;;
-    # ;;
+    
 esac
 
 
 
 case "$1" in
-    *base)
-	echo ""
-	;;
-    *req)
-	echo ""
-	;;
-    clean)
-	echo ""
-	;;
-    *) 
+
+    *mod) 
 	echo ">> Selected Modules are :"
 	echo ${module_list[@]}
+	echo ""
+	;;
+    *)
 	echo ""
 	;;
 
@@ -850,7 +782,7 @@ case "$1" in
 	;;
     pull)
 	# git pull for selected modules
-	git_pull
+	git_pull_modules
 	;;
     diff)
 	# check diff $2
@@ -907,6 +839,7 @@ case "$1" in
 	;;
     ver)
 	# print epics tags and e3 version for selected modules
+	print_version_info_e3
 	print_version_info_base
 	print_version_info_require
 	print_version_info_modules
@@ -919,6 +852,9 @@ case "$1" in
 	;;
     ver_mod)
 	print_version_info_modules
+	;;
+    ver_e3)
+	print_version_info_e3
 	;;
     r_base)
 	release_base "$2" 
@@ -946,6 +882,15 @@ case "$1" in
 	;;
     gpr_mod)
 	git_push_release_modules "$2"
+	;;
+    r_e3)
+	release_e3 "$2" 
+	;;
+    rd_e3)
+	release_e3 "$2" "delete"
+	;;
+    gpr_e3)
+	git_push_release_e3 "$2";
 	;;
     *)
 	usage

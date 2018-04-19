@@ -19,18 +19,14 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, April 19 09:52:51 CEST 2018
-#   version : 0.2.4
+#   date    : Thursday, April 19 17:17:34 CEST 2018
+#   version : 0.3.0
 
 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
-
-
-function pushd { builtin pushd "$@" > /dev/null; }
-function popd  { builtin popd  "$@" > /dev/null; }
 
 
 GIT_URL="https://github.com/icshwi"
@@ -41,44 +37,9 @@ BOOL_GIT_CLONE="TRUE"
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
 declare -ga module_list=()
-declare -ga m_list=()
 
-
-function die
-{
-    error=${1:-1}
-    ## exits with 1 if error number not given
-    shift
-    [ -n "$*" ] &&
-	printf "%s%s: %s\n" "$scriptname" ${version:+" ($version)"} "$*" >&2
-    exit "$error"
-}
-
-EXIST=1
-NON_EXIST=0
-
-
-function checkIfDir
-{
-    
-    local dir=$1
-    local result=""
-    if [ ! -d "$dir" ]; then
-	result=$NON_EXIST
-	# doesn't exist
-    else
-	result=$EXIST
-	# exist
-    fi
-    echo "${result}"
-};
-
-
-function checkout_e3_tags
-{
-    local tags=$1;
-    git checkout $tags;
-}
+. ${SC_TOP}/.e3_functions.cfg
+. ${SC_TOP}/.e3_modules_list.cfg
 
 
 function git_clone
@@ -89,25 +50,9 @@ function git_clone
     
 }
 
-function get_module_list
-{
-    local empty_string="";
-    declare -a entry=();
- 
-    while IFS= read -r line_data; do
-	if [ "$line_data" ]; then
-	    # Skip command #
-	    [[ "$line_data" =~ ^#.*$ ]] && continue
-	    entry[i]="${line_data}"
-	    ((++i))
-	fi
-    done < $1
- 
-    echo ${entry[@]}
-}
 
 
-
+# BASE
 function setup_base
 {
     local git_status=$1; shift;
@@ -129,8 +74,6 @@ function setup_base
 	
     done
 }
-
-
 
 function build_base
 {
@@ -165,8 +108,32 @@ function clean_base
 
 
 
+function git_checkout_base
+{
+    local rep;
+    local checkout_target=$1; shift;
+
+    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
+	for rep in  ${base_list[@]}; do
+	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+		pushd ${rep}
+		git checkout ${checkout_target}
+		popd
+	    else
+		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+	    fi  
+	done
+    else
+	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+    fi
+        
+}
 
 
+
+
+
+## REQUIRE
 function setup_require
 {
     local git_status=$1; shift;
@@ -176,7 +143,6 @@ function setup_require
 	fi
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
 	    make env
 	    popd
@@ -196,7 +162,6 @@ function build_require
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make build   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make install ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
@@ -222,17 +187,28 @@ function clean_require
 }
 
 
-
-
-
-
-function print_list
+function git_checkout_require
 {
-    local a_list;
-    for a_list in ${module_list[@]}; do
-	printf " %s\n" "$a_list";
-    done
+ 
+    local checkout_target=$1; shift;
+    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
+	local rep ="";
+	for rep in  ${require_list[@]}; do
+	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+		pushd ${rep}
+		git checkout ${checkout_target}
+		popd
+	    else
+		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+	    fi  
+	done
+    else
+	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+    fi  
 }
+
+
+## MODULES
 
 function setup_modules
 {
@@ -244,7 +220,6 @@ function setup_modules
 	fi
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
 	    make env
 	    make patch
@@ -262,7 +237,6 @@ function build_modules
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make install  ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
@@ -292,86 +266,25 @@ function clean_modules
 
 
 
-function git_pull
+function git_checkout_modules
 {
-    local rep;
+ 
+    local checkout_target=$1; shift;
+    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
 
-    for rep in  ${base_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git pull
-	    popd
-	fi
-    done
-    
-    for rep in  ${require_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git pull
-	    popd
-	fi
-    done
-
-    for rep in  ${module_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git pull
-	    popd
-	fi
-    done
+	for rep in  ${module_list[@]}; do
+	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+		pushd ${rep}
+		git checkout ${checkout_target}
+		popd
+	    else
+		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+	    fi  
+	done
+    else
+	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
+    fi  
 }
-   
-
-
-function git_add
-{
-    local rep;
-    local git_add_file=$1; shift;
-    for rep in  ${module_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git add ${git_add_file}
-	    popd
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi
-    done
-}
-   
-
-function git_commit
-{
-    local rep;
-    local git_commit_comment=$1; shift;
-    for rep in  ${module_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git commit -m "${git_commit_comment}"
-	    popd
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi
-    done
-}
-
-
-function git_push
-{
-    local rep;
-    for rep in  ${module_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    pushd ${rep}
-	    git push
-	    popd
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi  
-    done
-    
-    
-}
-
-
 
 
 
@@ -452,25 +365,30 @@ function mod_all
     build_modules;
 }
 
+
+
+function git_checkout_all
+{
+    local checkout_target=$1; shift;
+    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
+	git_checkout_base    "${checkout_target}"
+	git_checkout_require "${checkout_target}"
+	git_checkout_modules "${checkout_target}"
+    else
+	printf " %20s: SKIP all checkout, we cannot find it\n"  "${FUNCNAME[*]}" 
+    fi  
+}
+
+
+
+
+
 function usage
 {
+    usage_title;
+    usage_mod;
+
     {
-	echo "";
-	echo "Usage    : $0 [ -g <module_group_name> ] <option> ";
-	echo "";
-	echo " < module_group_name > ";
-	echo ""
-	echo "           common : epics modules"
-	echo "           timing : mrf timing    related modules";
-	echo "           ifc    : ifc platform  related modules";
-	echo "           ecat   : ethercat      related modules";
-	echo "           area   : area detector related modules";
-	echo "           test   : common, timing, ifc modules";
-	echo "           test2  : common, timing, area modules";
-	echo "           jhlee  : common, timing, ifc, area modules";
-	echo "           all    : common, timing, ifc, ecat, area modules";
-	echo "";
-	echo "";
 	echo " < option > ";
 	echo "";
       	echo "           env    : Print enabled Modules";
@@ -499,6 +417,12 @@ function usage
 	echo "            mod   : cmod, imod, bmod";
 	echo ""
 	echo "           load   : Load all installed Modules into iocsh.bash";
+	echo ""
+	echo "     ckout_base  : Checkout Base";
+	echo "      ckout_req  : Checkout Require";
+	echo "      ckout_mod  : Checkout Modules  (selected module group)";
+	echo "      ckout_all  : ckout_base, ckout_req, ckout_mod";
+       
 	echo ""           
 	echo ""    
 	
@@ -533,45 +457,42 @@ shift $((OPTIND-1))
 
 case "${GROUP_NAME}" in
     common)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
+	module_list+=( "${modules_common}" )
 	;;
     timing*)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
+	module_list+=( "${modules_timing}" )
 	;;
     ifc)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)" )
+	module_list+=( "${modules_ifc}"    )
 	;;
     ecat)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_ECAT)" )
+	module_list+=( "${modules_ecat}"   )
 	;;
     area)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)" )
+	module_list+=( "${modules_area}"   )
 	;;
     test)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
 	;;
     test2)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-#	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_area}"   )
 	;;
     jhlee)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
-	echo ""
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_area}"   )
 	;;
     all)
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_COMMON)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_TIMING)" )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_IFC)"    )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_ECAT)"   )
-	module_list+=( "$(get_module_list ${SC_TOP}/configure/MODULES_AD)"     )
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_area}"   )
+	module_list+=( "${modules_ecat}"   )
 	;;
     * )
 	module_list+=( "" )
@@ -580,18 +501,13 @@ esac
 
 
 case "$1" in
-    *base)
-	echo ""
-	;;
-    *req)
-	echo ""
-	;;
-    clean)
-	echo ""
-	;;
-    *) 
+
+    *mod) 
 	echo ">> Selected Modules are :"
 	echo ${module_list[@]}
+	echo ""
+	;;
+    *)
 	echo ""
 	;;
 
@@ -663,7 +579,7 @@ case "$1" in
 	mod_all
 	;;
     pull)
-	git_pull
+	git_pull_all
 	;;
     add)
 	git_add "$2"
@@ -679,6 +595,18 @@ case "$1" in
 	;;
     load)
 	module_loading_test_on_iocsh
+	;;
+    ckout_base)
+	git_checkout_base "$2"
+	;;
+    ckout_req)
+	git_checkout_require "$2"
+	;;
+    ckout_mod)
+	git_checkout_modules "$2"
+	;;
+    ckout_all)
+	git_checkout_all "$2"
 	;;
     *)
 	usage
