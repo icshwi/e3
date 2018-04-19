@@ -50,8 +50,8 @@ declare -ga require_list=("e3-require")
 declare -ga module_list=()
 
 
-. ${SC_TOP}/.e3_functions.cfg
-. ${SC_TOP}/.e3_modules_list.cfg
+. ${SC_TOP}/.cfgs/.e3_functions.cfg
+. ${SC_TOP}/.cfgs/.e3_modules_list.cfg
 
    
 
