@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, April 19 17:17:25 CEST 2018
-#   version : 0.1.0
+#   date    : Friday, April 20 17:25:56 CEST 2018
+#   version : 0.2.0
 
 
 # Example, how to use
@@ -598,6 +598,12 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
 	;;
+    test4)
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_area}"   )
+	module_list+=( "${modules_ecat}"   )
+	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
@@ -610,10 +616,6 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_ifc}"    )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
-	;;
-    test3)
-	module_list+=( "${modules_common}" )
-	module_list+=( "${modules_timing}" )
 	;;
     * )
 	module_list+=( "" )
@@ -664,7 +666,7 @@ case "$1" in
 	;;
     # git push for selected modules
     push)       git_push            ;;
-    merge_ours) git_merge_ours_donot_use ;;
+    # merge_ours) git_merge_ours_donot_use ;;
     copy)
 	# Example, for copy
 	# 
