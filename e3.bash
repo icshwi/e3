@@ -24,15 +24,14 @@
 
 
 
-declare -gr SC_SCRIPT="$(realpath "$0")"
-declare -gr SC_SCRIPTNAME=${0##*/}
-declare -gr SC_TOP="${SC_SCRIPT%/*}"
-
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
-BOOL_GIT_CLONE="TRUE"
 
+
+declare -gr SC_SCRIPT="$(realpath "$0")"
+declare -gr SC_SCRIPTNAME=${0##*/}
+declare -gr SC_TOP="${SC_SCRIPT%/*}"
 
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
@@ -47,43 +46,47 @@ function git_clone
 {
 
     local rep_name=$1 ; shift;
+    printf ">> %s\n" "$rep_name";
     ${GIT_CMD} ${GIT_URL}/$rep_name
+    printf "\n";
     
 }
 
 
-
 # BASE
-function setup_base
+function init_base
 {
-    local git_status=$1; shift;
+    local rep="";
     for rep in  ${base_list[@]}; do
-	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
-	    git_clone ${rep} ||  die 1 "${FUNCNAME[*]} : git clone ERROR at ${rep}: the target ${rep} may be exist, Please check it" ;
-	fi
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make init   ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
 	    make env
 	    make pkgs
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
 	    popd
 	else
-	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make gbase\" first"
 	fi
-	
+	printf "\n";
     done
 }
 
+# BASE
+function setup_base
+{
+    local git_status=$1; shift;
+    clone_base "${git_status}";
+    init_base;
+}
+
+# BASE
 function build_base
 {
-
-    sudo -v
+    local rep="";
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-#	    checkout_e3_tags "target_path_test"
 	    make build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    popd
 	else
@@ -93,73 +96,38 @@ function build_base
 }
 
 
-function clean_base
-{
-
-    local rep;
-    for rep in  ${base_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    echo "Cleaning .... $rep"
-	    sudo rm -rf ${SC_TOP}/${rep}
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi
-    done
-}
-
-
-
-function git_checkout_base
-{
-    local rep;
-    local checkout_target=$1; shift;
-
-    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
-	for rep in  ${base_list[@]}; do
-	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-		pushd ${rep}
-		git checkout ${checkout_target}
-		popd
-	    else
-		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	    fi  
-	done
-    else
-	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-    fi
-        
-}
-
-
-
-
 
 ## REQUIRE
-function setup_require
+function init_require
 {
-    local git_status=$1; shift;
+    local rep="";
     for rep in  ${require_list[@]}; do
-	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
-	    git_clone ${rep}  ||  die 1 "${FUNCNAME[*]} : git clone ERROR at ${rep}: the target ${rep} may be exist, Please check it" ;
-	fi
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
-	    make env
+	    make env;
 	    popd
 	else
-	    die 1 "${rep} doesn't exist";
+	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
 	fi
+	printf "\n";
     done
 }
 
+## REQUIRE
+# $1 : "TRUE" : git clone
+#    "        : skip clone
+function setup_require
+{
+    local git_status=$1; shift;
+    clone_require "${git_status}" ;
+    init_require;
+}
 
-
+## REQUIRE
 function build_require
 {
-
-    sudo -v
-    
+    local rep="";
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
@@ -173,52 +141,10 @@ function build_require
 }
 
 
-function clean_require
+function init_modules
 {
-    local rep;
-    for rep in  ${require_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    echo "Cleaning .... $rep"
-	    make uninstall 
-	    sudo rm -rf ${SC_TOP}/${rep}
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi
-    done
-}
-
-
-function git_checkout_require
-{
- 
-    local checkout_target=$1; shift;
-    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
-	local rep ="";
-	for rep in  ${require_list[@]}; do
-	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-		pushd ${rep}
-		git checkout ${checkout_target}
-		popd
-	    else
-		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	    fi  
-	done
-    else
-	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-    fi  
-}
-
-
-## MODULES
-
-function setup_modules
-{
-    local git_status=$1; shift;
-    local rep;
+    local rep="";
     for rep in  ${module_list[@]}; do
-	if [ "${BOOL_GIT_CLONE}" = "$git_status" ]; then
-	    git_clone ${rep}  ||  die 1 "${FUNCNAME[*]} : git clone ERROR at ${rep}: the target ${rep} may be exist, Please check it" ;
-	fi
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
@@ -226,15 +152,24 @@ function setup_modules
 	    make patch
 	    popd
 	else
-	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make -g all gmod\" first";
 	fi
+	printf "\n";
     done
 
 }
 
+
+function setup_modules
+{
+    local git_status=$1; shift;
+    clone_modules "${git_status}";
+    init_modules;
+}
+
 function build_modules
 {
-
+    local rep="";
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
@@ -244,48 +179,11 @@ function build_modules
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
 	fi
+	printf "\n";
     done
 }
 
 
-function clean_modules
-{
-    local rep;
-    sudo -v;
-    for rep in  ${module_list[@]}; do
-	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-	    echo "Cleaning .... $rep"
-	    pushd ${rep}
-	    make uninstall 
-	    popd
-	    sudo rm -rf ${SC_TOP}/${rep}
-	else
-	    printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	fi
-    done
-}
-
-
-
-function git_checkout_modules
-{
- 
-    local checkout_target=$1; shift;
-    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
-
-	for rep in  ${module_list[@]}; do
-	    if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
-		pushd ${rep}
-		git checkout ${checkout_target}
-		popd
-	    else
-		printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-	    fi  
-	done
-    else
-	printf " %20s: SKIP %20s, we cannot find it\n"  "${FUNCNAME[*]}"  "${rep}"
-    fi  
-}
 
 
 
@@ -345,39 +243,47 @@ function module_loading_test_on_iocsh
     exec iocsh.bash ${IOC_TEST}
 }
 
-function base_all
+function all_base
 {
     clean_base;
-    setup_base "TRUE";
+    setup_base;
     build_base;
 }
 
-function req_all
+function all_require
 {
     clean_require;
-    setup_require "TRUE";
+    setup_require;
     build_require;
 }
 
-function mod_all
+function all_modules
 {
     clean_modules;
-    setup_modules  "TRUE";
+    setup_modules;
     build_modules;
 }
 
-
-
-function git_checkout_all
+function init_all
 {
-    local checkout_target=$1; shift;
-    if [[ $(checkIfVar "${checkout_target}") -eq "$EXIST" ]]; then
-	git_checkout_base    "${checkout_target}"
-	git_checkout_require "${checkout_target}"
-	git_checkout_modules "${checkout_target}"
-    else
-	printf " %20s: SKIP all checkout, we cannot find it\n"  "${FUNCNAME[*]}" 
-    fi  
+    init_base;
+    init_require;
+    init_modules;
+}
+
+function build_all
+{
+    build_base;
+    build_require;
+    build_modules;
+}
+
+function all_all
+{
+    clean_all;
+    clone_all;
+    init_all;
+    build_all;
 }
 
 
@@ -395,42 +301,50 @@ function usage
       	echo "           env    : Print enabled Modules";
 	echo ""
 	echo "           call   : Clean all (base, require, selected module group)";
+	echo "           gall   : Clone all (base, require, selected module group)";
 	echo "           iall   : Init  all (base, require, selected module group)";
 	echo "           ball   : Build, Install all (base, require, selected module group)";
-	echo "            all   : call, iall, ball";
-	echo "          clean   : call";
+	echo "            all   : call, gall, iall, ball";
 	echo ""
 	echo "           cbase  : Clean Base";
+	echo "           gbase  : Clone Base";
 	echo "           ibase  : Init  Base ";
 	echo "           bbase  : Build, Install Base";
-	echo "            base  : cbase, ibase, bbase";
+	echo "            base  : cbase, gbase, ibase, bbase";
 	echo ""           
-	echo ""
 	echo "           creq   : Clean Require";
+	echo "           greq   : Clone Require";
 	echo "           ireq   : Init  Require";
 	echo "           breq   : Build, Install Require";
-	echo "            req   : creq, ireq, breq";
+	echo "            req   : creq, gbase ireq, breq";
 	echo ""           
-	echo ""
 	echo "           cmod   : Clean Modules (selected module group)";
+	echo "           gmod   : Clone Modules (selected module group)";
 	echo "           imod   : Init  Modules (selected module group)";
 	echo "           bmod   : Build, Install Modules (selected module group)";
-	echo "            mod   : cmod, imod, bmod";
+	echo "            mod   : cmod, mod, imod, bmod";
 	echo ""
-	echo "           load   : Load all installed Modules into iocsh.bash";
+	echo "        co_base \"_check_out_name_\" : Checkout Base";
+	echo "         co_req \"_check_out_name_\" : Checkout Require";
+	echo "         co_mod \"_check_out_name_\" : Checkout Modules  (selected module group)";
+	echo "         co_all \"_check_out_name_\" : co_base, co_req, co_mod";
 	echo ""
-	echo "     ckout_base  : Checkout Base";
-	echo "      ckout_req  : Checkout Require";
-	echo "      ckout_mod  : Checkout Modules  (selected module group)";
-	echo "      ckout_all  : ckout_base, ckout_req, ckout_mod";
-       
+	echo "          vbase   : Print BASE    Version Information in e3-*";
+	echo "           vreq   : Print REQUIRE Version Information in e3-*";
+	echo "           vmod   : Print MODULES Version Information in e3-*";
+	echo "           vall   : Print ALL     Version Information in e3-*";
+	echo "";
+	echo "         allall   : Print ALL Version Information in e3-* by using \"make vars\"";
+	echo "";
+       	echo "           load   : Load all installed Modules into iocsh.bash";
+	echo ""
 	echo ""           
 	echo ""    
 	
 	echo "  Examples : ";
 	echo ""
-	echo "          $0 -g all env";
-	echo "          $0 -g all iall";
+	echo "          $0 creq "
+	echo "          $0 -g all cmod";
 	echo "          $0 -g timing env";
 	echo "          $0 base";
         echo "          $0 req";
@@ -482,6 +396,10 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_timing}" )
 	module_list+=( "${modules_area}"   )
 	;;
+    test3)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
@@ -508,6 +426,11 @@ case "$1" in
 	echo ${module_list[@]}
 	echo ""
 	;;
+    *all) 
+	echo ">> Selected Modules are :"
+	echo ${module_list[@]}
+	echo ""
+	;;
     *)
 	echo ""
 	;;
@@ -516,102 +439,52 @@ esac
 
 
 case "$1" in
-    env)
-	echo ">> Vertical display for the selected modules :"
-	echo ""
-	print_list
-	echo ""
-	;;
-    
-    call)
-	clean_base;
-	clean_require;
-	clean_modules;
-	;;
-    iall)
-	setup_base "TRUE";
-	setup_require "TRUE";
-	setup_modules  "TRUE"
-	;;
-    ball)
-	build_base;
-	build_require;
-	build_modules;
-	;;
-    all)
-	base_all;
-	req_all;
-	mod_all;
-	;;
-    cbase)
-	clean_base;
-	;;
-    ibase)
-	setup_base "TRUE";
-	;;
-    bbase)
-	build_base;
-	;;
-    base)
-	base_all;
-	;;
-    creq)
-	clean_require
-	;;
-    ireq)
-	setup_require "TRUE";
-	;;
-    breq)
-	build_require;
-	;;
-    req)
-	req_all;
-	;;
-    cmod)
-	clean_modules
-	;;
-    imod)
-	setup_modules  "TRUE"
-	;;
-    bmod)
-	build_modules
-	;;
-    mod)
-	mod_all
-	;;
-    pull)
-	git_pull_all
-	;;
-    add)
-	git_add "$2"
-	;;
-    commit)
-	git_commit "$2"
-	;;
-    push)
-	git_push
-	;;
-    db)
-	install_db
-	;;
-    load)
-	module_loading_test_on_iocsh
-	;;
-    ckout_base)
-	git_checkout_base "$2"
-	;;
-    ckout_req)
-	git_checkout_require "$2"
-	;;
-    ckout_mod)
-	git_checkout_modules "$2"
-	;;
-    ckout_all)
-	git_checkout_all "$2"
-	;;
-    *)
-	usage
-	;;
+    env)  print_module_list ;; 
+    # all : clean, clone, init, build, and all
+    clean) clean_all     ;;
+    call)  clean_all     ;;
+    gall)  clone_all     ;;
+    iall)  init_all      ;;
+    ball)  build_all     ;;
+    all)   all_all       ;;
+    # BASE : clean, clone, init, build, and all
+    cbase) clean_base    ;;
+    gbase) clone_base    ;;
+    ibase)  init_base    ;;
+    bbase) build_base    ;;
+    base)    all_base    ;;
+    # REQUIRE : clean, clone, init, build, and all
+    creq)  clean_require ;;
+    greq)  clone_require ;;
+    ireq)   init_require ;;
+    breq)  build_require ;;
+    req)     all_require ;;
+    # MODULES : clean, clone, init, build, and all
+    cmod)  clean_modules ;;
+    gmod)  clone_modules ;;
+    imod)   init_modules ;;
+    bmod)  build_modules ;;
+    mod)     all_modules ;;
+    # Git Checkout 
+    co_base) git_checkout_base    "$2";;
+    co_req)  git_checkout_require "$2";;
+    co_mod)  git_checkout_modules "$2";;
+    co_all)  git_checkout_all     "$2";;
+    # GIT Commands 
+    pull)   git_pull_all    ;;
+    add)    git_add    "$2" ;;
+    commit) git_commit "$2" ;;
+    push)   git_push        ;;
+    # Module Loading Test
+    load) module_loading_test_on_iocsh;;
+    # Print Version Information in e3-* directory
+    vbase) print_version_info_base    ;;
+    vreq)  print_version_info_require ;;
+    vmod)  print_version_info_modules ;;
+    vall)  print_version_info_all     ;;
+    # Call *make vars in each e3-* directory
+    allall)  print_version_really_everything   ;;
+    *)    usage;;
 esac
 
 exit 0;

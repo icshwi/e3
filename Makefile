@@ -33,6 +33,9 @@ ifdef DEBUG_SHELL
 endif
 
 
+DEFAULT_GROUPNAME="test3"
+
+
 # help is defined in 
 # https://gist.github.com/rcmachado/af3db315e31383502660
 help:
@@ -68,22 +71,25 @@ PHONY+=req
 req:
 	$(QUIET) bash e3.bash req
 
-
+PHONY+=mod
+## Setup and Build Require
+mod:
+	$(QUIET) bash e3.bash-g $(DEFAULT_GROUPNAME)  mod
 
 PHONY+=clean
-## Clean all e3-* with the test group (COMMON,TIMING,IFC,AD)
+## Clean all e3-* with the test group (COMMON,TIMING,IFC)
 clean:
-	$(QUIET) bash e3.bash -g test clean
+	$(QUIET) bash ./e3.bash -g $(DEFAULT_GROUPNAME) call
 
 PHONY+=build
-## Build all  with the test group  (COMMON,TIMING,IFC,AD)
+## Build all  with the test group  (COMMON,TIMING,IFC)
 build: 
-	$(QUIET) bash e3.bash -g test all
+	$(QUIET) bash e3.bash -g $(DEFAULT_GROUPNAME) all
 
 PHONY+=env
-## Print modules list with the test group  (COMMON,TIMING,IFC,AD)
+## Print modules list with the test group  (COMMON,TIMING,IFC)
 env:
-	$(QUIET) bash e3.bash -g test env
+	$(QUIET) bash e3.bash -g $(DEFAULT_GROUPNAME) env
 
 
 PHONY+=timing
@@ -110,7 +116,7 @@ area:
 PHONY+=load
 ## Existent Modules Loading Test
 load:
-	$(QUIET) bash e3.bash -g test load
+	$(QUIET) bash e3.bash -g $(DEFAULT_GROUPNAME) load
 
 PHONY+=pull
 # Other rules for debugging..

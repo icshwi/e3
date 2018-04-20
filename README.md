@@ -80,3 +80,24 @@ $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
 ```
 
 
+
+```
+[1] $ ./e3.bash -g all call
+[2] $ ./e3.bash -g all gall
+[3] $ ./e3.bash -g all co_all "target_path_test"
+[4] $ ./e3.bash -g all vall
+[*] Create RELEASE.local
+[*] $ ./e3.bash -g all allall
+    One can see the RELEASE.local info..
+[5] $ ./e3.bash -g all iall
+[6] $ ./e3.bash -g all ball
+[7] $ ./e3.baseh g all load 
+```
+
+
+```
+ ./e3.bash -g common iall
+ ./e3.bash -g common ball
+ ./e3.bash -g common load
+ 
+ ```

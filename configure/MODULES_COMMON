@@ -6,8 +6,12 @@ e3-modbus
 e3-ipmiComm
 e3-sequencer
 e3-sscan
+e3-motor
+e3-std
 e3-ip
 e3-calc
-e3-stream
+e3-pcre
+e3-StreamDevice
 e3-s7plc
 e3-recsync
+

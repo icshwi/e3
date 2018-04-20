@@ -43,8 +43,6 @@ declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="$(dirname "$SC_SCRIPT")"
 
-
-
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
 declare -ga module_list=()
@@ -54,21 +52,6 @@ declare -ga module_list=()
 . ${SC_TOP}/.cfgs/.e3_modules_list.cfg
 
    
-
-function git_diff
-{
-    local rep;
-    local git_add_file=$1; shift;
-     for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	echo ""
-	echo ">> git diff in ${rep}"
-	git diff ${git_add_file}
-	popd
-    done
-}
-
-
 
 
 function git_branch_tag_status
@@ -533,133 +516,6 @@ function append_afile_to_bfile
 }
 
 
-
-function print_version_info_base
-{
-    local rep;
-    local conf_mod="configure/CONFIG_BASE";
-    local epics_base_tag=""
-    local e3_base_version="";
-    local base_prefix="R";
-    # Since R0.1, we don't need to check e3-env, because we drop it forever.
-    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-    # 	conf_mod="e3-env/e3-env";
-    # else
-    # 	conf_mod="configure/CONFIG_BASE";
-    # fi	
-
-    for rep in  ${base_list[@]}; do
-	pushd ${rep}
-	if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG=")"
-	    e3_base_version=${epics_base_tag%${base_prefix}}
-	else
-	    epics_base_tag="$(read_file_get_string   "${conf_mod}" "EPICS_BASE_TAG:=")"
-	    e3_base_version="$(read_file_get_string  "${conf_mod}" "E3_BASE_VERSION:=")"
-	fi	    					    
-	printf "\n"
-	printf ">> %s\n" "${rep}"
-	printf "   EPICS_BASE_TAG  : %s\n" "${epics_base_tag}"
-	printf "   E3_BASE_VERSION : %s\n" "${e3_base_version}"
-	branch_info=$(git rev-parse --abbrev-ref HEAD);
-	printf "   E3 Branch       : %s\n" "${branch_info}"
-	tag_info=$(git tag --points-at HEAD)
-	printf "   E3 Tag          : %s\n" "${tag_info}"
-	popd
-    done
-}
-
-
-
-
-function print_version_info_require
-{
-    local rep;
-    local conf_mod="configure/CONFIG_MODULE";
-    local epics_module_tag=""
-    local e3_version="";
-    # Since R0.1, we don't need to check e3-env, because we drop it forever.
-    #
-    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-    # 	conf_mod="e3-env/e3-env";
-    # else
-    # 	conf_mod="configure/CONFIG_MODULE";
-    # fi	
-
-    for rep in  ${require_list[@]}; do
-	pushd ${rep}
-	if [[ $(checkIfFile "${conf_mod}") -eq "$EXIST" ]]; then
-	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string         "${conf_mod}" "E3_MODULE_VERSION:=")"
-	fi	    					    
-	printf "\n"
-	printf ">> %s\n" "${rep}"
-	printf "   EPICS_MODULE_TAG  : %s\n" "${epics_module_tag}"
-	printf "   E3_MODULE_VERSION : %s\n" "${e3_version}"
-	branch_info=$(git rev-parse --abbrev-ref HEAD);
-	printf "   E3 Branch         : %s\n" "${branch_info}"
-	tag_info=$(git tag --points-at HEAD)
-	printf "   E3 Tag            : %s\n" "${tag_info}"
-	popd
-    done
-}
-
-
-
-
-
-function print_version_info_modules
-{
-    local rep;
-    local conf_mod="configure/CONFIG_MODULE";
-    local epics_module_tag=""
-    local e3_version=""
-    local e3_version="0";
-    # if [[ $(checkIfFile "${conf_mod}") -eq "$NON_EXIST" ]]; then
-    # 	conf_mod="configure/CONFIG";
-    # else
-    # 	conf_mod="configure/CONFIG_MODULE";
-    # fi	
-
-    for rep in  ${module_list[@]}; do
-	pushd ${rep}
-	if [[ $(checkIfFile "configure/CONFIG_MODULE") -eq "$EXIST" ]]; then
-	    epics_module_tag="$(read_file_get_string   "${conf_mod}" "EPICS_MODULE_TAG:=")"
-	    e3_version="$(read_file_get_string         "${conf_mod}" "E3_MODULE_VERSION:=")"
-	fi	    					    
-	printf "\n"
-	printf ">> %s\n" "${rep}"
-	printf "   EPICS_MODULE_TAG  : %s\n" "${epics_module_tag}"
-	printf "   E3_MODULE_VERSION : %s\n" "${e3_version}"
-	branch_info=$(git rev-parse --abbrev-ref HEAD);
-	printf "   E3 Branch         : %s\n" "${branch_info}"
-	tag_info=$(git tag --points-at HEAD)
-	printf "   E3 Tag            : %s\n" "${tag_info}"
-	popd
-    done
-}
-
-
-
-function print_version_info_e3
-{
-    local rep=${SC_TOP};
-    
-    pushd ${rep}
-    printf ">> %s\n" "${rep}"
-    branch_info=$(git rev-parse --abbrev-ref HEAD);
-    printf "   E3 Branch         : %s\n" "${branch_info}"
-    tag_info=$(git tag --points-at HEAD)
-    printf "   E3 Tag            : %s\n" "${tag_info}"
-    printf "   E3 Release        : \n";
-    tree -L 2 release_*
-    popd
-}
-
-
-
-
-
 function usage
 {
     usage_title;
@@ -669,12 +525,20 @@ function usage
 	echo " < option > ";
 	echo "";
       
-	echo "           env     : Print enabled Modules";
-	echo "           version : Print all module versions";
-       	echo "           pull    : git pull in all modules"           
-	echo "           push    : git push in all modules"
-	echo " "
-	echo "           others  : LOOK at $0 for Examples"
+	echo "           env    : Print enabled Modules";
+	echo "";
+	echo "        co_base \"_check_out_name_\" : Checkout Base";
+	echo "         co_req \"_check_out_name_\" : Checkout Require";
+	echo "         co_mod \"_check_out_name_\" : Checkout Modules  (selected module group)";
+	echo "         co_all \"_check_out_name_\" : co_base, co_req, co_mod";
+	echo ""
+	echo "          vbase   : Print BASE    Version Information in e3-*";
+	echo "           vreq   : Print REQUIRE Version Information in e3-*";
+	echo "           vmod   : Print MODULES Version Information in e3-*";
+	echo "           vall   : Print ALL     Version Information in e3-*";
+	echo "";
+	echo "         allall   : Print ALL Version Information in e3-* by using \"make vars\"";
+	echo "           others: LOOK at $0 for Examples"
 	echo ""
 	echo "  Examples : ";
 	echo ""    
@@ -730,6 +594,10 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_timing}" )
 	module_list+=( "${modules_area}"   )
 	;;
+    test3)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
@@ -742,6 +610,10 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_ifc}"    )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
+	;;
+    test3)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
 	;;
     * )
 	module_list+=( "" )
@@ -770,12 +642,7 @@ esac
 
 
 case "$1" in
-    env)
-	echo ">> Vertical display for the selected modules :"
-	echo ""
-	print_list
-	echo ""
-	;;
+    env) print_module_list ;; 
     pull)
 	# git pull for selected modules
 	git_pull_modules
@@ -795,10 +662,9 @@ case "$1" in
 	# git commit -m "$2"
 	git_commit "$2"
 	;;
-    push)
-	# git push for selected modules
-	git_push
-	;;
+    # git push for selected modules
+    push)       git_push            ;;
+    merge_ours) git_merge_ours_donot_use ;;
     copy)
 	# Example, for copy
 	# 
@@ -833,64 +699,49 @@ case "$1" in
 	# $ ./maintain_e3.bash -g ecat push
 	append_afile_to_bfile "$2" "$3"
 	;;
-    ver)
-	# print epics tags and e3 version for selected modules
-	print_version_info_e3
-	print_version_info_base
-	print_version_info_require
-	print_version_info_modules
-	;;
-    ver_base)
-	print_version_info_base
-	;;
-    ver_req)
-	print_version_info_require
-	;;
-    ver_mod)
-	print_version_info_modules
-	;;
-    ver_e3)
-	print_version_info_e3
-	;;
-    r_base)
-	release_base "$2" 
-	;;
-    rd_base)
-	release_base "$2" "delete"
-	;;
-    gpr_base)
-	git_push_release_base "$2"
-	;;
-    r_req)
-	release_require "$2" 
-	;;
-    rd_req)
-	release_require "$2" "delete"
-	;;
-    gpr_req)
-	git_push_release_require "$2"
-	;;
-    r_mod)
-	release_modules "$2" 
-	;;
-    rd_mod)
-	release_modules "$2" "delete"
-	;;
-    gpr_mod)
-	git_push_release_modules "$2"
-	;;
-    r_e3)
-	release_e3 "$2" 
-	;;
-    rd_e3)
-	release_e3 "$2" "delete"
-	;;
-    gpr_e3)
-	git_push_release_e3 "$2";
-	;;
-    *)
-	usage
-	;;
+    # Relaese 
+    r_base)   release_base    "$2" ;;
+    r_req)    release_require "$2" ;;
+    r_mod)    release_modules "$2" ;;
+    # Delete Release 
+    rd_base)  release_base    "$2" "delete" ;;
+    rd_req)   release_require "$2" "delete" ;;
+    rd_mod)   release_modules "$2" "delete" ;;
+    # git push release 
+    gpr_base) git_push_release_base    "$2" ;;
+    gpr_req)  git_push_release_require "$2" ;;
+    gpr_mod)  git_push_release_modules "$2" ;;
+    # 
+    r_e3)     release_e3 "$2"  ;; 
+    rd_e3)    release_e3 "$2" "delete" ;;
+    gpr_e3)   git_push_release_e3 "$2" ;;
+
+    # all : clean, clone 
+    call)  clean_all     ;;
+    gall)  clone_all     ;;
+    # BASE : clean, clone
+    cbase) clean_base    ;;
+    gbase) clone_base    ;;
+    # REQUIRE : clean, clone
+    creq)  clean_require ;;
+    greq)  clone_require ;;
+    # MODULES : clean, clone
+    cmod)  clean_modules ;;
+    gmod)  clone_modules ;;
+    # Git Checkout 
+    co_base) git_checkout_base    "$2";;
+    co_req)  git_checkout_require "$2";;
+    co_mod)  git_checkout_modules "$2";;
+    co_all)  git_checkout_all     "$2";;
+    # Print Version Information in e3-* directory
+     vbase)  print_version_info_base    ;;
+      vreq)  print_version_info_require ;;
+      vmod)  print_version_info_modules ;;
+      vall)  print_version_info_all     ;;
+    # Call *make vars in each e3-* directory
+    allall)  print_version_really_everything   ;;
+       ve3)  print_version_info_e3      ;;
+         *)  usage                      ;;
 esac
 
 exit 0;
