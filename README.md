@@ -110,29 +110,93 @@ The useful options are
 ```
 $ bash caget_pvs.bash E3Test_PVs.list EPICS_VERS
 $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
-
 ```
 
 ## More rich options are defined in e3.bash
 
+### Usage for e3.bash
+```
+e3 (master)$ ./e3.bash 
+
+Usage    : ./e3.bash [ -g <module_group_name> ] <option> 
+
+ < module_group_name > 
+
+           common  : epics modules
+           timing  : mrf timing    related modules
+           ifc     : ifc platform  related modules
+           ecat    : ethercat      related modules
+           area    : area detector related modules
+           test    : common, timing, ifc modules
+           test2   : common, timing, area modules
+           test3   : common, timing modules
+           test4   : timing, ifc, ecat, area modules
+           jhlee   : common, timing, ifc, area modules
+           all     : common, timing, ifc, ecat, area modules
+
+
+ < option > 
+
+           env    : Print enabled Modules
+
+           call   : Clean all (base, require, selected module group)
+           gall   : Clone all (base, require, selected module group)
+           iall   : Init  all (base, require, selected module group)
+           ball   : Build, Install all (base, require, selected module group)
+            all   : call, gall, iall, ball
+
+           cbase  : Clean Base
+           gbase  : Clone Base
+           ibase  : Init  Base 
+           bbase  : Build, Install Base
+            base  : cbase, gbase, ibase, bbase
+
+           creq   : Clean Require
+           greq   : Clone Require
+           ireq   : Init  Require
+           breq   : Build, Install Require
+            req   : creq, gbase ireq, breq
+
+           cmod   : Clean Modules (selected module group)
+           gmod   : Clone Modules (selected module group)
+          imod   : Init  Modules (selected module group)
+           bmod   : Build, Install Modules (selected module group)
+            mod   : cmod, mod, imod, bmod
+
+        co_base "_check_out_name_" : Checkout Base
+         co_req "_check_out_name_" : Checkout Require
+         co_mod "_check_out_name_" : Checkout Modules  (selected module group)
+         co_all "_check_out_name_" : co_base, co_req, co_mod
+
+          vbase   : Print BASE    Version Information in e3-*
+           vreq   : Print REQUIRE Version Information in e3-*
+           vmod   : Print MODULES Version Information in e3-*
+           vall   : Print ALL     Version Information in e3-*
+
+         allall   : Print ALL Version Information in e3-* by using "make vars"
+
+           load   : Load all installed Modules into iocsh.bash
+
+
+```
+
+
 ### Examples :
 
+* 
 ```
-[1] $ ./e3.bash -g all call
-[2] $ ./e3.bash -g all gall
-[3] $ ./e3.bash -g all co_all "target_path_test"
-[4] $ ./e3.bash -g all vall
-[*] Create RELEASE.local
-[*] $ ./e3.bash -g all allall
-    One can see the RELEASE.local info..
-[5] $ ./e3.bash -g all iall
-[6] $ ./e3.bash -g all ball
-[7] $ ./e3.baseh g all load 
+$ ./e3.bash -g all call
+$ ./e3.bash -g all gall
+$ ./e3.bash -g all vall
+$ ./e3.bash -g all iall
+$ ./e3.bash -g all ball
+$ ./e3.bash -g all load 
 ```
 
+* 
 ```
- ./e3.bash -g common iall
- ./e3.bash -g common ball
- ./e3.bash -g common load
- 
- ```
+$ ./e3.bash -g common iall
+$ ./e3.bash -g common ball
+$ ./e3.bash -g common load
+```
+
