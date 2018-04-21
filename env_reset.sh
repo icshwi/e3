@@ -1,9 +1,0 @@
-PATH=/usr/local/bin:/usr/bin:/bin
-unset EPICS_MODULES_PATH
-unset EPICS_ENV_PATH
-unset EPICS_BASE
-unset EPICS_BASES_PATH
-unset EPICS_HOST_ARCH
-unset PYTHONPATH
-
-unset EPICS_CA_AUTO_ADDR_LIST
