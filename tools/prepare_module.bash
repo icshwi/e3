@@ -375,17 +375,18 @@ env:
 	\$(QUIET) echo "EPICS_BASE_TAG              : "\$(EPICS_BASE_TAG)
 	\$(QUIET) echo "CROSS_COMPILER_TARGET_ARCHS : "\$(CROSS_COMPILER_TARGET_ARCHS)
 	\$(QUIET) echo ""
-	\$(QUIET) echo "----- >>>> ESS EPICS Environment  <<<< -----"
-	\$(QUIET) echo ""
-	\$(QUIET) echo "EPICS_LOCATION              : "\$(EPICS_LOCATION)
-	\$(QUIET) echo "EPICS_MODULES               : "\$(EPICS_MODULES)
-	\$(QUIET) echo "DEFAULT_EPICS_VERSIONS      : "\$(DEFAULT_EPICS_VERSIONS)
-	\$(QUIET) echo "BASE_INSTALL_LOCATIONS      : "\$(BASE_INSTALL_LOCATIONS)
-	\$(QUIET) echo "REQUIRE_VERSION             : "\$(REQUIRE_VERSION)
-	\$(QUIET) echo "REQUIRE_PATH                : "\$(REQUIRE_PATH)
-	\$(QUIET) echo "REQUIRE_TOOLS               : "\$(REQUIRE_TOOLS)
-	\$(QUIET) echo "REQUIRE_BIN                 : "\$(REQUIRE_BIN)
-	\$(QUIET) echo ""
+	\$(QUIET) echo "----- >>>> Default ESS EPICS Environment  <<<< -----"
+        \$(QUIET) echo ""
+        \$(QUIET) echo "EPICS_LOCATION              : "\$(ESS_EPICS_PATH)
+        \$(QUIET) echo "EPICS_MODULES               : "\$(REQUIRE_PATH)
+        \$(QUIET) echo "DEFAULT_EPICS_VERSION       : "\$(DEFAULT_EPICS_VERSION)
+        \$(QUIET) echo "BASE_INSTALL_LOCATION       : "\$(BASE_INSTALL_LOCATION)
+        \$(QUIET) echo "REQUIRE_VERSION             : "\$(REQUIRE_VERSION)
+        \$(QUIET) echo "REQUIRE_PATH                : "\$(REQUIRE_PATH)
+        \$(QUIET) echo "REQUIRE_TOOLS               : "\$(REQUIRE_TOOLS)
+        \$(QUIET) echo "REQUIRE_BIN                 : "\$(REQUIRE_BIN)
+        \$(QUIET) echo ""
+
 
 # Copy ${MODULE_NAME}.Makefile into its source path
 conf:
