@@ -1,10 +1,11 @@
-# e3 : European Spallation Source EPICS Environment
+# E3 : European Spallation Source EPICS Environment
 
-This is the setup script for testing and developing ESS EPICS Envrionment (aka E3), and it is not the production release.
+This is the setup and maintenance scripts for the ESS EPICS Environment (E3). 
 
 
 ## Tested Platforms
-The following Linux distribution were tested with the physical installation. And the Virtual Image on the VirtualBox as well. However, we DO NOT support any container yet, for example Docker. Please understand our resouces, since we don't have any resources on the container support. However, you are always welcome to try them with them. If one would like to contribute, please contact us. We are happy to merge any contributions.
+The following Linux distribution were tested with the physical installation. And the Virtual Image on the VirtualBox as well. However, we DO NOT support any container yet, for example Docker. Please understand our resources, since we don't have any resources on the container support. However, you are always welcome to try them with them. If one would like to contribute, please contact us. We are happy to merge any contributions.
+
 
 
 * Debian 8 (Jessie)   (Tested)
@@ -19,7 +20,7 @@ The following Linux distribution were tested with the physical installation. And
 
 
 
-##
+## Procedure to duplicate E3 in your system.
 
 NOTE that if one has the pre-existed EPICS environment, please run the following command first:
 ```
@@ -37,12 +38,12 @@ After finishing the installation, one can test all compiled modules loading via
  e3 (master)$ make load
 ```
 
-If one see the clean ioc shell, the enviornment is ready to use. However, one should source the dynamic environment via
+If one see the clean ioc shell, the environment is ready to use. However, one should source the dynamic environment via
 
 ```
 e3 (master)$ source tools/setenv 
 ```
-, because it gives us more flexiable way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through 
+, because it gives us more flexible way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through 
 ```
 e3 (master)$  iocsh.bash cmds/iocStats.cmd 
 ```
