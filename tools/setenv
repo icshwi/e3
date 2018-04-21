@@ -1,1 +1,5 @@
+
+unset EPICS_HOST_ARCH
+unset EPICS_BASE
+
 source /epics/base-3.15.5/require/3.0.0/bin/setE3Env.bash
