@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Friday, October 20 09:39:11 CEST 2017
-# version : 0.0.2
+# Date    : Saturday, April 21 21:56:44 CEST 2018
+# version : 0.1.0
 
 
 
@@ -32,6 +32,31 @@ fi
 
 declare -a pvlist=();
 declare cmd="caget"
+
+function print_ca_addr
+{
+    printf ">> Print ... \n"
+    echo "EPICS_CA_ADDR_LIST      : $EPICS_CA_ADDR_LIST"
+    echo "EPICS_CA_AUTO_ADDR_LIST : $EPICS_CA_AUTO_ADDR_LIST"
+}
+
+
+function unset_ca_addr
+{
+    printf ">> Unset ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST\n"
+    unset EPICS_CA_ADDR_LIST
+    unset EPICS_CA_AUTO_ADDR_LIST
+}
+
+function set_ca_addr
+{
+    printf "Set ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST \n";
+    export EPICS_CA_ADDR_LIST="$1"
+    export EPICS_CA_AUTO_ADDR_LIST="$2";
+    print_ca_addr
+}
+
+
 
 function pvs_from_list()
 {
@@ -47,21 +72,22 @@ function pvs_from_list()
 }
 
 
-export _HOST_IP="$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')";
-export EPICS_CA_AUTO_ADDR_LIST=NO
-export EPICS_CA_ADDR_LIST=${_HOST_IP}
+_HOST_IP="$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')";
+
+
+unset_ca_addr
+set_ca_addr "$_HOST_IP" "YES"
 
 pvs_from_list $1
 
-
 substring=$2
 
+printf ">> Get PVs .... \n"
 if [ -z "$substring" ]; then
-
     for pv in ${pvlist[@]}; do
 	$cmd $pv
     done
-
+    
 else
     for pv in ${pvlist[@]}; do
 	if test "${pv#*$substring}" != "$pv"; then

@@ -1,0 +1,2 @@
+unset EPICS_HOST_ARCH
+unset EPICS_BASE

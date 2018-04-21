@@ -1,4 +1,3 @@
-require require, 2.5.4
 require iocStats, 1856ef5
 
 epicsEnvSet("PREF", "E3Test")
