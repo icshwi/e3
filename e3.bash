@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 20 17:25:51 CEST 2018
-#   version : 0.4.0
+#   date    : Sunday, April 22 21:07:42 CEST 2018
+#   version : 0.4.1
 
 
 
@@ -144,6 +144,9 @@ function build_require
 function init_modules
 {
     local rep="";
+    # git credential cache set to 30 mins (enough) in order to minimize the same password, and username again again
+    # in bitbucket and gitlab.esss.se
+    git config credential.helper 'cache --timeout=1800'
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
@@ -156,7 +159,9 @@ function init_modules
 	fi
 	printf "\n";
     done
-
+    # git credential exit, so we clear 30 mins cache
+    git credential-cache exit
+    
 }
 
 
