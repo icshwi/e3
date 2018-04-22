@@ -74,7 +74,7 @@ req:
 PHONY+=mod
 ## Setup and Build Require
 mod:
-	$(QUIET) bash e3.bash-g $(DEFAULT_GROUPNAME)  mod
+	$(QUIET) bash e3.bash -g $(DEFAULT_GROUPNAME)  mod
 
 PHONY+=clean
 ## Clean all e3-* with the test group (COMMON,TIMING,IFC)
