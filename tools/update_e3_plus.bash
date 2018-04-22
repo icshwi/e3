@@ -592,17 +592,17 @@ git submodule update --remote --merge \$@/
 endef
 
 define patch_site
-for i in \$(wildcard \$(TOP)/patch/Site/*p0.patch); do \\
-	printf "\nPatching %s with the file : %s\n" "\$(E3_MODULE_SRC_PATH)" "\$\$i"; \\
+for i in \$(wildcard \$(TOP)/patch/Site/*p0.patch); do\\
+	printf "\nPatching %s with the file : %s\n" "\$(E3_MODULE_SRC_PATH)" "\$\$i";\\
 	patch -d \$(E3_MODULE_SRC_PATH) --ignore-whitespace -p0 < \$\$i;\\
 done
 endef
 
 
 define patch_revert_site
-for i in \$(wildcard \$(TOP)/patch/Site/*p0.patch); do \\
-	printf "\nPatching %s with the file : %s\n" "\$(E3_MODULE_SRC_PATH)" "\$\$i"; \\
-	patch -R -d \$(E3_MODULE_SRC_PATH) --ignore-whitespace -p0 < \$\$i; \\
+for i in \$(wildcard \$(TOP)/patch/Site/*p0.patch); do\\
+	printf "\nPatching %s with the file : %s\n" "\$(E3_MODULE_SRC_PATH)" "\$\$i";\\
+	patch -R -d \$(E3_MODULE_SRC_PATH) --ignore-whitespace -p0 < \$\$i;\\
 done
 
 endef
@@ -725,6 +725,7 @@ install_module: uninstall db
 ## Uninstall : \$(E3_MODULE_NAME)
 uninstall: conf
 	\$(QUIET) \$(SUDOBASH) '\$(E3_MODULE_MAKE_CMDS) uninstall'
+	\$(SUDO) find \$(E3_SITELIBS_PATH) -xtype l -delete 
 
 ## Build the EPICS Module : \$(E3_MODULE_NAME)
 # Build always the Module with the EPICS_MODULES_TAG
