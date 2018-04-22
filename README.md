@@ -13,9 +13,9 @@ The following Linux distribution were tested with the physical installation. And
 * CentOS 7.4          (Tested) 
 * Raspbian Stretch
 
-* Ubuntu 16.04.3 LTS (Xenial Xerus)
-* Ubuntu 17.10 (Artful Aardvark)
-* LinuxMint 18.3 (sylvia)
+* Ubuntu 16.04.3 LTS (Xenial Xerus) (Tested)
+* Ubuntu 17.10 (Artful Aardvark) (Tested)
+* LinuxMint 18.3 (sylvia) (Tested)
 * Fedora 27 (Workstation Edition)
 
 
