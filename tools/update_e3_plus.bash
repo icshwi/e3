@@ -394,10 +394,13 @@ SUDO_INFO := \$(shell test -w \$(EPICS_BASE) 1>&2 2> /dev/null; echo \$\$?)
 
 ifeq "\$(SUDO_INFO)" "1"
 SUDO := sudo
-SUDOBASH = \$(SUDO)
-SUDOBASH += -E
+SUDOBASH = \$(SUDO) -E
 SUDOBASH += bash -c
+else
+SUDO :=
+SUDOBASH = bash -c
 endif    
+
 
 
 # Valid for only Development Mode, because we clone/remove them
