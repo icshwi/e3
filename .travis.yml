@@ -8,6 +8,7 @@ git:
 before_install:
    - sudo apt-get -qq update
    - sudo apt-get install -y realpath
-
+   - sh .jenkin.sh 
+   
 install:
    - ./.ci/build.bash
