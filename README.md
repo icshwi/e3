@@ -1,4 +1,7 @@
-# E3 : European Spallation Source EPICS Environment
+E3 : European Spallation Source EPICS Environment
+======
+
+[![Build Status](https://travis-ci.org/icshwi/e3.svg?branch=master)](https://travis-ci.org/icshwi/e3)
 
 This is the setup and maintenance scripts for the ESS EPICS Environment (E3). 
 
