@@ -1,9 +1,9 @@
-sudo: required
+sudo: yes
 dist: trusty
 language: generic
 
 git:
-    submodules: false
+  submodules: false
     
 before_install:
    - sudo apt-get -qq update
