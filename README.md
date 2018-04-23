@@ -19,7 +19,7 @@ The following Linux distribution were tested with the physical installation. And
 * Ubuntu 16.04.3 LTS (Xenial Xerus) (Tested)
 * Ubuntu 17.10 (Artful Aardvark) (Tested)
 * LinuxMint 18.3 (sylvia) (Tested)
-* Fedora 27 (Workstation Edition)
+* Fedora 27 (Workstation Edition) (Tested)
 
 
 
