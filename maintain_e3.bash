@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 20 17:25:56 CEST 2018
-#   version : 0.2.0
+#   date    : Monday, April 23 16:59:04 CEST 2018
+#   version : 0.2.1
 
 
 # Example, how to use
@@ -663,6 +663,7 @@ case "$1" in
 	# git pull for selected modules
 	git_pull_modules
 	;;
+    cat)      cat_file "$2"     ;;
     diff)     git_diff "$2"  	;;
     checkout) git_checkout "$2" ;;
     add)      git_add "$2"      ;;
