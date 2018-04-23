@@ -491,12 +491,16 @@ function copy_a_file
     local afile=${input##*/};
     local target=${input%/*}
     
+    local i;
+    let i=0
+    
     for rep in  ${module_list[@]}; do
 	pushd ${rep}
 	echo ""
-	echo "copy ../${afile} to ${target}/ in $rep"
+	echo "$i : Copy ../${afile} to ${target}/ in $rep"
 	cp ../${afile} ${target}/
 	popd
+	((++i))
     done
 }
 
@@ -567,7 +571,7 @@ while getopts " :g:" opt; do
 done
 shift $((OPTIND-1))
 
-
+  
 case "${GROUP_NAME}" in
     common)
 	module_list+=( "${modules_common}" )
@@ -576,7 +580,14 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_timing}" )
 	;;
     ifc)
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}" )
+	;;
+    ifc1)
+	module_list+=( "${modules_ifc_free}"    )
+	;;
+    ifc2)
+	module_list+=( "${modules_ifc_nonfree}" )
 	;;
     ecat)
 	module_list+=( "${modules_ecat}"   )
@@ -587,33 +598,36 @@ case "${GROUP_NAME}" in
     test)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
 	;;
     test2)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     test3)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	;;
     test4)
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
+	module_list+=( "${modules_ifc_free}"    )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     all)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"   )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
@@ -623,7 +637,6 @@ case "${GROUP_NAME}" in
 	;;
     
 esac
-
 
 
 case "$1" in
@@ -649,21 +662,10 @@ case "$1" in
 	# git pull for selected modules
 	git_pull_modules
 	;;
-    diff)
-	# check diff $2
-	# git diff $2 for selected modules
-	git_diff "$2" 
-	;;
-    add)
-	# add $2 into repo for selected modules
-	# git add $2
-	git_add "$2"
-	;;
-    commit)
-	# write commit messages for selected modules
-	# git commit -m "$2"
-	git_commit "$2"
-	;;
+    diff)     git_diff "$2"  	;;
+    checkout) git_checkout "$2" ;;
+    add)      git_add "$2"      ;;
+    commit)   git_commit "$2" 	;;
     # git push for selected modules
     push)       git_push            ;;
     # merge_ours) git_merge_ours_donot_use ;;

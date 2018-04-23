@@ -375,6 +375,7 @@ while getopts " :g:" opt; do
 done
 shift $((OPTIND-1))
 
+    
 case "${GROUP_NAME}" in
     common)
 	module_list+=( "${modules_common}" )
@@ -383,7 +384,14 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_timing}" )
 	;;
     ifc)
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}" )
+	;;
+    ifc1)
+	module_list+=( "${modules_ifc_free}"    )
+	;;
+    ifc2)
+	module_list+=( "${modules_ifc_nonfree}" )
 	;;
     ecat)
 	module_list+=( "${modules_ecat}"   )
@@ -394,39 +402,44 @@ case "${GROUP_NAME}" in
     test)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
 	;;
     test2)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     test3)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	;;
     test4)
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
+	module_list+=( "${modules_ifc_free}"    )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     all)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc}"    )
+	module_list+=( "${modules_ifc_free}"   )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
     * )
 	module_list+=( "" )
+	
 	;;
+    
 esac
 
 
