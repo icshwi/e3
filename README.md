@@ -120,19 +120,22 @@ e3 (master)$ ./e3.bash
 
 Usage    : ./e3.bash [ -g <module_group_name> ] <option> 
 
+
  < module_group_name > 
 
            common  : epics modules
            timing  : mrf timing    related modules
-           ifc     : ifc platform  related modules
+           ifc     : ifc platform  related modules (FREE+NON-FREE)
+           ifc1    : ifc platform  related modules (FREE) 
+           ifc2    : ifc platform  related modules (NON-FREE) 
            ecat    : ethercat      related modules
            area    : area detector related modules
-           test    : common, timing, ifc modules
-           test2   : common, timing, area modules
-           test3   : common, timing modules
-           test4   : timing, ifc, ecat, area modules
-           jhlee   : common, timing, ifc, area modules
-           all     : common, timing, ifc, ecat, area modules
+           test    : common, timing, modules
+           test2   : common, timing, ifc1, area modules
+           test3   : common, timing, ifc1 modules
+           test4   : timing, ifc1, ifc2, ecat, area modules
+           jhlee   : common, timing, ifc1, area modules
+           all     : common, timing, ifc1, ifc2, ecat, area modules
 
 
  < option > 
