@@ -14,7 +14,7 @@ The following Linux distribution were tested with the physical installation. And
 * Debian 8 (Jessie)   (Tested)
 * Debian 9 (Stretch)  (Tested)
 * CentOS 7.4          (Tested) 
-* Raspbian Stretch
+* Raspbian Stretch    (Tested without AD modules)
 * Ubuntu 14.04.05 LTS (Tested with travis-ci)
 * Ubuntu 16.04.3 LTS (Xenial Xerus) (Tested)
 * Ubuntu 17.10 (Artful Aardvark) (Tested)
