@@ -52,6 +52,13 @@ function git_clone
     
 }
 
+function make_init2
+{
+    git submodule update --init --recursive ;
+    git submodule update --remote ;
+    make checkout
+}
+
 
 # BASE
 function init_base
@@ -71,6 +78,29 @@ function init_base
 	printf "\n";
     done
 }
+
+# BASE
+function init2_base
+{
+    local rep="";
+    for rep in  ${base_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    git submodule sync
+	    git submodule update --init --recursive
+	    make checkout
+	    make env
+	    make pkgs
+	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make gbase\" first"
+	fi
+	printf "\n";
+    done
+}
+
+
 
 # BASE
 function setup_base
@@ -113,6 +143,26 @@ function init_require
 	printf "\n";
     done
 }
+
+
+
+## REQUIRE
+function init2_require
+{
+    local rep="";
+    for rep in  ${require_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
+	    make env;
+	    popd
+	else
+	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
+	fi
+	printf "\n";
+    done
+}
+
 
 ## REQUIRE
 # $1 : "TRUE" : git clone
@@ -163,6 +213,31 @@ function init_modules
     git credential-cache exit
     
 }
+
+
+function init2_modules
+{
+    local rep="";
+    # git credential cache set to 30 mins (enough) in order to minimize the same password, and username again again
+    # in bitbucket and gitlab.esss.se
+    git config credential.helper 'cache --timeout=1800'
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
+	    make env
+	    make patch
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make -g all gmod\" first";
+	fi
+	printf "\n";
+    done
+    # git credential exit, so we clear 30 mins cache
+    git credential-cache exit
+    
+}
+
 
 
 function setup_modules
@@ -276,12 +351,30 @@ function init_all
     init_modules;
 }
 
+
+function init2_all
+{
+    init2_base;
+    init2_require;
+    init2_modules;
+}
+
+
 function build_all
 {
     build_base;
     build_require;
     build_modules;
 }
+
+function all2_all
+{
+    clean_all;
+    clone_all;
+    init2_all;
+    build_all;
+}
+
 
 function all_all
 {
@@ -290,6 +383,7 @@ function all_all
     init_all;
     build_all;
 }
+
 
 
 
@@ -469,24 +563,29 @@ case "$1" in
     call)  clean_all     ;;
     gall)  clone_all     ;;
     iall)  init_all      ;;
+    i2all) init2_all     ;;
     ball)  build_all     ;;
     all)   all_all       ;;
+    all2)  all2_all      ;;
     # BASE : clean, clone, init, build, and all
     cbase) clean_base    ;;
     gbase) clone_base    ;;
     ibase)  init_base    ;;
+    i2base)  init2_base  ;;
     bbase) build_base    ;;
     base)    all_base    ;;
     # REQUIRE : clean, clone, init, build, and all
     creq)  clean_require ;;
     greq)  clone_require ;;
     ireq)   init_require ;;
+    i2req)  init2_require ;;
     breq)  build_require ;;
     req)     all_require ;;
     # MODULES : clean, clone, init, build, and all
     cmod)  clean_modules ;;
     gmod)  clone_modules ;;
     imod)   init_modules ;;
+    i2mod)  init2_modules ;;
     bmod)  build_modules ;;
     mod)     all_modules ;;
     # Git Checkout 
