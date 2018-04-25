@@ -5,5 +5,5 @@
 * Run the following
 
 ```
-$ git git submodule sync
+$ git submodule sync
 ```
