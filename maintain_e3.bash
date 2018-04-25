@@ -617,6 +617,13 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
+    test5)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_ifc_nonfree}"   )
+	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_area}"   )
+	;;
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
