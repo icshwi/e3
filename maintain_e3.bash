@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, April 23 16:59:04 CEST 2018
-#   version : 0.2.1
+#   date    : Friday, April 27 17:51:39 CEST 2018
+#   version : 0.2.2
 
 
 # Example, how to use
@@ -572,6 +572,7 @@ done
 shift $((OPTIND-1))
 
 
+# ifc_free should be installed before ifc_nonfree
 case "${GROUP_NAME}" in
     common)
 	module_list+=( "${modules_common}" )
@@ -612,16 +613,16 @@ case "${GROUP_NAME}" in
 	;;
     test4)
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
     test5)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     jhlee)
@@ -644,6 +645,7 @@ case "${GROUP_NAME}" in
 	;;
     
 esac
+
 
 
 

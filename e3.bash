@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, April 23 15:25:30 CEST 2018
-#   version : 0.4.2
+#   date    : Friday, April 27 17:51:46 CEST 2018
+#   version : 0.4.3
 
 
 
@@ -469,7 +469,8 @@ while getopts " :g:" opt; do
 done
 shift $((OPTIND-1))
 
-    
+
+# ifc_free should be installed before ifc_nonfree
 case "${GROUP_NAME}" in
     common)
 	module_list+=( "${modules_common}" )
@@ -510,16 +511,16 @@ case "${GROUP_NAME}" in
 	;;
     test4)
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	module_list+=( "${modules_ecat}"   )
 	;;
     test5)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )
-	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_ifc_free}"    )
+	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	;;
     jhlee)
