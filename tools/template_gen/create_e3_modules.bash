@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+#  Copyright (c) 2018 - Presetn Jeong Han Lee
 #  Copyright (c) 2018 - Present European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
@@ -18,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 13:08:44 CEST 2018
-#   version : 0.2.2
+#   date    : Friday, April 27 23:05:29 CEST 2018
+#   version : 0.3.0
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -28,8 +29,9 @@ declare -gr SC_LOGDATE="$(date +%Y%b%d-%H%M-%S%Z)"
 declare -gr SC_USER="$(whoami)"
 declare -gr SC_HASH="$(git rev-parse HEAD)"
 
-declare -g LOG=".MODULE_LOG"
+declare -g  LOG=".MODULE_LOG"
 
+declare -g  E3_MODULE_DEST=""
 ##
 ## The following GLOBAL variables should be updated according to
 ## main release. However, it can be changed after their creation also.
@@ -62,17 +64,16 @@ function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [-m <module_configuraton_file> ]" ;
+	echo "Usage    : $0 [-m <module_configuraton_file>] [-d <module_destination_path>] " ;
 	echo "";
-	echo "Example in module configuration file : ";
+	echo "               -m : mandatory"
+	echo "               -d : option ( \$PWD if not ) "
 	echo "";
-	echo "EPICS_MODULE_NAME:=adsis8300";
-	echo "E3_MODULE_SRC_PATH:=adsis8300";
-	echo "EPICS_MODULE_URL:=https://bitbucket.org/europeanspallationsource";
-	echo "E3_TARGET_URL:=https://github.com/icshwi";
-
+	echo "Examples in modules_conf  : ";
 	echo "";
-	echo " bash create_e3_modules.bash -m  adsis8300.conf "
+	echo " bash create_e3_modules.bash -m  snmp3.conf"
+	echo " bash create_e3_modules.bash -m  snmp3.conf -d ~/testing"
+	echo ""
 	
     } 1>&2;
     exit 1; 
@@ -96,14 +97,11 @@ function module_info
     
 }
 
-while getopts " :m:" opt; do
+while getopts " :m:d:" opt; do
     case "${opt}" in
-	m)
-	    MODULE_CONF=${OPTARG}
-	    ;;
-	*)
-	    usage
-	    ;;
+	m)  MODULE_CONF=${OPTARG} ;;
+	d)  E3_MODULE_PATH=${OPTARG}   ;;
+	*)  usage                 ;;
     esac
 done
 shift $((OPTIND-1))
@@ -111,6 +109,11 @@ shift $((OPTIND-1))
 if [ -z "${MODULE_CONF}" ] ; then
     usage
 fi
+
+if [ -z "${E3_MODULE_PATH}" ]; then
+    E3_MODULE_PATH=${PWD}
+fi
+
 
 if [[ $(checkIfFile "${MODULE_CONF}") -eq "NON_EXIST" ]]; then
     die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
@@ -129,16 +132,19 @@ _E3_MODULE_GITURL_FULL=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
 _E3_TGT_URL_FULL=${e3_target_url}/${_E3_MOD_NAME}
 
 
+E3_MODULE_DEST=${E3_MODULE_PATH}/${_E3_MOD_NAME};
+
+
 module_info;
 
 ## Create the entire directory once
 
-mkdir -p ${_E3_MOD_NAME}/{configure/E3,patch/Site,docs}  ||  die 1 "We cannot create directories : Please check it" ;
+mkdir -p ${E3_MODULE_DEST}/{configure/E3,patch/Site,docs}  ||  die 1 "We cannot create directories : Please check it" ;
 
 
 
 ## Copy its original Module configuration file in docs
-cp ${MODULE_CONF} ${_E3_MOD_NAME}/docs/   ||  die 1 "We cannot copy ${MODULE_CONF} to ${_E3_MOD_NAME}/docs : Please check it" ;
+cp ${MODULE_CONF} ${E3_MODULE_DEST}/docs/   ||  die 1 "We cannot copy ${MODULE_CONF} to ${E3_MODULE_DEST}/docs : Please check it" ;
 
 
 touch ${LOG}
@@ -148,12 +154,12 @@ touch ${LOG}
     
     module_info;
     
-} >> ${_E3_MOD_NAME}/docs/${LOG}
+} >> ${E3_MODULE_DEST}/docs/${LOG}
 
 
 
-## Going into ${_E3_MOD_NAME}
-pushd ${_E3_MOD_NAME}
+## Going into ${E3_MODULE_DEST}
+pushd ${E3_MODULE_DEST}
 
 git init ||  die 1 "We cannot git init in ${_E3_MOD_NAME} : Please check it" ;
 
@@ -222,18 +228,18 @@ case ${answer:0:1} in
 esac
 
 
-## Going out from ${_E3_MOD_NAME}
+## Going out from ${E3_MODULE_DEST}
 popd
 
 
 echo "";
 echo "The following files should be modified according to the module : "
 echo "";
-echo "   * ${_E3_MOD_NAME}/configure/CONFIG_MODULE"
-echo "   * ${_E3_MOD_NAME}/configure/RELEASE"
+echo "   * ${E3_MODULE_DEST}/configure/CONFIG_MODULE"
+echo "   * ${E3_MODULE_DEST}/configure/RELEASE"
 echo "";
 echo "One can check the e3- template works via ";
-echo "   cd ${_E3_MOD_NAME}"
+echo "   cd ${E3_MODULE_DEST}"
 echo "   make init"
 echo "   make vars"
 echo "";
