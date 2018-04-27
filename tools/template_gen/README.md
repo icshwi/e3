@@ -55,7 +55,7 @@ One should create the empty respository, which has the e3-${EPICS_MODULE_NAME} n
 # Procedure 
 
 ```
-template_gen (master)$ bash create_e3_modules.bash -m modules_conf/snmp3.conf
+template_gen (master)$ ./create_e3_modules.bash -m modules_conf/snmp3.conf
 >> 
 EPICS_MODULE_NAME  :                                                         snmp3
 E3_MODULE_SRC_PATH :                                                         snmp3
@@ -71,19 +71,27 @@ https://github.com/jeonghanlee/snmp3 is adding as submodule...
 Cloning into 'snmp3'...
 remote: Counting objects: 327, done.
 remote: Total 327 (delta 0), reused 0 (delta 0), pack-reused 327
-Receiving objects: 100% (327/327), 1.64 MiB | 776.00 KiB/s, done.
+Receiving objects: 100% (327/327), 1.64 MiB | 1.76 MiB/s, done.
 Resolving deltas: 100% (128/128), done.
 Checking connectivity... done.
 add ignore = all ... 
 
 
 >>>> Do you want to add the URL https://github.com/icshwi/e3-snmp3 for the remote repository?
->>>> In that mean, you already create an empty repository at https://github.com/icshwi/e3-snmp3. (y/n)? n
+     In that mean, you already create an empty repository at https://github.com/icshwi/e3-snmp3.
+
+     If yes, the script will push the local e3-snmp3 to the remote repository. (y/n)? n
 
 
->>>> We are skipping add the remote repository url now. 
->>>> You can do this later with the following commands. 
->>>> $ git remote add origin https://github.com/icshwi/e3-snmp3 
+>>>> Skipping add the remote repository url. 
+     And skipping push the e3-snmp3 to the remote also.
+
+In case, one would like to push this e3 module to git repositories,
+Please use the following commands within e3-snmp3/ :
+
+   * git remote add origin https://github.com/icshwi/e3-snmp3
+   * git commit -m "First commit"
+   * git push -u origin master
 
 The following files should be modified according to the module : 
 
@@ -94,13 +102,4 @@ One can check the e3- template works via
    cd e3-snmp3
    make init
    make vars
-
-
-In case, one would like to push this e3 module to git repositories
-Please use the following commands  in e3-snmp3/:
-
-   * git remote add origin https://github.com/icshwi/e3-snmp3
-   * git commit -m "First commit"
-   * git push -u origin master
-
 ```
