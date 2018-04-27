@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Copyright (c) 2018 - Presetn Jeong Han Lee
+#  Copyright (c) 2018 - Present Jeong Han Lee
 #  Copyright (c) 2018 - Present European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
