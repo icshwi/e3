@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 09:57:47 CEST 2018
-#   version : 0.2.1
+#   date    : Friday, April 27 13:08:44 CEST 2018
+#   version : 0.2.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -39,17 +39,18 @@ declare -g LOG=".MODULE_LOG"
 ## Please see add_configure, add_readme, and so on
 ## 
 
+
 declare -gr _E3_EPICS_PATH=/epics
 declare -gr _E3_BASE_VERSION=3.15.5
 declare -gr _E3_REQUIRE_NAME=require
 declare -gr _E3_REQUIRE_VERSION=3.0.0
-
 declare -gr _EPICS_BASE=${_E3_EPICS_PATH}/base-${_E3_BASE_VERSION}
 
 declare -g  _EPICS_MODULE_NAME=""
 declare -g  _E3_MODULE_SRC_PATH=""
 declare -g  _E3_MOD_NAME=""
 declare -g  _E3_TGT_URL_FULL=""
+declare -g  _E3_MODULE_GITURL_FULL=""
 
 
 . ${SC_TOP}/.create_e3_mod_functions.cfg
@@ -88,7 +89,7 @@ function module_info
 
     printf ">> \n";
     printf "e3 module name     :  %60s\n" "${_E3_MOD_NAME}"
-    printf "e3 module url full :  %60s\n" "${module_url_full}"
+    printf "e3 module url full :  %60s\n" "${_E3_MODULE_GITURL_FULL}"
     printf "e3 target url full :  %60s\n" "${_E3_TGT_URL_FULL}"
     printf ">> \n";
 
@@ -124,7 +125,7 @@ e3_target_url="$(read_file_get_string        "${MODULE_CONF}" "E3_TARGET_URL:=")
 
 _E3_MOD_NAME=e3-${_EPICS_MODULE_NAME}
 
-module_url_full=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
+_E3_MODULE_GITURL_FULL=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
 _E3_TGT_URL_FULL=${e3_target_url}/${_E3_MOD_NAME}
 
 
@@ -157,7 +158,7 @@ pushd ${_E3_MOD_NAME}
 git init ||  die 1 "We cannot git init in ${_E3_MOD_NAME} : Please check it" ;
 
 ## add submodule
-add_submodule "${module_url_full}" "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot add ${module_url_full} as git submodule ${_E3_MOD_NAME} : Please check it" ;
+add_submodule "${_E3_MODULE_GITURL_FULL}" "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot add ${_E3_MODULE_GITURL_FULL} as git submodule ${_E3_MOD_NAME} : Please check it" ;
 
 ## add the default .gitignore
 add_gitignore
@@ -195,16 +196,28 @@ git add .
 
 printf "\n";
 printf  ">>>> Do you want to add the URL ${_E3_TGT_URL_FULL} for the remote repository?\n";
-read -p ">>>> In that mean, you already create an empty repository at ${_E3_TGT_URL_FULL}. (y/n)? " answer
+printf  "     In that mean, you already create an empty repository at ${_E3_TGT_URL_FULL}.\n";
+printf  "\n";
+read -p "     If yes, the script will push the local ${_E3_MOD_NAME} to the remote repository. (y/n)? " answer
 case ${answer:0:1} in
-    y|Y )
+    y|Y|yes|Yes|YES )
 	printf ">>>> We are going to the further process ...... ";
-	git remote add origin ${_E3_TGT_URL_FULL}
+	git remote add origin ${_E3_TGT_URL_FULL};
+	git commit -m "Init..${_E3_MOD_NAME}";
+	git push -u origin master ||  die 1 "Repository is not at ${_E3_TGT_URL_FULL} : Please create it first!" ;
+	
 	;;
     * )
-        printf "\n\n>>>> We are skipping add the remote repository url now. \n";
-	printf ">>>> You can do this later with the following commands. \n";
-	printf ">>>> $ git remote add origin ${_E3_TGT_URL_FULL} \n"
+	printf "\n\n";
+        printf ">>>> Skipping add the remote repository url. \n";
+	printf "     And skipping push the ${_E3_MOD_NAME} to the remote also.\n";
+	printf "\n";
+	printf "In case, one would like to push this e3 module to git repositories,\n"
+	printf "Please use the following commands within ${_E3_MOD_NAME}/ :\n"
+	printf "\n";
+	printf "   * git remote add origin ${_E3_TGT_URL_FULL}\n";
+	printf "   * git commit -m \"First commit\"\n";
+	printf "   * git push -u origin master\n";
 	;;
 esac
 
@@ -225,12 +238,7 @@ echo "   make init"
 echo "   make vars"
 echo "";
 echo "";
-echo "In case, one would like to push this e3 module to git repositories"
-echo "Please use the following commands  in ${_E3_MOD_NAME}/:"
-echo ""
-echo "   * git remote add origin ${_E3_TGT_URL_FULL}";
-echo "   * git commit -m \"First commit\"";
-echo "   * git push -u origin master";
+
 	
 
 exit
