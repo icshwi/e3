@@ -2488,3 +2488,112 @@ To https://github.com/icshwi/e3-ADPointGrey
 > -------------------------------------------------------------
 >> Exiting from e3-ADPointGrey
 > -------------------------------------------------------------
+
+
+
+
+./maintain_e3.bash ver_e3
+
+jhlee@kaffee: e3 (master)$ ./maintain_e3.bash ver_e3
+
+>> /home/jhlee/e3
+   E3 Branch         : master
+   E3 Tag            : 
+   E3 Release        : 
+release_defs
+└── R0100_20180419.def
+release_info
+└── RELEAE_INFO_R0100_20180419.txt
+release_logs
+└── R0100
+    ├── WorkLog_R0100.log
+    └── WorkLog_R0100.log~
+
+1 directory, 4 files
+
+
+jhlee@kaffee: e3 (master)$ ./maintain_e3.bash r_e3 release_defs/R0100_20180419.def 
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into /home/jhlee/e3
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch  :                 R0.1
+  Tag     :             R0.1.0.0
+  Comment :               The E3+ Early Concept Test
+  Delete  :                     
+> -------------------------------------------------------------
+M       e3.bash
+M       maintain_e3.bash
+M       release_logs/R0100/WorkLog_R0100.log
+Switched to a new branch 'R0.1'
+
+
+>> Branch info : 
+* R0.1             c9bb2b6 add R0.1 release info, defs, log, and update shell to be used
+  master           c9bb2b6 add R0.1 release info, defs, log, and update shell to be used
+  target_path_test deb3e9c [behind 41] update DEFAULT EPICS ENV
+
+>> Tag info  : 
+R0.1.0.0
+v0.1
+
+> -------------------------------------------------------------
+>> Exiting from /home/jhlee/e3
+> -------------------------------------------------------------
+
+
+> -------------------------------------------------------------
+>> Exiting from /home/jhlee/e3
+> -------------------------------------------------------------
+jhlee@kaffee: e3 (R0.1)$ ./maintain_e3.bash ver_e3
+
+>> /home/jhlee/e3
+   E3 Branch         : R0.1
+   E3 Tag            : R0.1.0.0
+   E3 Release        : 
+release_defs
+└── R0100_20180419.def
+release_info
+└── RELEAE_INFO_R0100_20180419.txt
+release_logs
+└── R0100
+    ├── WorkLog_R0100.log
+    └── WorkLog_R0100.log~
+
+1 directory, 4 files
+jhlee@kaffee: e3 (R0.1)$ 
+
+
+jhlee@kaffee: e3 (R0.1)$ ./maintain_e3.bash gpr_e3 release_defs/R0100_20180419.def 
+
+
+> -------------------------------------------------------------
+>>  0 : Entering into 
+> -------------------------------------------------------------
+* Release Branch and Tag to the remote .... 
+  Branch :                 R0.1
+  Tag    :             R0.1.0.0
+> -------------------------------------------------------------
+* Remote Information :
+origin  http://github.com/icshwi/e3 (fetch)
+origin  http://github.com/icshwi/e3 (push)
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1
+Total 0 (delta 0), reused 0 (delta 0)
+To http://github.com/icshwi/e3
+ * [new branch]      R0.1 -> R0.1
+> -------------------------------------------------------------
+ * cmd : git push origin R0.1.0.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 182 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To http://github.com/icshwi/e3
+ * [new tag]         R0.1.0.0 -> R0.1.0.0
+> -------------------------------------------------------------
+>> Exiting from 
+> -------------------------------------------------------------
+
+
+

@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, April 23 15:46:19 CEST 2018
-#   version : 0.2.0
+#   date    : Friday, April 27 09:57:47 CEST 2018
+#   version : 0.2.1
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -47,8 +47,10 @@ declare -gr _E3_REQUIRE_VERSION=3.0.0
 declare -gr _EPICS_BASE=${_E3_EPICS_PATH}/base-${_E3_BASE_VERSION}
 
 declare -g  _EPICS_MODULE_NAME=""
+declare -g  _E3_MODULE_SRC_PATH=""
 declare -g  _E3_MOD_NAME=""
 declare -g  _E3_TGT_URL_FULL=""
+
 
 . ${SC_TOP}/.create_e3_mod_functions.cfg
 
@@ -64,9 +66,10 @@ function usage
 	echo "Example in module configuration file : ";
 	echo "";
 	echo "EPICS_MODULE_NAME:=adsis8300";
+	echo "E3_MODULE_SRC_PATH:=adsis8300";
 	echo "EPICS_MODULE_URL:=https://bitbucket.org/europeanspallationsource";
 	echo "E3_TARGET_URL:=https://github.com/icshwi";
-	echo "E3_SUBMODULE_PATH:=adsis8300";
+
 	echo "";
 	echo " bash create_e3_modules.bash -m  adsis8300.conf "
 	
@@ -79,9 +82,10 @@ function module_info
 
     printf ">> \n";
     printf "EPICS_MODULE_NAME  :  %60s\n" "${_EPICS_MODULE_NAME}"
+    printf "E3_MODULE_SRC_PATH :  %60s\n" "${_E3_MODULE_SRC_PATH}"
     printf "EPICS_MODULE_URL   :  %60s\n" "${epics_mod_url}"
     printf "E3_TARGET_URL      :  %60s\n" "${e3_target_url}"
-    printf "E3_SUBMODULE_PATH  :  %60s\n" "${e3_submod_path}"
+
     printf ">> \n";
     printf "e3 module name     :  %60s\n" "${_E3_MOD_NAME}"
     printf "e3 module url full :  %60s\n" "${module_url_full}"
@@ -112,13 +116,15 @@ if [[ $(checkIfFile "${MODULE_CONF}") -eq "NON_EXIST" ]]; then
 fi
 
 
-_EPICS_MODULE_NAME="$(read_file_get_string  "${MODULE_CONF}" "EPICS_MODULE_NAME:=")";
-epics_mod_url="$(read_file_get_string   "${MODULE_CONF}" "EPICS_MODULE_URL:=")";
-e3_target_url="$(read_file_get_string   "${MODULE_CONF}" "E3_TARGET_URL:=")";
-e3_submod_path="$(read_file_get_string  "${MODULE_CONF}" "E3_SUBMODULE_PATH:=")";
+_EPICS_MODULE_NAME="$(read_file_get_string   "${MODULE_CONF}" "EPICS_MODULE_NAME:=")";
+_E3_MODULE_SRC_PATH="$(read_file_get_string  "${MODULE_CONF}" "E3_MODULE_SRC_PATH:=")";
+epics_mod_url="$(read_file_get_string        "${MODULE_CONF}" "EPICS_MODULE_URL:=")";
+e3_target_url="$(read_file_get_string        "${MODULE_CONF}" "E3_TARGET_URL:=")";
+
 
 _E3_MOD_NAME=e3-${_EPICS_MODULE_NAME}
-module_url_full=${epics_mod_url}/${e3_submod_path}
+
+module_url_full=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
 _E3_TGT_URL_FULL=${e3_target_url}/${_E3_MOD_NAME}
 
 
@@ -151,7 +157,7 @@ pushd ${_E3_MOD_NAME}
 git init ||  die 1 "We cannot git init in ${_E3_MOD_NAME} : Please check it" ;
 
 ## add submodule
-add_submodule "${module_url_full}" "${e3_submod_path}" ||  die 1 "We cannot add ${module_url_full} as git submodule ${_E3_MOD_NAME} : Please check it" ;
+add_submodule "${module_url_full}" "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot add ${module_url_full} as git submodule ${_E3_MOD_NAME} : Please check it" ;
 
 ## add the default .gitignore
 add_gitignore
@@ -193,7 +199,7 @@ read -p ">>>> In that mean, you already create an empty repository at ${_E3_TGT_
 case ${answer:0:1} in
     y|Y )
 	printf ">>>> We are going to the further process ...... ";
-	git remote add origin remote ${_E3_TGT_URL_FULL}
+	git remote add origin ${_E3_TGT_URL_FULL}
 	;;
     * )
         printf "\n\n>>>> We are skipping add the remote repository url now. \n";
