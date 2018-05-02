@@ -667,11 +667,10 @@ esac
 
 
 case "$1" in
-    env) print_module_list ;; 
-    pull)
-	# git pull for selected modules
-	git_pull_modules
-	;;
+    env) print_module_list ;;
+    # git pull for selected modules
+    pull) git_pull_modules ;;
+    # ./maintain_e3.bash -g all cat configure/E3/RULES_PATCH
     cat)      cat_file "$2"     ;;
     diff)     git_diff "$2"  	;;
     checkout) git_checkout "$2" ;;
