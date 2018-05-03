@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 23:05:29 CEST 2018
-#   version : 0.3.0
+#   date    : Friday, May  4 01:34:24 CEST 2018
+#   version : 0.3.1
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -77,6 +77,22 @@ function usage
 	
     } 1>&2;
     exit 1; 
+}
+
+function help
+{
+    {
+	printf "\n\n";
+        printf ">>>> Skipping add the remote repository url. \n";
+	printf "     And skipping push the ${_E3_MOD_NAME} to the remote also.\n";
+	printf "\n";
+	printf "In case, one would like to push this e3 module to git repositories,\n"
+	printf "Please use the following commands within ${_E3_MOD_NAME}/ :\n"
+	printf "\n";
+	printf "   * git remote add origin ${_E3_TGT_URL_FULL}\n";
+	printf "   * git commit -m \"First commit\"\n";
+	printf "   * git push -u origin master\n";
+    } 1>&2;
 }
 
 function module_info
@@ -208,22 +224,13 @@ read -p "     If yes, the script will push the local ${_E3_MOD_NAME} to the remo
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
 	printf ">>>> We are going to the further process ...... ";
-	git remote add origin ${_E3_TGT_URL_FULL};
-	git commit -m "Init..${_E3_MOD_NAME}";
+	git remote add origin ${_E3_TGT_URL_FULL} ||  die 1 "Cannot add ${_E3_TGT_URL_FULL} in origin: Please check your git env!" ;
+	git commit -m "Init..${_E3_MOD_NAME}" ||  die 1 "We cannot commit, maybe you need to run git config user and so on." ;
 	git push -u origin master ||  die 1 "Repository is not at ${_E3_TGT_URL_FULL} : Please create it first!" ;
 	
 	;;
     * )
-	printf "\n\n";
-        printf ">>>> Skipping add the remote repository url. \n";
-	printf "     And skipping push the ${_E3_MOD_NAME} to the remote also.\n";
-	printf "\n";
-	printf "In case, one would like to push this e3 module to git repositories,\n"
-	printf "Please use the following commands within ${_E3_MOD_NAME}/ :\n"
-	printf "\n";
-	printf "   * git remote add origin ${_E3_TGT_URL_FULL}\n";
-	printf "   * git commit -m \"First commit\"\n";
-	printf "   * git push -u origin master\n";
+	help;
 	;;
 esac
 
