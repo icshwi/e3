@@ -19,15 +19,15 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 23:05:29 CEST 2018
-#   version : 0.3.0
+#   date    : Friday, May  4 09:38:43 CEST 2018
+#   version : 0.3.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="$(dirname "$SC_SCRIPT")"
 declare -gr SC_LOGDATE="$(date +%Y%b%d-%H%M-%S%Z)"
 declare -gr SC_USER="$(whoami)"
-declare -gr SC_HASH="$(git rev-parse HEAD)"
+declare -gr SC_HASH="$(git rev-parse --short HEAD)"
 
 declare -g  LOG=".MODULE_LOG"
 
@@ -79,19 +79,35 @@ function usage
     exit 1; 
 }
 
+function help
+{
+    {
+	printf "\n\n";
+        printf ">>>> Skipping add the remote repository url. \n";
+	printf "     And skipping push the ${_E3_MOD_NAME} to the remote also.\n";
+	printf "\n";
+	printf "In case, one would like to push this e3 module to git repositories,\n"
+	printf "Please use the following commands within ${_E3_MOD_NAME}/ :\n"
+	printf "\n";
+	printf "   * git remote add origin ${_E3_TGT_URL_FULL}\n";
+	printf "   * git commit -m \"First commit\"\n";
+	printf "   * git push -u origin master\n";
+    } 1>&2;
+}
+
 function module_info
 {
 
     printf ">> \n";
-    printf "EPICS_MODULE_NAME  :  %60s\n" "${_EPICS_MODULE_NAME}"
-    printf "E3_MODULE_SRC_PATH :  %60s\n" "${_E3_MODULE_SRC_PATH}"
-    printf "EPICS_MODULE_URL   :  %60s\n" "${epics_mod_url}"
-    printf "E3_TARGET_URL      :  %60s\n" "${e3_target_url}"
+    printf "EPICS_MODULE_NAME  : %64s\n" "${_EPICS_MODULE_NAME}"
+    printf "E3_MODULE_SRC_PATH : %64s\n" "${_E3_MODULE_SRC_PATH}"
+    printf "EPICS_MODULE_URL   : %64s\n" "${epics_mod_url}"
+    printf "E3_TARGET_URL      : %64s\n" "${e3_target_url}"
 
     printf ">> \n";
-    printf "e3 module name     :  %60s\n" "${_E3_MOD_NAME}"
-    printf "e3 module url full :  %60s\n" "${_E3_MODULE_GITURL_FULL}"
-    printf "e3 target url full :  %60s\n" "${_E3_TGT_URL_FULL}"
+    printf "e3 module name     : %64s\n" "${_E3_MOD_NAME}"
+    printf "e3 module url full : %64s\n" "${_E3_MODULE_GITURL_FULL}"
+    printf "e3 target url full : %64s\n" "${_E3_TGT_URL_FULL}"
     printf ">> \n";
 
     
@@ -149,8 +165,12 @@ cp ${MODULE_CONF} ${E3_MODULE_DEST}/docs/   ||  die 1 "We cannot copy ${MODULE_C
 
 touch ${LOG}
 {
-    printf "USER : ${SC_USER}\n";
-    printf "TIME : ${SC_LOGDATE}\n";
+    printf ">>\n";
+    printf "Script is used     : ${SC_SCRIPTNAME}\n";
+    printf "Script Path        : ${SC_TOP}\n";
+    printf "User               : ${SC_USER}\n";
+    printf "Log Time           : ${SC_LOGDATE}\n";
+    printf "e3 repo Hash       : ${SC_HASH}\n";
     
     module_info;
     
@@ -208,22 +228,13 @@ read -p "     If yes, the script will push the local ${_E3_MOD_NAME} to the remo
 case ${answer:0:1} in
     y|Y|yes|Yes|YES )
 	printf ">>>> We are going to the further process ...... ";
-	git remote add origin ${_E3_TGT_URL_FULL};
-	git commit -m "Init..${_E3_MOD_NAME}";
+	git remote add origin ${_E3_TGT_URL_FULL} ||  die 1 "Cannot add ${_E3_TGT_URL_FULL} in origin: Please check your git env!" ;
+	git commit -m "Init..${_E3_MOD_NAME}" ||  die 1 "We cannot commit, maybe you need to run git config user and so on." ;
 	git push -u origin master ||  die 1 "Repository is not at ${_E3_TGT_URL_FULL} : Please create it first!" ;
 	
 	;;
     * )
-	printf "\n\n";
-        printf ">>>> Skipping add the remote repository url. \n";
-	printf "     And skipping push the ${_E3_MOD_NAME} to the remote also.\n";
-	printf "\n";
-	printf "In case, one would like to push this e3 module to git repositories,\n"
-	printf "Please use the following commands within ${_E3_MOD_NAME}/ :\n"
-	printf "\n";
-	printf "   * git remote add origin ${_E3_TGT_URL_FULL}\n";
-	printf "   * git commit -m \"First commit\"\n";
-	printf "   * git push -u origin master\n";
+	help;
 	;;
 esac
 
