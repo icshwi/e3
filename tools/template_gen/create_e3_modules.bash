@@ -19,15 +19,15 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, May  4 01:34:24 CEST 2018
-#   version : 0.3.1
+#   date    : Friday, May  4 09:38:43 CEST 2018
+#   version : 0.3.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="$(dirname "$SC_SCRIPT")"
 declare -gr SC_LOGDATE="$(date +%Y%b%d-%H%M-%S%Z)"
 declare -gr SC_USER="$(whoami)"
-declare -gr SC_HASH="$(git rev-parse HEAD)"
+declare -gr SC_HASH="$(git rev-parse --short HEAD)"
 
 declare -g  LOG=".MODULE_LOG"
 
@@ -99,15 +99,15 @@ function module_info
 {
 
     printf ">> \n";
-    printf "EPICS_MODULE_NAME  :  %60s\n" "${_EPICS_MODULE_NAME}"
-    printf "E3_MODULE_SRC_PATH :  %60s\n" "${_E3_MODULE_SRC_PATH}"
-    printf "EPICS_MODULE_URL   :  %60s\n" "${epics_mod_url}"
-    printf "E3_TARGET_URL      :  %60s\n" "${e3_target_url}"
+    printf "EPICS_MODULE_NAME  : %64s\n" "${_EPICS_MODULE_NAME}"
+    printf "E3_MODULE_SRC_PATH : %64s\n" "${_E3_MODULE_SRC_PATH}"
+    printf "EPICS_MODULE_URL   : %64s\n" "${epics_mod_url}"
+    printf "E3_TARGET_URL      : %64s\n" "${e3_target_url}"
 
     printf ">> \n";
-    printf "e3 module name     :  %60s\n" "${_E3_MOD_NAME}"
-    printf "e3 module url full :  %60s\n" "${_E3_MODULE_GITURL_FULL}"
-    printf "e3 target url full :  %60s\n" "${_E3_TGT_URL_FULL}"
+    printf "e3 module name     : %64s\n" "${_E3_MOD_NAME}"
+    printf "e3 module url full : %64s\n" "${_E3_MODULE_GITURL_FULL}"
+    printf "e3 target url full : %64s\n" "${_E3_TGT_URL_FULL}"
     printf ">> \n";
 
     
@@ -165,8 +165,12 @@ cp ${MODULE_CONF} ${E3_MODULE_DEST}/docs/   ||  die 1 "We cannot copy ${MODULE_C
 
 touch ${LOG}
 {
-    printf "USER : ${SC_USER}\n";
-    printf "TIME : ${SC_LOGDATE}\n";
+    printf ">>\n";
+    printf "Script is used     : ${SC_SCRIPTNAME}\n";
+    printf "Script Path        : ${SC_TOP}\n";
+    printf "User               : ${SC_USER}\n";
+    printf "Log Time           : ${SC_LOGDATE}\n";
+    printf "e3 repo Hash       : ${SC_HASH}\n";
     
     module_info;
     
