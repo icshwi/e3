@@ -165,6 +165,25 @@ function init2_require
 
 
 ## REQUIRE
+function devinit_require
+{
+    local rep="";
+    for rep in  ${require_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    make devinit ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
+	    make env;
+	    popd
+	else
+	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
+	fi
+	printf "\n";
+    done
+}
+
+
+
+## REQUIRE
 # $1 : "TRUE" : git clone
 #    "        : skip clone
 function setup_require
@@ -173,6 +192,19 @@ function setup_require
     clone_require "${git_status}" ;
     init_require;
 }
+
+
+## REQUIRE
+# $1 : "TRUE" : git clone
+#    "        : skip clone
+function devsetup_require
+{
+    local git_status=$1; shift;
+    clone_require "${git_status}" ;
+    devinit_require;
+}
+
+
 
 ## REQUIRE
 function build_require
@@ -189,6 +221,24 @@ function build_require
 	fi
     done
 }
+
+## REQUIRE
+function devbuild_require
+{
+    local rep="";
+    for rep in  ${require_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    make devbuild   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make devinstall ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
+	    popd
+	else
+	    die 1 "${rep} doesn't exist";
+	fi
+    done
+}
+
+
 
 
 function init_modules
@@ -336,6 +386,16 @@ function all_require
     setup_require;
     build_require;
 }
+
+
+function devall_require
+{
+    clean_require;
+    devsetup_require;
+    devbuild_require;
+}
+
+
 
 function all_modules
 {
@@ -588,12 +648,14 @@ case "$1" in
     bbase) build_base    ;;
     base)    all_base    ;;
     # REQUIRE : clean, clone, init, build, and all
-    creq)  clean_require ;;
-    greq)  clone_require ;;
-    ireq)   init_require ;;
-    i2req)  init2_require ;;
-    breq)  build_require ;;
-    req)     all_require ;;
+    creq)      clean_require ;;
+    greq)      clone_require ;;
+    ireq)       init_require ;;
+    i2req)     init2_require ;;
+    devireq) devinit_require ;;
+    breq)      build_require ;;
+    req)         all_require ;;
+    devreq)   devall_require ;;
     # MODULES : clean, clone, init, build, and all
     cmod)  clean_modules ;;
     gmod)  clone_modules ;;
