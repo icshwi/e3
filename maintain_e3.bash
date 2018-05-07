@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 17:51:39 CEST 2018
-#   version : 0.2.2
+#   date    : Monday, May  7 10:07:19 CEST 2018
+#   version : 0.2.3
 
 
 # Example, how to use
@@ -625,6 +625,12 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_ifc_nonfree}"   )
 	module_list+=( "${modules_area}"   )
 	;;
+    test6)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
+	module_list+=( "${modules_area}"   )
+	;;
+    
     jhlee)
 	module_list+=( "${modules_common}" )
 	module_list+=( "${modules_timing}" )

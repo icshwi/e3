@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, April 27 17:51:46 CEST 2018
-#   version : 0.4.3
+#   date    : Monday, May  7 10:07:03 CEST 2018
+#   version : 0.4.4
 
 
 
@@ -521,6 +521,11 @@ case "${GROUP_NAME}" in
 	module_list+=( "${modules_timing}" )
 	module_list+=( "${modules_ifc_free}"    )
 	module_list+=( "${modules_ifc_nonfree}"   )
+	module_list+=( "${modules_area}"   )
+	;;
+    test6)
+	module_list+=( "${modules_common}" )
+	module_list+=( "${modules_timing}" )
 	module_list+=( "${modules_area}"   )
 	;;
     jhlee)
