@@ -1,2 +1,0 @@
-EPICS_BASE:=/testing/base-3.15.5
-E3_REQUIRE_VERSION:=0.0.1
