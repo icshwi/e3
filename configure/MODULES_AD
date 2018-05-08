@@ -4,8 +4,10 @@ e3-ADSimDetector
 e3-ADAndor
 e3-ADAndor3
 e3-ADPointGrey
+#
+# BI
 e3-amcpico8
-#e3-pico8
+e3-adpico8
 e3-adsis8300
 e3-adsis8300bcm
 e3-adsis8300bpm
