@@ -76,6 +76,7 @@ _HOST_IP="$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')";
 
 
 unset_ca_addr
+
 set_ca_addr "$_HOST_IP" "YES"
 
 pvs_from_list $1
@@ -83,11 +84,13 @@ pvs_from_list $1
 substring=$2
 
 printf ">> Get PVs .... \n"
+printf "\n";
+printf "\n";
+
 if [ -z "$substring" ]; then
     for pv in ${pvlist[@]}; do
 	$cmd $pv
     done
-    
 else
     for pv in ${pvlist[@]}; do
 	if test "${pv#*$substring}" != "$pv"; then
