@@ -372,11 +372,11 @@ function module_loading_test_on_iocsh
 
     exec iocsh.bash ${IOC_TEST} & export APP_PID=$!
 
-    sleep 30s;
+#    sleep 30s;
     
-    kill -SIGINT ${APP_PID};
+#    kill -SIGINT ${APP_PID};
 
-    stty sane > /dev/null 2>&1
+   # stty sane > /dev/null 2>&1
     
 }
 
