@@ -20,7 +20,7 @@
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
 #   date    : Monday, May  7 10:07:03 CEST 2018
-#   version : 0.4.4
+#   version : 0.4.5
 
 
 
@@ -172,7 +172,7 @@ function devinit_require
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make devinit ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
-	    make env;
+	    make devenv;
 	    popd
 	else
 	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
