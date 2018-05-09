@@ -121,24 +121,19 @@ $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
 ```
 e3 (master)$ ./e3.bash 
 
-Usage    : ./e3.bash [ -g <module_group_name> ] <option> 
+
+Usage    : ./e3.bash [ -ctifeal ] <option> 
 
 
- < module_group_name > 
+           -c     : common      : epics modules
+           -t     : timing      : mrf timing modules
+           -i{c}  : ifc free    : ifc modules without user accounts
+           -f{ci} : ifc nonfree : ifc modules with user accounts
+           -e{c}  : ecat        : ethercat modules
+           -a{c}  : area        : area detector modules / BI Modules
+           -l{c}  : llrf        : Old LLRF modules
 
-           common  : epics modules
-           timing  : mrf timing    related modules
-           ifc     : ifc platform  related modules (FREE+NON-FREE)
-           ifc1    : ifc platform  related modules (FREE) 
-           ifc2    : ifc platform  related modules (NON-FREE) 
-           ecat    : ethercat      related modules
-           area    : area detector related modules
-           test    : common, timing, modules
-           test2   : common, timing, ifc1, area modules
-           test3   : common, timing, ifc1 modules
-           test4   : timing, ifc1, ifc2, ecat, area modules
-           jhlee   : common, timing, ifc1, area modules
-           all     : common, timing, ifc1, ifc2, ecat, area modules
+                    {*}         : Enable by default if not defined
 
 
  < option > 
@@ -191,18 +186,18 @@ Usage    : ./e3.bash [ -g <module_group_name> ] <option>
 
 * 
 ```
-$ ./e3.bash -g all call
-$ ./e3.bash -g all gall
-$ ./e3.bash -g all vall
-$ ./e3.bash -g all iall
-$ ./e3.bash -g all ball
-$ ./e3.bash -g all load 
+$ ./e3.bash -ctifeal call
+$ ./e3.bash -ctifeal gall
+$ ./e3.bash -ctifeal vall
+$ ./e3.bash -ctifeal iall
+$ ./e3.bash -ctifeal ball
+$ ./e3.bash -ctifeal load 
 ```
 
 * 
 ```
-$ ./e3.bash -g common iall
-$ ./e3.bash -g common ball
-$ ./e3.bash -g common load
+$ ./e3.bash -c iall
+$ ./e3.bash -c ball
+$ ./e3.bash -c load
 ```
 

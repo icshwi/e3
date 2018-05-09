@@ -23,4 +23,4 @@ echo "E3_REQUIRE_VERSION:=0.0.1" >> RELEASE_DEV.local
 #
 bash e3.bash base
 bash e3.bash devreq
-bash e3.bash -g all mod
+bash e3.bash -ctifea mod
