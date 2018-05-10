@@ -38,10 +38,38 @@ echo "EPICS_MODULE_TAG:=tags/R4-27"  > configure/CONFIG_MODULE.local
 echo "E3_MODULE_VERSION:=4.27.0"    >> configure/CONFIG_MODULE.local
 
 make init
+make env
 make rebuild
 
 cd ..
 
 
-bash e3.bash -l imod
-bash e3.bash -l bmod
+cd e3-loki
+make init
+make env
+make rebuild
+
+cd ..
+
+cd e3-nds
+make init
+make env
+make rebuild
+
+cd ..
+
+cd e3-sis8300
+make init
+make env
+make rebuild
+
+cd ..
+
+cd e3-sis8300llrf
+make init
+make env
+make rebuild
+
+cd ..
+
+
