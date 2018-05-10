@@ -43,6 +43,8 @@ make rebuild
 
 cd ..
 
+echo ">>"
+echo ">>"
 
 cd e3-loki
 make init
@@ -51,6 +53,9 @@ make rebuild
 
 cd ..
 
+echo ">>"
+echo ">>"
+
 cd e3-nds
 make init
 make env
@@ -58,12 +63,41 @@ make rebuild
 
 cd ..
 
+echo ">>"
+echo ">>"
+
+cd e3-sis8300drv
+make init
+make env
+make rebuild
+
+cd ..
+
+echo ">>"
+echo ">>"
+
 cd e3-sis8300
 make init
 make env
 make rebuild
 
 cd ..
+
+echo ">>"
+echo ">>"
+
+
+cd e3-sis8300llrfdrv
+make init
+make env
+make rebuild
+
+cd ..
+
+
+echo ">>"
+echo ">>"
+
 
 cd e3-sis8300llrf
 make init
