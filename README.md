@@ -181,6 +181,13 @@ Usage    : ./e3.bash [ -ctifeal ] <option>
 
 ```
 
+### SSH KEY Usage
+
+One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one.
+
+```
+source tools/use_sshkey.sh
+```
 
 ### Examples :
 
