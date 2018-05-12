@@ -6,18 +6,19 @@ echo ">>> rm -rf e3-*"
 rm -rf e3-*
 
 TARGET="/epics/devreq"
+epics_base="${TARGET}/base-3.15.5"
 
 echo ">>> Creating CONFIG_BASE.local ... "
 
 echo "E3_EPICS_PATH:=${TARGET}" > CONFIG_BASE.local
 
 echo ">>> Creating RELEASE.local ... "
-echo "EPICS_BASE:=${TARGET}" > RELEASE.local
+echo "EPICS_BASE:=${epics_base}" > RELEASE.local
 echo "E3_REQUIRE_VERSION:=0.0.1" >> RELEASE.local
 
 
 echo ">>> Creating RELEASE_DEV.local for require... "
-echo "EPICS_BASE:=${TARGET}/base-3.15.5" > RELEASE_DEV.local
+echo "EPICS_BASE:=${epics_base}" > RELEASE_DEV.local
 echo "E3_REQUIRE_VERSION:=0.0.1" >> RELEASE_DEV.local
 
 
