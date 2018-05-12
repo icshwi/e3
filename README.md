@@ -122,7 +122,7 @@ $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
 e3 (master)$ ./e3.bash 
 
 
-Usage    : ./e3.bash [ -ctifeal ] <option> 
+Usage    : ./e3.bash [ -ctifealo ] <option> 
 
 
            -c     : common      : epics modules
@@ -132,8 +132,10 @@ Usage    : ./e3.bash [ -ctifeal ] <option>
            -e{c}  : ecat        : ethercat modules
            -a{c}  : area        : area detector modules / BI Modules
            -l{c}  : llrf        : Old LLRF modules
-
-                    {*}         : Enable by default if not defined
+                    {c,ci}      : Enable by default if not defined (dependent modules)
+   	   -o     : only        : ignore dependent modules
+	                          Option -e is actually -ec, however,
+				  -eo means only -e. 
 
 
  < option > 
@@ -193,12 +195,12 @@ source tools/use_sshkey.sh
 
 * 
 ```
-$ ./e3.bash -ctifeal call
-$ ./e3.bash -ctifeal gall
-$ ./e3.bash -ctifeal vall
-$ ./e3.bash -ctifeal iall
-$ ./e3.bash -ctifeal ball
-$ ./e3.bash -ctifeal load 
+$ ./e3.bash -ctifea call
+$ ./e3.bash -ctifea gall
+$ ./e3.bash -ctifea vall
+$ ./e3.bash -ctifea iall
+$ ./e3.bash -ctifea ball
+$ ./e3.bash -ctifea load 
 ```
 
 * 
