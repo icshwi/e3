@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Saturday, May 12 13:39:14 CEST 2018
-#   version : 0.5.1
+#   date    : Sunday, May 13 00:14:13 CEST 2018
+#   version : 0.5.2
 
 
 
@@ -539,9 +539,10 @@ ifcnfree=""
 ecat=""
 area=""
 llrf=""
+only=""
 
 
-while getopts "ctifeal" opt; do
+while getopts "ctifealo" opt; do
     case "${opt}" in
 	c) common="1"  ;;
 	t) timing="1"  ;;
@@ -550,6 +551,7 @@ while getopts "ctifeal" opt; do
 	e) ecat="1"    ;;
 	a) area="1"    ;;
 	l) llrf="1"    ;;
+	o) only="1"    ;;
 	*) usage ;;
     esac
 done
@@ -564,20 +566,21 @@ if ! [ -z "${timing}" ]; then
     module_list+=( "${modules_timing}" )
 fi
 
+
 if ! [ -z "${ifcfree}" ]; then
-    if [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" );
-	common="2"
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
+	    module_list+=( "${modules_common}" );
+	    common="2"
     fi
     module_list+=( "${modules_ifc_free}" )
 fi
 
 if ! [ -z "${ifcnfree}" ]; then
-    if [ -z "${common}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
 	module_list+=( "${modules_common}" )
 	common="2"
     fi
-    if [ -z "${ifcfree}" ]; then
+     if [ -z "${only}" ] && [ -z "${ifcfree}" ]; then
 	module_list+=( "${modules_ifc_free}" )
 	ifcfree="2"
     fi
@@ -586,7 +589,7 @@ fi
 
 
 if ! [ -z "${ecat}" ]; then
-    if [ -z "${common}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
 	module_list+=( "${modules_common}" )
 	common="2"
     fi
@@ -594,7 +597,7 @@ if ! [ -z "${ecat}" ]; then
 fi
 
 if ! [ -z "${area}" ]; then
-    if [ -z "${common}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
 	module_list+=( "${modules_common}" )
 	common="2"
     fi
@@ -603,12 +606,13 @@ fi
 
 
 if ! [ -z "${llrf}" ]; then
-    if [ -z "${common}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
 	module_list+=( "${modules_common}" )
 	common="2"
     fi
     module_list+=( "${modules_llrf}" )
 fi
+
 
 
 
