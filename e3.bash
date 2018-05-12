@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, May 10 00:05:29 CEST 2018
-#   version : 0.5.0
+#   date    : Saturday, May 12 13:39:14 CEST 2018
+#   version : 0.5.1
 
 
 
@@ -47,7 +47,15 @@ function git_clone
 
     local rep_name=$1 ; shift;
     printf ">> %s\n" "$rep_name";
-    ${GIT_CMD} ${GIT_URL}/$rep_name
+    if [[ $(checkIfDir "${rep}") -eq "$NON_EXIST" ]]; then
+	printf ">> No target directroy is found, Cloning...\n\n";
+	${GIT_CMD} ${GIT_URL}/$rep_name  ||  die 1 "${FUNCNAME[*]} : Cloning Error at ${rep}: Please check the repository status" ;
+    else
+	printf ">> Target directory is found, Pulling instead of Cloning ... \n\n";
+	pushd ${rep} 
+	git pull ||  die 1 "${FUNCNAME[*]} : Pulling Error at ${rep}: Please check the repository status" ;
+	popd
+    fi
     printf "\n";
     
 }
