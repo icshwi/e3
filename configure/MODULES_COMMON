@@ -6,7 +6,7 @@ e3-modbus
 e3-ipmiComm
 e3-sequencer
 e3-sscan
-e3-motor
+#e3-motor
 e3-std
 e3-ip
 e3-calc
