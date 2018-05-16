@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, May 13 00:14:04 CEST 2018
-#   version : 0.3.1
+#   date    : Thursday, May 17 00:57:26 CEST 2018
+#   version : 0.3.2
 
 
 # Example, how to use
@@ -671,6 +671,10 @@ case "$1" in
     # git push for selected modules
     push)       git_push            ;;
     # merge_ours) git_merge_ours_donot_use ;;
+    status)       git_status            ;;
+    # merge_ours) git_merge_ours_donot_use ;;
+    # Disable it, because it is not general purpose
+    #    delete_lines) delete_lines_starting_from "$2"  ;;
     copy)
 	# Example, for copy
 	# 
