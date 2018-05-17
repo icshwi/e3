@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, May 17 09:07:11 CEST 2018
-#   version : 0.5.1
+#   date    : Thursday, May 17 09:16:42 CEST 2018
+#   version : 0.5.2
 
 
 
@@ -519,7 +519,7 @@ function usage
 	echo "  Examples : ";
 	echo ""
 	echo "          $0 creq "
-	echo "          $0 -ctifeal cmod";
+	echo "          $0 -ctifealb cmod";
 	echo "          $0 -t env";
 	echo "          $0 base";
         echo "          $0 req";
@@ -542,10 +542,12 @@ ifcnfree=""
 ecat=""
 area=""
 llrf=""
+bi=""
 only=""
 
+options=ctifealbo
 
-while getopts "ctifealo" opt; do
+while getopts "${options}" opt; do
     case "${opt}" in
 	c) common="1"  ;;
 	t) timing="1"  ;;
@@ -554,6 +556,7 @@ while getopts "ctifealo" opt; do
 	e) ecat="1"    ;;
 	a) area="1"    ;;
 	l) llrf="1"    ;;
+	b) bi="1"    ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac
@@ -617,6 +620,17 @@ if ! [ -z "${llrf}" ]; then
 fi
 
 
+if ! [ -z "${bi}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
+	module_list+=( "${modules_common}" )
+	common="2"
+    fi
+     if [ -z "${only}" ] && [ -z "${area}" ]; then
+	module_list+=( "${modules_area}" )
+	area="2"
+    fi
+    module_list+=( "${modules_bi}" )
+fi
 
 
 # print_list
