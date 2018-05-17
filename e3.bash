@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, May 13 00:14:13 CEST 2018
-#   version : 0.5.2
+#   date    : Tuesday, May 15 22:56:10 CEST 2018
+#   version : 0.5.3
 
 
 
@@ -772,6 +772,7 @@ case "$1" in
     i2mod)  init2_modules ;;
     bmod)  build_modules ;;
     mod)     all_modules ;;
+    pmod)    git_pull_modules ;;
     # Git Checkout 
     co_base) git_checkout_base    "$2";;
     co_req)  git_checkout_require "$2";;
