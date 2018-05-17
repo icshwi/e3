@@ -577,7 +577,7 @@ while getopts "${options}" opt; do
 	e) ecat="1"    ;;
 	a) area="1"    ;;
 	l) llrf="1"    ;;
-	b) bi="1"    ;;
+	b) bi="1"      ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac
@@ -641,6 +641,17 @@ if ! [ -z "${llrf}" ]; then
 fi
 
 
+if ! [ -z "${bi}" ]; then
+    if [ -z "${only}" ] && [ -z "${common}" ]; then
+	module_list+=( "${modules_common}" )
+	common="2"
+    fi
+     if [ -z "${only}" ] && [ -z "${area}" ]; then
+	module_list+=( "${modules_area}" )
+	area="2"
+    fi
+    module_list+=( "${modules_bi}" )
+fi
 
 
 case "$1" in
