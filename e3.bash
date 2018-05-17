@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, May 13 00:14:13 CEST 2018
-#   version : 0.5.2
+#   date    : Thursday, May 17 09:07:11 CEST 2018
+#   version : 0.5.1
 
 
 
@@ -334,8 +334,11 @@ function build_modules
 
 function module_loading_test_on_iocsh
 {
-    source ${SC_TOP}/e3-require/tools/setE3Env.bash
-
+    pushd ${SC_TOP}/e3-require
+    make requireconf
+    source tools/setE3Env.bash
+    popd
+    
     local IOC_TEST=/tmp/module_loading_test.cmd
     
     {
