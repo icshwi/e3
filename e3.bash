@@ -365,15 +365,15 @@ function module_loading_test_on_iocsh
 	    printf "# >>>>>        VER  ..... ${ver}\n";
 	    printf "# >>>>>\n";
 
-	    if [[ ${mod} == AD* ]]; then
-		printf "#--------------------------------------- \n";
-		printf "# In ADSupport, ADCore, and ADSimDector, \n";
-		printf "# Simply ignore the following errors : \n";
-		printf " epicsEnvSet(\"TOP\",\"${SC_TOP}/${rep}\")\n"
-		printf " cd ${SC_TOP}/${rep}\n"
-		printf " < ${SC_TOP}/${rep}/cmds/load_libs.cmd\n"
-		printf "#--------------------------------------- \n";
-	    fi
+	    # if [[ ${mod} == AD* ]]; then
+	    # 	printf "#--------------------------------------- \n";
+	    # 	printf "# In ADSupport, ADCore, and ADSimDector, \n";
+	    # 	printf "# Simply ignore the following errors : \n";
+	    # 	printf " epicsEnvSet(\"TOP\",\"${SC_TOP}/${rep}\")\n"
+	    # 	printf " cd ${SC_TOP}/${rep}\n"
+	    # 	printf " < ${SC_TOP}/${rep}/cmds/load_libs.cmd\n"
+	    # 	printf "#--------------------------------------- \n";
+	    # fi
 	    printf "require ${mod},${ver}\n";
 	    printf "# >>>>>\n";
 	    printf "#\n#\n"
