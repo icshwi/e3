@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, May 17 09:16:42 CEST 2018
-#   version : 0.5.3
+#   date    : Thursday, May 17 23:15:03 CEST 2018
+#   version : 0.5.4
 
 
 
@@ -357,6 +357,9 @@ function module_loading_test_on_iocsh
 	    done < ${SC_TOP}/${rep}/configure/CONFIG_MODULE
 	    if [ "${mod}" = "StreamDevice" ]; then
 		mod="stream"
+	    fi
+	    if [ "${mod}" = "ethercatmc" ]; then
+		mod="EthercatMC"
 	    fi
 	    printf "#\n#\n"
 	    printf "# >>>>>\n";
