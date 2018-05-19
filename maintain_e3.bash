@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, May 17 09:18:10 CEST 2018
-#   version : 0.3.3
+#   date    : Saturday, May 19 23:48:07 CEST 2018
+#   version : 0.3.4
 
 # Example, how to use
 #
@@ -739,18 +739,6 @@ case "$1" in
     rd_e3)    release_e3 "$2" "delete" ;;
     gpr_e3)   git_push_release_e3 "$2" ;;
 
-    # all : clean, clone 
-    call)  clean_all     ;;
-    gall)  clone_all     ;;
-    # BASE : clean, clone
-    cbase) clean_base    ;;
-    gbase) clone_base    ;;
-    # REQUIRE : clean, clone
-    creq)  clean_require ;;
-    greq)  clone_require ;;
-    # MODULES : clean, clone
-    cmod)  clean_modules ;;
-    gmod)  clone_modules ;;
     # Git Checkout 
     co_base) git_checkout_base    "$2";;
     co_req)  git_checkout_require "$2";;
