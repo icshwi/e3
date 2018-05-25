@@ -1,4 +1,23 @@
-init = {
+e3_checkout = {
+    sh 'echo "E3_EPICS_PATH:=/tmp" > CONFIG_BASE.local'
+    sh 'echo "EPICS_BASE:=/tmp/base-3.15.5" > RELEASE.local'
+
+    dir('e3-base') {
+        git url: "https://github.com/icshwi/e3-base"
+    }
+
+    dir('e3-require') {
+        git url: "https://github.com/icshwi/e3-require"
+    }
+
+    modules.each {
+        dir(it) {
+            git url: "https://github.com/icshwi/${it}"
+        }
+    }
+}
+
+e3_init = {
     dir('e3-base') {
         sh 'make init'
         sh 'make env'
@@ -17,7 +36,7 @@ init = {
     }
 }
 
-build = {
+e3_build = {
     dir('e3-base') {
         sh 'make build'
     }
@@ -34,32 +53,17 @@ build = {
 }
 
 pipeline {
-    agent {
-        label 'docker-ce'
-    }
+    agent none
     stages {
         stage('checkout') {
+            agent {
+                label 'docker-ce'
+            }
             steps {
-                checkout scm
-                sh 'echo "E3_EPICS_PATH:=/tmp" > CONFIG_BASE.local'
-                sh 'echo "EPICS_BASE:=/tmp/base-3.15.5" > RELEASE.local'
-
-                dir('e3-base') {
-                    git url: "https://github.com/icshwi/e3-base"
-                }
-
-                dir('e3-require') {
-                    git url: "https://github.com/icshwi/e3-require"
-                }
-
                 script {
+                    checkout scm
                     def content = readFile 'configure/MODULES_COMMON'
                     modules = content.split('\n').findAll { !it.startsWith('#') }
-                    modules.each {
-                        dir(it) {
-                            git url: "https://github.com/icshwi/${it}"
-                        }
-                    }
                 }
             }
         }
@@ -69,22 +73,43 @@ pipeline {
                     agent {
                         dockerfile {
                             dir 'environments/debian/9'
-                            reuseNode true
+                            label 'docker-ce'
                         }
                     }
                     steps {
                         script {
-                            init()
-                            build()
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
+                        }
+                    }
+                }
+                stage('Ubuntu 17.10') {
+                    agent {
+                        dockerfile {
+                            dir 'environments/ubuntu/17.10'
+                            label 'docker-ce'
+                        }
+                    }
+                    steps {
+                        script {
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
                         }
                     }
                 }
             }
-        }
-    }
-    post {
-        always {
-            cleanWs()
         }
     }
 }
