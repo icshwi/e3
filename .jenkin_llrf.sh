@@ -24,6 +24,6 @@ git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
 git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
 
 
-git config user.email "jeonghan.lee@gmail.com"
-git config user.name "Jeong Han Lee"
+git config --global user.email "jeonghan.lee@gmail.com"
+git config --global user.name "Jeong Han Lee"
 
