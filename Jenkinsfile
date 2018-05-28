@@ -69,10 +69,90 @@ pipeline {
         }
         stage('build') {
             parallel {
+                stage('CentOS 7') {
+                    agent {
+                        dockerfile {
+                            dir 'environments/centos/7'
+                            label 'docker-ce'
+                        }
+                    }
+                    steps {
+                        script {
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
+                        }
+                    }
+                }
+                stage('Debian 8') {
+                    agent {
+                        dockerfile {
+                            dir 'environments/debian/8'
+                            label 'docker-ce'
+                        }
+                    }
+                    steps {
+                        script {
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
+                        }
+                    }
+                }
                 stage('Debian 9') {
                     agent {
                         dockerfile {
                             dir 'environments/debian/9'
+                            label 'docker-ce'
+                        }
+                    }
+                    steps {
+                        script {
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
+                        }
+                    }
+                }
+                stage('Fedora 27') {
+                    agent {
+                        dockerfile {
+                            dir 'environments/fedora/27'
+                            label 'docker-ce'
+                        }
+                    }
+                    steps {
+                        script {
+                            e3_checkout()
+                            e3_init()
+                            e3_build()
+                        }
+                    }
+                    post {
+                        always {
+                            cleanWs()
+                        }
+                    }
+                }
+                stage('Ubuntu 16.04') {
+                    agent {
+                        dockerfile {
+                            dir 'environments/ubuntu/16.04'
                             label 'docker-ce'
                         }
                     }
