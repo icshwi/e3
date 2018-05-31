@@ -1,0 +1,3 @@
+FROM centos:7
+
+RUN yum -y -q makecache && yum -y -q install screen telnet nano unzip git tree emacs xterm ipmitool autoconf libtool automake m4 re2c tclx coreutils graphviz liberation-fonts-common liberation-narrow-fonts liberation-mono-fonts liberation-serif-fonts liberation-sans-fonts logrotate xorg-x11-fonts-misc cpan kernel-devel symlinks readline-devel libXt-devel libXp-devel libXmu-devel libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils net-snmp-devel libxml2-devel libpng12-devel libzip-devel libusb-devel python-devel darcs hdf5-devel boost-devel pcre-devel libusbx-devel systemd-devel hg centos-release-scl make patch
