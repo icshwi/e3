@@ -7,13 +7,15 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 
 
 ## Tested Platforms
-The following Linux distribution were tested with the physical installation. And the Virtual Image on the VirtualBox as well. However, we DO NOT support any container yet, for example Docker. Please understand our resources, since we don't have any resources on the container support. However, you are always welcome to try them with them. If one would like to contribute, please contact us. We are happy to merge any contributions.
+The following Linux distribution were compiled, but Debian and CentOS are highly recommended. Ubuntu has some issues about the loading shared libraries.
 
 
+### Building and Loading Tests
+* Debian 8 
+* Debian 9    
+* CentOS 7.4
 
-* Debian 8 (Jessie)   (Tested)
-* Debian 9 (Stretch)  (Tested)
-* CentOS 7.4          (Tested) 
+### Building Tests
 * Raspbian Stretch    (Tested without AD modules)
 * Ubuntu 14.04.05 LTS (Tested with travis-ci)
 * Ubuntu 16.04.3 LTS (Xenial Xerus) (Tested)
@@ -22,31 +24,74 @@ The following Linux distribution were tested with the physical installation. And
 * Fedora 27 (Workstation Edition) (Tested)
 
 
+## Procedure to duplicate the minimal E3 in your system.
 
-## Procedure to duplicate E3 in your system.
 
 NOTE that if one has the pre-existed EPICS environment, please run the following command first:
 ```
  e3 (master)$ source tools/unset 
 ```
 
-The following command guides us to lead the first glimpse of E3. SUDO permission may be needed.
+
+This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicat the E3 in most Linux flavor without any difficulties. 
+
+Note that the account should be in sudo group, 
+
+### Get e3
+```
+$ git clone https://github.com/icshwi/e3
 
 ```
- e3 (master)$ make build
+
+### Install base within the e3 directory
+
+```
+$ ./e3.bash base
 ```
 
-After finishing the installation, one can test all compiled modules loading via
+### Install require within the e3 directory
 ```
- e3 (master)$ make load
+$ ./e3.base req
 ```
+
+
+### Install common modules within the e3 directory
+
+```
+$ ./e3.bash -c env
+
+>> Vertical display for the selected modules :
+
+    0 : e3-iocStats
+    1 : e3-autosave
+    2 : e3-asyn
+    3 : e3-busy
+    4 : e3-modbus
+    5 : e3-ipmiComm
+    6 : e3-sequencer
+    7 : e3-sscan
+    8 : e3-std
+    9 : e3-ip
+   10 : e3-calc
+   11 : e3-pcre
+   12 : e3-StreamDevice
+   13 : e3-s7plc
+   14 : e3-recsync
+
+$ ./e3.bash -c mod
+
+$ ./e3.bash -c load
+
+```
+
 
 If one see the clean ioc shell, the environment is ready to use. However, one should source the dynamic environment via
 
 ```
 e3 (master)$ source tools/setenv 
 ```
-, because it gives us more flexible way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through 
+, because it gives us more flexible way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through
+
 ```
 e3 (master)$  iocsh.bash cmds/iocStats.cmd 
 ```
@@ -115,14 +160,25 @@ $ bash caget_pvs.bash E3Test_PVs.list EPICS_VERS
 $ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
 ```
 
+If one would like to do more, please visit https://github.com/icshwi/e3training
+
+
+## Outside the e3 directory
+
+Each base, Require module, and others modules have its own MAKEFILE and its own configuration files. Thus, one can put e3-base, e3-require, and all other e3-modules in any directories where one would like to keep.
+
+
+
+
 ## More rich options are defined in e3.bash
+
 
 ### Usage for e3.bash
 ```
 e3 (master)$ ./e3.bash 
 
 
-Usage    : ./e3.bash [ -ctifealo ] <option> 
+Usage    : ./e3.bash [ -ctifealbo ] <option> 
 
 
            -c     : common      : epics modules
@@ -131,11 +187,11 @@ Usage    : ./e3.bash [ -ctifealo ] <option>
            -f{ci} : ifc nonfree : ifc modules with user accounts
            -e{c}  : ecat        : ethercat modules
            -a{c}  : area        : area detector modules / BI Modules
-           -l{c}  : llrf        : Old LLRF modules
-                    {c,ci}      : Enable by default if not defined (dependent modules)
-   	   -o     : only        : ignore dependent modules
-	                          Option -e is actually -ec, however,
-				  -eo means only -e. 
+           -l{c}  : llrf        : old LLRF modules
+           -b{ca} : bi          : beam instrumentation modules (based on AD)
+           {c,ci} : dep modules : enable by default if not defined (dependent modules)
+             -o   : only        : ignore dependent modules
+                                  the option -e is actually -ec. And -eo means -e.
 
 
  < option > 
@@ -192,6 +248,9 @@ source tools/use_sshkey.sh
 ```
 
 ### Examples :
+
+
+
 
 * 
 ```
