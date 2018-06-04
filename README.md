@@ -33,7 +33,7 @@ NOTE that if one has the pre-existed EPICS environment, please run the following
 ```
 
 
-This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicat the E3 in most Linux flavor without any difficulties. 
+This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
 
 Note that the account should be in sudo group, 
 
@@ -51,7 +51,7 @@ $ ./e3.bash base
 
 ### Install require within the e3 directory
 ```
-$ ./e3.base req
+$ ./e3.bash req
 ```
 
 
