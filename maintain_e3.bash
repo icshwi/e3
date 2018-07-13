@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Saturday, May 19 23:48:07 CEST 2018
-#   version : 0.3.4
+#   date    : Sunday, June 24 00:15:05 CEST 2018
+#   version : 0.3.5
 
 # Example, how to use
 #
@@ -555,19 +555,6 @@ function usage
 }
 
 
-
-common=""
-timing=""
-ifcfree=""
-ifcnfree=""
-ecat=""
-area=""
-llrf=""
-bi=""
-only=""
-
-options=ctifealbo
-
 while getopts "${options}" opt; do
     case "${opt}" in
 	c) common="1"  ;;
@@ -578,81 +565,14 @@ while getopts "${options}" opt; do
 	a) area="1"    ;;
 	l) llrf="1"    ;;
 	b) bi="1"      ;;
+	4) epicsv4="1" ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac
 done
 shift $((OPTIND-1)) # remove parsed options and args from $@ list
 
-
-if ! [ -z "${common}" ]; then
-    module_list+=( "${modules_common}" )
-fi
-
-if ! [ -z "${timing}" ]; then
-    module_list+=( "${modules_timing}" )
-fi
-
-
-if ! [ -z "${ifcfree}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	    module_list+=( "${modules_common}" );
-	    common="2"
-    fi
-    module_list+=( "${modules_ifc_free}" )
-fi
-
-if ! [ -z "${ifcnfree}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-     if [ -z "${only}" ] && [ -z "${ifcfree}" ]; then
-	module_list+=( "${modules_ifc_free}" )
-	ifcfree="2"
-    fi
-    module_list+=( "${modules_ifc_nonfree}" )
-fi
-
-
-if ! [ -z "${ecat}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_ecat}" )
-fi
-
-if ! [ -z "${area}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_area}" )
-fi
-
-
-if ! [ -z "${llrf}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_llrf}" )
-fi
-
-
-if ! [ -z "${bi}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-     if [ -z "${only}" ] && [ -z "${area}" ]; then
-	module_list+=( "${modules_area}" )
-	area="2"
-    fi
-    module_list+=( "${modules_bi}" )
-fi
-
+module_list_func
 
 case "$1" in
 

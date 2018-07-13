@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, May 17 23:15:03 CEST 2018
-#   version : 0.5.4
+#   date    : Sunday, June 24 00:15:01 CEST 2018
+#   version : 0.5.5
 
 
 
@@ -519,18 +519,6 @@ function usage
 
 
 
-common=""
-timing=""
-ifcfree=""
-ifcnfree=""
-ecat=""
-area=""
-llrf=""
-bi=""
-only=""
-
-options=ctifealbo
-
 while getopts "${options}" opt; do
     case "${opt}" in
 	c) common="1"  ;;
@@ -540,179 +528,18 @@ while getopts "${options}" opt; do
 	e) ecat="1"    ;;
 	a) area="1"    ;;
 	l) llrf="1"    ;;
-	b) bi="1"    ;;
+	b) bi="1"      ;;
+	4) epicsv4="1" ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac
 done
 shift $((OPTIND-1)) # remove parsed options and args from $@ list
 
-
-if ! [ -z "${common}" ]; then
-    module_list+=( "${modules_common}" )
-fi
-
-if ! [ -z "${timing}" ]; then
-    module_list+=( "${modules_timing}" )
-fi
-
-
-if ! [ -z "${ifcfree}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	    module_list+=( "${modules_common}" );
-	    common="2"
-    fi
-    module_list+=( "${modules_ifc_free}" )
-fi
-
-if ! [ -z "${ifcnfree}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-     if [ -z "${only}" ] && [ -z "${ifcfree}" ]; then
-	module_list+=( "${modules_ifc_free}" )
-	ifcfree="2"
-    fi
-    module_list+=( "${modules_ifc_nonfree}" )
-fi
-
-
-if ! [ -z "${ecat}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_ecat}" )
-fi
-
-if ! [ -z "${area}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_area}" )
-fi
-
-
-if ! [ -z "${llrf}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-    module_list+=( "${modules_llrf}" )
-fi
-
-
-if ! [ -z "${bi}" ]; then
-    if [ -z "${only}" ] && [ -z "${common}" ]; then
-	module_list+=( "${modules_common}" )
-	common="2"
-    fi
-     if [ -z "${only}" ] && [ -z "${area}" ]; then
-	module_list+=( "${modules_area}" )
-	area="2"
-    fi
-    module_list+=( "${modules_bi}" )
-fi
+module_list_func
 
 
 # print_list
-
-
-
-
-# while getopts " :g:" opt; do
-#     case "${opt}" in
-# 	g)
-# 	    GROUP_NAME=${OPTARG}
-# 	    ;;
-# 	*)
-# 	    usage
-# 	    ;;
-#     esac
-# done
-# shift $((OPTIND-1))
-
-
-# # ifc_free should be installed before ifc_nonfree
-# case "${GROUP_NAME}" in
-#     common)
-# 	module_list+=( "${modules_common}" )
-# 	;;
-#     timing*)
-# 	module_list+=( "${modules_timing}" )
-# 	;;
-#     ifc)
-# 	module_list+=( "${modules_ifc_free}"    )
-# 	module_list+=( "${modules_ifc_nonfree}" )
-# 	;;
-#     ifc1)
-# 	module_list+=( "${modules_ifc_free}"    )
-# 	;;
-#     ifc2)
-# 	module_list+=( "${modules_ifc_nonfree}" )
-# 	;;
-#     ecat)
-# 	module_list+=( "${modules_ecat}"   )
-# 	;;
-#     area)
-# 	module_list+=( "${modules_area}"   )
-# 	;;
-#     test)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	;;
-#     test2)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"   )
-# 	module_list+=( "${modules_area}"   )
-# 	;;
-#     test3)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"   )
-# 	;;
-#     test4)
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"    )
-# 	module_list+=( "${modules_ifc_nonfree}"   )
-# 	module_list+=( "${modules_area}"   )
-# 	module_list+=( "${modules_ecat}"   )
-# 	;;
-#     test5)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"    )
-# 	module_list+=( "${modules_ifc_nonfree}"   )
-# 	module_list+=( "${modules_area}"   )
-# 	;;
-#     test6)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_area}"   )
-# 	;;
-#     jhlee)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"   )
-# 	module_list+=( "${modules_area}"   )
-# 	;;
-#     all)
-# 	module_list+=( "${modules_common}" )
-# 	module_list+=( "${modules_timing}" )
-# 	module_list+=( "${modules_ifc_free}"   )
-# 	module_list+=( "${modules_ifc_nonfree}"   )
-# 	module_list+=( "${modules_area}"   )
-# 	module_list+=( "${modules_ecat}"   )
-# 	;;
-#     * )
-# 	module_list+=( "" )
-	
-# 	;;
-    
-# esac
 
 
 case "$1" in
