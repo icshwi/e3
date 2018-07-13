@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, May  4 09:38:43 CEST 2018
-#   version : 0.3.2
+#   date    : Friday, June 15 12:13:39 CEST 2018
+#   version : 0.4.3
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -58,6 +58,10 @@ declare -g  _E3_MODULE_GITURL_FULL=""
 . ${SC_TOP}/.create_e3_mod_functions.cfg
 
 
+
+targetpath=""
+remotesrc=""
+localsrc=""
 
 
 function usage
@@ -101,50 +105,85 @@ function module_info
     printf ">> \n";
     printf "EPICS_MODULE_NAME  : %64s\n" "${_EPICS_MODULE_NAME}"
     printf "E3_MODULE_SRC_PATH : %64s\n" "${_E3_MODULE_SRC_PATH}"
-    printf "EPICS_MODULE_URL   : %64s\n" "${epics_mod_url}"
+    if ! [ -z "${remotesrc}" ]; then
+	printf "EPICS_MODULE_URL   : %64s\n" "${epics_mod_url}"
+    fi
     printf "E3_TARGET_URL      : %64s\n" "${e3_target_url}"
 
     printf ">> \n";
     printf "e3 module name     : %64s\n" "${_E3_MOD_NAME}"
-    printf "e3 module url full : %64s\n" "${_E3_MODULE_GITURL_FULL}"
+    if ! [ -z "${remotesrc}" ]; then
+	printf "e3 module url full : %64s\n" "${_E3_MODULE_GITURL_FULL}"
+    fi
     printf "e3 target url full : %64s\n" "${_E3_TGT_URL_FULL}"
     printf ">> \n";
 
     
 }
 
-while getopts " :m:d:" opt; do
+options=":r:m:d:l:"
+
+while getopts "${options}" opt; do
     case "${opt}" in
-	m)  MODULE_CONF=${OPTARG} ;;
-	d)  E3_MODULE_PATH=${OPTARG}   ;;
-	*)  usage                 ;;
+	m)
+	    remotesrc="1";
+	    MODULE_CONF=${OPTARG} ;
+	    ;;
+	r)
+	    remotesrc="1";
+	    MODULE_CONF=${OPTARG} ;
+	    ;;
+	d)
+	    targetpath="1";
+	    E3_MODULE_PATH=${OPTARG};
+	    ;;
+	l)
+	    localsrc="1";
+	    MODULE_CONF=${OPTARG};
+	    ;;
+	*)
+	    usage
+	    ;;
     esac
 done
 shift $((OPTIND-1))
 
-if [ -z "${MODULE_CONF}" ] ; then
-    usage
+if [ -z "${remotesrc}" ] ; then
+    if [ -z "${localsrc}" ]; then
+	usage
+    fi
 fi
 
-if [ -z "${E3_MODULE_PATH}" ]; then
+if [ -z "${targetpath}" ]; then
     E3_MODULE_PATH=${PWD}
 fi
 
 
+# REMOTE SRC or LOCAL SRC
+# The configuration file should contain the following two entries:
+#
+# EPICS_MODULE_NAME:=
+# E3_MODULE_SRC_PATH:=
+# E3_TARGET_URL:=
+
 if [[ $(checkIfFile "${MODULE_CONF}") -eq "NON_EXIST" ]]; then
     die 1 "ERROR at ${FUNCNAME[*]} : we cannot find the input file >>${release_file}<<";
+else
+    _EPICS_MODULE_NAME="$(read_file_get_string   "${MODULE_CONF}" "EPICS_MODULE_NAME:=")";
+    _E3_MODULE_SRC_PATH="$(read_file_get_string  "${MODULE_CONF}" "E3_MODULE_SRC_PATH:=")";
+    e3_target_url="$(read_file_get_string        "${MODULE_CONF}" "E3_TARGET_URL:=")";
+    if ! [ -z "${remotesrc}" ]; then
+	epics_mod_url="$(read_file_get_string        "${MODULE_CONF}" "EPICS_MODULE_URL:=")";
+    fi
 fi
-
-
-_EPICS_MODULE_NAME="$(read_file_get_string   "${MODULE_CONF}" "EPICS_MODULE_NAME:=")";
-_E3_MODULE_SRC_PATH="$(read_file_get_string  "${MODULE_CONF}" "E3_MODULE_SRC_PATH:=")";
-epics_mod_url="$(read_file_get_string        "${MODULE_CONF}" "EPICS_MODULE_URL:=")";
-e3_target_url="$(read_file_get_string        "${MODULE_CONF}" "E3_TARGET_URL:=")";
 
 
 _E3_MOD_NAME=e3-${_EPICS_MODULE_NAME}
 
-_E3_MODULE_GITURL_FULL=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
+if ! [ -z "${remotesrc}" ]; then
+     _E3_MODULE_GITURL_FULL=${epics_mod_url}/${_E3_MODULE_SRC_PATH}
+fi
+
 _E3_TGT_URL_FULL=${e3_target_url}/${_E3_MOD_NAME}
 
 
@@ -154,8 +193,17 @@ E3_MODULE_DEST=${E3_MODULE_PATH}/${_E3_MOD_NAME};
 module_info;
 
 ## Create the entire directory once
+#├── cmds
+#├── configure
+#│   └── E3
+#├── docs
+#├── opi
+#├── patch
+#│   └── Site
+#└── template
 
-mkdir -p ${E3_MODULE_DEST}/{configure/E3,patch/Site,docs}  ||  die 1 "We cannot create directories : Please check it" ;
+#
+mkdir -p ${E3_MODULE_DEST}/{configure/E3,patch/Site,docs,cmds,template,opi}  ||  die 1 "We cannot create directories : Please check it" ;
 
 
 
@@ -181,10 +229,15 @@ touch ${LOG}
 ## Going into ${E3_MODULE_DEST}
 pushd ${E3_MODULE_DEST}
 
+
 git init ||  die 1 "We cannot git init in ${_E3_MOD_NAME} : Please check it" ;
 
-## add submodule
-add_submodule "${_E3_MODULE_GITURL_FULL}" "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot add ${_E3_MODULE_GITURL_FULL} as git submodule ${_E3_MOD_NAME} : Please check it" ;
+
+if ! [ -z "${localsrc}" ]; then
+    mkdir -p "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot create directories : Please check it" ;
+else
+    add_submodule "${_E3_MODULE_GITURL_FULL}" "${_E3_MODULE_SRC_PATH}" ||  die 1 "We cannot add ${_E3_MODULE_GITURL_FULL} as git submodule ${_E3_MOD_NAME} : Please check it" ;
+fi
 
 ## add the default .gitignore
 add_gitignore
