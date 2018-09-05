@@ -27,12 +27,6 @@ The following Linux distribution were compiled, but Debian and CentOS are highly
 ## Procedure to duplicate the minimal E3 in your system.
 
 
-NOTE that if one has the pre-existed EPICS environment, please run the following command first:
-```
- e3 (master)$ source tools/unset 
-```
-
-
 This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
 
 Note that the account should be in sudo group, 
