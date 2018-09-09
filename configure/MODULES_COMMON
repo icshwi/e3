@@ -4,7 +4,7 @@ e3-asyn
 e3-busy
 e3-modbus
 e3-ipmiComm
-e3-sequencer
+e3-seq
 e3-sscan
 #e3-motor
 e3-std
