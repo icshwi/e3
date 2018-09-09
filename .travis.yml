@@ -1,6 +1,9 @@
 sudo: enabled
 dist: trusty
 language: generic
+branches:
+  only:
+    - master
 
 git:
   submodules: false
