@@ -11,11 +11,9 @@ e3-busy
 e3-modbus
 e3-ipmiComm
 #e3-lua
-e3-sequencer
+e3-seq
 e3-sscan
 e3-ip
 e3-calc
 e3-StreamDevice
-#
-#e3-ecat2
-#e3-ecat2db
+
