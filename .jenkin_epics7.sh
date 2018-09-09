@@ -13,9 +13,11 @@ epics_base="${TARGET}/base-${VERSION}"
 
 echo ""
 echo ">>> Creating CONFIG_BASE.local ... "
-echo "E3_EPICS_PATH:=${TARGET}"       > CONFIG_BASE.local
+echo "E3_EPICS_PATH:=${TARGET}"          > CONFIG_BASE.local
 echo "EPICS_BASE_TAG:=tags/R${VERSION}" >> CONFIG_BASE.local
-echo "E3_BASE_VERSION:=${VERSION}" >> CONFIG_BASE.local
+echo "E3_BASE_VERSION:=${VERSION}"      >> CONFIG_BASE.local
+echo "E3_CROSS_COMPILER_TARGET_ARCHS =" >> CONFIG_BASE.local
+
 
 echo ""
 echo ">>> Creating RELEASE.local ... "
