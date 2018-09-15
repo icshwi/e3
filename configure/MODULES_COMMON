@@ -14,5 +14,6 @@ e3-pcre
 e3-StreamDevice
 e3-s7plc
 e3-recsync
+e3-MCoreUtils
 #e3-snmp3
 
