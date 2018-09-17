@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, June 24 00:15:05 CEST 2018
-#   version : 0.3.5
+#   date    : Monday, September 17 11:24:47 CEST 2018
+#   version : 0.3.6
 
 # Example, how to use
 #
@@ -555,6 +555,7 @@ while getopts "${options}" opt; do
 	l) llrf="1"    ;;
 	b) bi="1"      ;;
 	4) epicsv4="1" ;;
+	d) develop="1" ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac
@@ -589,6 +590,7 @@ case "$1" in
     diff)     git_diff "$2"  	;;
     checkout) git_checkout "$2" ;;
     add)      git_add "$2"      ;;
+    rm)       git_rm "$2"       ;;
     commit)   git_commit "$2" 	;;
     # git push for selected modules
     push)       git_push            ;;

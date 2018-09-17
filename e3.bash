@@ -19,15 +19,11 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, June 24 00:15:01 CEST 2018
-#   version : 0.5.5
-
-
-
+#   date    : Monday, September 17 11:25:00 CEST 2018
+#   version : 0.5.6
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
-
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -530,6 +526,7 @@ while getopts "${options}" opt; do
 	l) llrf="1"    ;;
 	b) bi="1"      ;;
 	4) epicsv4="1" ;;
+	d) develop="1" ;;
 	o) only="1"    ;;
 	*) usage ;;
     esac

@@ -1,0 +1,23 @@
+e3-seq
+e3-snmp
+#e3-ethmod
+e3-ADPluginEdge
+e3-ADPluginCalib
+e3-ADSpinnaker
+
+#
+# IOCs
+#e3-fms14
+e3-sorensensga30x501d
+e3-sorensenXG125120
+#e3-npm
+e3-fimioc
+#
+# Training
+e3-TrIoIntr
+e3-TrRecProcess
+
+# Something else
+e3-admisc
+e3-adpico8
+e3-amcpico8
