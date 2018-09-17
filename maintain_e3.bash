@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, September 17 11:24:47 CEST 2018
-#   version : 0.3.6
+#   date    : Monday, September 17 23:40:04 CEST 2018
+#   version : 0.3.7
 
 # Example, how to use
 #
@@ -601,6 +601,9 @@ case "$1" in
     #    delete_lines) delete_lines_starting_from "$2"  ;;
     copy)
 	copy_a_file "$2"
+	;;
+    insert)
+	insert_a_string_to_after_a_specific_string "$2" "$3" "$4"
 	;;
     append)
 	# Example, for append

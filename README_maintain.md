@@ -84,3 +84,12 @@ $  bash maintain_e3.bash -ctileo push
 
 
 ```
+## Insert a string to a file the after a specific string
+```
+$ ./maintain_e3.bash -c insert "configure/RELEASE" "# The definitions shown*" "-include \$(TOP)/../../RELEASE.local"
+$ ./maintain_e3.bash -ctifeabl4d diff "--stat configure/RELEASE"
+$ ./maintain_e3.bash -ctifeabl4d insert "configure/RELEASE_DEV" "# The definitions shown*" "-include \$(TOP)/../../RELEASE_DEV.local"
+./maintain_e3.bash -ctifeabl4d diff "--stat"
+
+
+```
