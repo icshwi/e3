@@ -98,7 +98,7 @@ if test "${BASE_VERSION#*$epics7string}" != "$BASE_VERSION"; then
 
     cat ${SC_TOP}/configure/MODULES_COMMON
     if [ -z "$SEQ_VERSION" ]; then
-	SEQ_VERSION="2.6.8"
+	SEQ_VERSION="2.2.6"
     fi
 elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
     printf "EPICS %s is detected\n" "${BASE_VERSION}"
