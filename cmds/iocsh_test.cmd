@@ -2,6 +2,8 @@
 require iocStats,ae5d083
 require recsync,1.3.0
 require autosave,5.9.0
+require MCoreUtils,1.2.1
+
 
 epicsEnvSet("SEC", "SEC")
 epicsEnvSet("SUB", "SUB01")
