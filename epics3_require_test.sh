@@ -102,3 +102,7 @@ echo "bash e3.bash base"
 echo "bash e3.bash devreq"
 echo "bash e3.bash -ctifealb mod"
 
+
+
+git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
+git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
