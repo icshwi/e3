@@ -76,12 +76,13 @@ E3_BASE_VERSION:=${BASE_VERSION}
 
 
 
-cat > CONFIG_BASE.local <<EOF
+cat > ${SC_TOP}/CONFIG_BASE.local <<EOF
 $config_base
 EOF
 
-cat CONFIG_BASE.local
-
+echo ">>> CONFIG_BASE.local"
+cat ${SC_TOP}/CONFIG_BASE.local
+echo ">>>"
 
 epics7string="7."
 epics315string="3.15."
@@ -101,8 +102,6 @@ if test "${BASE_VERSION#*$epics7string}" != "$BASE_VERSION"; then
 	SEQ_VERSION="2.2.6"
     fi
 elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
-    printf "EPICS %s is detected\n" "${BASE_VERSION}"
-    printf "\n";
     printf "Switch sequrencer to 2.1\n"
     
     sed -i 's/^e3-seq/#e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
@@ -118,6 +117,17 @@ else
 fi
 
 
+config_require="
+EPICS_MODULE_TAG:=tags/v${REQUIRE_VERSION}
+"
+
+cat > ${SC_TOP}/REQUIRE_CONFIG_MODULE.local <<EOF
+$config_require
+EOF
+
+echo ">>> REQUIRE_CONFIG_MODULE"
+cat ${SC_TOP}/REQUIRE_CONFIG_MODULE.local
+echo ">>>"
 
 
 
@@ -129,12 +139,12 @@ E3_SEQUENCER_VERSION:=${SEQ_VERSION}
 "
 
 
-cat > RELEASE.local <<EOF
+cat > ${SC_TOP}/RELEASE.local <<EOF
 $release
 EOF
-
-cat RELEASE.local
-
+echo ">>> RELEASE.local"
+cat ${SC_TOP}/RELEASE.local
+echo ">>>"
 
 
 
@@ -142,8 +152,8 @@ git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
 git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
 
 
-
-echo "Please run the following commands"
+echo ""
+echo "Run the following..."
 echo "bash e3.bash base"
 echo "bash e3.bash req"
 echo "bash e3.bash -ctifealb mod"
