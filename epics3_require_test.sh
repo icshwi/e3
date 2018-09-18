@@ -48,7 +48,7 @@ if [ -z "$TARGET" ]; then
 fi
 
 VERSION="3.15.5"
-REQUIRE_VERSION="3.0.1"
+REQUIRE_VERSION="3.0.2"
 SEQ_VERSION="2.1.21"
 
 
