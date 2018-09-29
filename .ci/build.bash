@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-bash e3.bash -ctia4a all2
-#bash e3.bash -g jhlee load
+bash e3.bash -ctia4 all2
+
 
 

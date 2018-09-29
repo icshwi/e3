@@ -12,7 +12,7 @@ before_install:
    - "export TERM=dumb"
    - sudo apt-get -qq update
    - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev  
-   - sh .travis.sh 
+   -  bash e3_building_test.bash -t ${HOME}/build/epics -r 3.0.2
    
 install:
    - ./.ci/build.bash
