@@ -1,4 +1,4 @@
-E3 : European Spallation Source EPICS Environment
+e3 developing environment
 ======
 
 [![Build Status](https://travis-ci.org/icshwi/e3.svg?branch=master)](https://travis-ci.org/icshwi/e3)
@@ -7,33 +7,34 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 
 
 ## Tested Platforms
-The following Linux distribution were compiled, but Debian and CentOS are highly recommended. Ubuntu has some issues about the loading shared libraries.
 
+* Building, requiring (loading), and running modules should be tested carefully if one would like to run an EPICS IOC within e3.
+* The following Linux distribution covers Building and Requireing Tests.
 
-### Building and Loading Tests
+### Building and Requring Tests
 * Debian 8 
 * Debian 9    
 * CentOS 7
 * Ubuntu 18.04
 
-### Building Tests
-* Raspbian Stretch    (Tested without AD modules)
-* Ubuntu 14.04.05 LTS (Tested with travis-ci)
-* Ubuntu 16.04.3 LTS (Xenial Xerus) (Tested)
-* Ubuntu 17.10 (Artful Aardvark) (Tested)
-* LinuxMint 18.3 (sylvia) (Tested)
-* Fedora 27 (Workstation Edition) (Tested)
+### Building Test (Not all modules)
+* Raspbian Stretch    
+* Ubuntu 14.04.05 LTS (travis-ci)
+* Ubuntu 16.04.3 LTS 
+* Ubuntu 17.10 (Artful Aardvark)
+* LinuxMint 18.3 (sylvia) 
+* Fedora 27 (Workstation Edition)
 
 
 ## Procedure to duplicate the minimal E3 in your system.
 
-* This procedure has many assuptioms, so it is most-likely "doesn't work". Thus please look at the other site in order to duplicate e3 at https://github.com/icshwi/e3-builder
+* This procedure has many assumptions, so it is most-likely "doesn't work". Thus please look at the other site in order to duplicate e3 at https://github.com/icshwi/e3-builder
 
-* However, if one would like to challenge this, please followed instruction.
+* However, if one would like to challenge this, please follow the below basic instruction.
 
 * This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
 
-Note that the user account should be in sudo group. And please install "git make" first.  
+Note that the user account should be in sudo group. And please install "git" and "make" first.  
 
 ### Get e3
 ```
@@ -171,11 +172,8 @@ Each base, Require module, and others modules have its own MAKEFILE and its own 
 
 
 
-
-## More rich options are defined in e3.bash
-
-
-### Usage for e3.bash
+## 
+## Usage for e3.bash
 ```
 e3 (master)$ ./e3.bash 
 
@@ -241,7 +239,7 @@ Usage    : ./e3.bash [ -ctifealbo ] <option>
 
 ```
 
-### SSH KEY Usage
+## SSH KEY Usage
 
 One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one.
 
@@ -249,7 +247,7 @@ One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree*
 source tools/use_sshkey.sh
 ```
 
-### Examples :
+## Examples :
 
 
 
@@ -271,3 +269,14 @@ $ ./e3.bash -c ball
 $ ./e3.bash -c load
 ```
 
+## Customized e3 Building
+
+If one would like to see the upcoming EPICS 7 with e3
+
+```
+$ bash  e3_building_test.bash -t /epics/test -b 7.0.1.1
+$ bash e3.bash base
+$ bash e3.bash req
+$ bash e3.bash -c mod
+```
+Note that the -4 option is not necessary, because 7 has 4 already in base.

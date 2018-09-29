@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, September 18 19:51:22 CEST 2018
-# version : 0.0.2
+# Date    : Saturday, September 29 23:01:53 CEST 2018
+# version : 0.0.4
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -27,7 +27,34 @@ declare -gr SC_TOP="${SC_SCRIPT%/*}"
 
 declare -g TARGET="";
 
-options="t:b:r:s:"
+
+
+declare -gr DEFAULT_TARGET_PATH="/epics"
+declare -gr DEFAULT_BASE_VERSION="3.15.5"
+declare -gr DEFAULT_REQ_VERSION="3.0.2"
+declare -gr DEFAULT_SEQ_VERSION="2.1.21"
+
+
+function usage
+{
+    {
+	echo "";
+	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-s <sequencer_version>] " ;
+	echo "";
+	echo "               -t : default ${DEFAULT_TARGET_PATH}"
+	echo "               -b : default ${DEFAULT_BASE_VERSION}"
+	echo "               -r : default ${DEFAULT_REQ_VERSION}"
+	echo "               -s : default ${DEFAULT_SEQ_VERSION}"
+	echo "";
+	echo " bash $0 -t /epics/test/ -r 3.0.0"
+	echo ""
+	
+    } 1>&2;
+    exit 1; 
+}
+
+
+options=":t:b:r:s:h"
 
 
 while getopts "${options}" opt; do
@@ -44,6 +71,13 @@ while getopts "${options}" opt; do
 	s)
 	    SQU_VERSION=${OPTARG} ;
             ;;
+	:)
+	    echo "Option -$OPTARG requires an argument." >&2
+	    exit 1
+	    ;;
+	h)
+	    usage
+	    ;;
 	\?)
 	    echo "Invalid option: -$OPTARG" >&2
 	    exit
@@ -53,15 +87,15 @@ done
 shift $((OPTIND-1))
 
 if [ -z "$TARGET" ]; then
-    TARGET="/epics"
+    TARGET=${DEFAULT_TARGET_PATH}
 fi
 
 if [ -z "$BASE_VERSION" ]; then
-    BASE_VERSION="3.15.5"
+    BASE_VERSION=${DEFAULT_BASE_VERSION}
 fi
 
 if [ -z "$REQUIRE_VERSION" ]; then
-    REQUIRE_VERSION="3.0.0"
+    REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
 fi
 
 
@@ -74,12 +108,13 @@ E3_BASE_VERSION:=${BASE_VERSION}
 #E3_CROSS_COMPILER_TARGET_ARCHS =
 "
 
-
-
 cat > ${SC_TOP}/CONFIG_BASE.local <<EOF
 $config_base
 EOF
 
+echo ""
+echo ">>> EPICS BASE Configuration "
+echo ""
 echo ">>> CONFIG_BASE.local"
 cat ${SC_TOP}/CONFIG_BASE.local
 echo ">>>"
@@ -109,7 +144,7 @@ elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
 
     cat ${SC_TOP}/configure/MODULES_COMMON
       if [ -z "$SEQ_VERSION" ]; then
-	  SEQ_VERSION="2.1.21"
+	  SEQ_VERSION=${DEFAULT_SEQ_VERSION}
       fi
 else
     printf "Don't support it\n";
@@ -147,16 +182,15 @@ cat ${SC_TOP}/RELEASE.local
 echo ">>>"
 
 
-
 git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
 git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
 
 
 echo ""
-echo "Run the following..."
+echo ">>> Run the following..."
 echo "bash e3.bash base"
 echo "bash e3.bash req"
-echo "bash e3.bash -ctifealb mod"
+echo "bash e3.bash -c mod"
 
 
 exit
