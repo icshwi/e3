@@ -91,10 +91,12 @@ if [ -z "$TARGET" ]; then
 fi
 
 if [ -z "$BASE_VERSION" ]; then
+    printf "No BASE version is defined, use the default one %s\n" "${DEFAULT_BASE_VERSION}"
     BASE_VERSION=${DEFAULT_BASE_VERSION}
 fi
 
 if [ -z "$REQUIRE_VERSION" ]; then
+    printf "No REQUIRE version is defined, use the default one %s\n" "${DEFAULT_REQ_VERSION}"
     REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
 fi
 
