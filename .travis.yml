@@ -2,6 +2,7 @@ sudo: enabled
 dist: trusty
 language: generic
 
+
 branches:
   only:
     - master
@@ -14,12 +15,15 @@ env:
 #   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=cti
 #   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=cti
 
+cache:
+  directories:
+  - ${TARGET}
+
+
 jobs:
   include:
     - stage: building
-      cache:
-        directories:
-     	 - ${TARGET}
+
 
       before_install:
       - "export TERM=dumb"
