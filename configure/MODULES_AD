@@ -2,6 +2,6 @@ e3-ADSupport
 e3-ADCore
 e3-ADSimDetector
 e3-ADAndor
-e3-ADAndor3
+#e3-ADAndor3
 e3-ADPointGrey
 e3-ADProsilica
