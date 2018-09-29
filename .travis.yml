@@ -2,7 +2,6 @@ sudo: enabled
 dist: trusty
 language: generic
 
-
 branches:
   only:
     - master
@@ -15,35 +14,20 @@ env:
 #   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=cti
 #   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=cti
 
-cache:
-  directories:
-  - ${TARGET}
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev  
+  - cp -r $TRAVIS_BUILD_DIR ${TARGET}
+  - cd ${TARGET}
+  - echo ${PWD}
 
-jobs:
-  include:
-    - stage: building
+install:
+  - bash e3_building_test.bash -t ${TARGET}/epics -b ${BASE} -r ${REQUIRE}
 
-
-      before_install:
-      - "export TERM=dumb"
-      - sudo apt-get -qq update
-      - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev  
-      - cp -r $TRAVIS_BUILD_DIR ${TARGET}
-      - cd ${TARGET}
-      - echo ${PWD}
-   
-      install:
-      - bash e3_building_test.bash -t ${TARGET}/epics -b ${BASE} -r ${REQUIRE}
-      script:
-      - bash e3.bash -${BUILDING_MOD} all2
-
-    - stage: e3 environment sourcing test
-      script:
-      - source ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-
-    - stage: compiled modules loading test
-      script:
-      - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log&
-      - kill -9 $!
-      - cat requiring_test_log
+script:
+  - bash e3.bash -${BUILDING_MOD} all2
+  - source ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+  - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log&
+  - kill -9 $!
+  - cat requiring_test_log
