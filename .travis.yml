@@ -30,12 +30,12 @@ jobs:
       script:
       - bash e3.bash -${BUILDING_MOD} all2
 
-    - stage: sourcing test
+    - stage: e3 environment sourcing test
       script:
       - source ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
 
-    - stage: requiring test
+    - stage: compiled modules loading test
       script:
-      - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log
+      - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log&
       - kill -9 $!
       - cat requiring_test_log
