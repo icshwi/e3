@@ -17,7 +17,7 @@ env:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev 
+  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree 
   - cp -r $TRAVIS_BUILD_DIR ${TARGET}
   - cd ${TARGET}
   - echo ${PWD}
@@ -30,6 +30,7 @@ script:
 
 after_success:
   - echo ${PWD}
+  - tree ${PWD}
   - cat ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log&
   - kill -9 $!
