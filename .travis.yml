@@ -9,10 +9,10 @@ git:
   submodules: false
 
 env:
-   - TARGET=${HOME}/build/1 BASE=3.15.5  REQUIRE=3.0.0 BUILDING_MOD=c
-   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=c
-#   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctia
-#   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
+   - TARGET=${HOME}/build/1 BASE=3.15.5  REQUIRE=3.0.0 BUILDING_MOD=ctia4
+   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctia4
+   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctia
+   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
      
 before_install:
    - "export TERM=dumb"
@@ -20,6 +20,7 @@ before_install:
    - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev  
    - cp -r $TRAVIS_BUILD_DIR ${TARGET}
    - cd ${TARGET}
+   - echo ${PWD}
    
 install:
    -  bash e3_building_test.bash -t ${TARGET}/epics -b ${BASE} -r ${REQUIRE}
