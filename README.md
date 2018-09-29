@@ -13,7 +13,8 @@ The following Linux distribution were compiled, but Debian and CentOS are highly
 ### Building and Loading Tests
 * Debian 8 
 * Debian 9    
-* CentOS 7.4
+* CentOS 7
+* Ubuntu 18.04
 
 ### Building Tests
 * Raspbian Stretch    (Tested without AD modules)
@@ -26,10 +27,13 @@ The following Linux distribution were compiled, but Debian and CentOS are highly
 
 ## Procedure to duplicate the minimal E3 in your system.
 
+* This procedure has many assuptioms, so it is most-likely "doesn't work". Thus please look at the other site in order to duplicate e3 at https://github.com/icshwi/e3-builder
 
-This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
+* However, if one would like to challenge this, please followed instruction.
 
-Note that the account should be in sudo group, 
+* This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
+
+Note that the user account should be in sudo group. And please install "git make" first.  
 
 ### Get e3
 ```
@@ -52,10 +56,11 @@ $ ./e3.bash req
 ### Install common modules within the e3 directory
 
 ```
-$ ./e3.bash -c env
+e3 (master)$ bash e3.bash -c vars
 
 >> Vertical display for the selected modules :
 
+ Modules List 
     0 : e3-iocStats
     1 : e3-autosave
     2 : e3-asyn
@@ -67,14 +72,17 @@ $ ./e3.bash -c env
     8 : e3-std
     9 : e3-ip
    10 : e3-calc
-   11 : e3-pcre
-   12 : e3-StreamDevice
-   13 : e3-s7plc
-   14 : e3-recsync
+   11 : e3-delaygen
+   12 : e3-pcre
+   13 : e3-StreamDevice
+   14 : e3-s7plc
+   15 : e3-recsync
+   16 : e3-MCoreUtils
 
-$ ./e3.bash -c mod
 
-$ ./e3.bash -c load
+e3 (master)$ bash e3.bash -c mod
+
+e3 (master)$ bash e3.bash -c load
 
 ```
 

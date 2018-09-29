@@ -1,4 +1,4 @@
-require iocStats, 1856ef5
+require iocStats, ae5d083
 
 epicsEnvSet("PREF", "E3Test")
 epicsEnvSet("IOCST", "IocStat")
