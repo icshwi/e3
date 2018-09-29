@@ -27,8 +27,6 @@ install:
 
 script:
   - bash e3.bash -${BUILDING_MOD} all2
-
-after_success:
   - echo ${PWD}
   - tree ${PWD}
   - cat ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
