@@ -665,7 +665,7 @@ case "$1" in
     push)   git_push        ;;
     # Module Loading Test
     load) module_loading_test_on_iocsh;;
-    cmds) generate_startup_script;;
+    cmd) generate_startup_script;;
     # Print Version Information in e3-* directory
     vbase) print_version_info_base    ;;
     vreq)  print_version_info_require ;;
