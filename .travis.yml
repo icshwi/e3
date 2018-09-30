@@ -34,7 +34,7 @@ script:
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - echo "logfile $TARGET/.output" > ${TARGET}/.screenrc
-  - screen -C ${TARGET}/.screenrc -dm -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
+  - screen -c ${TARGET}/.screenrc -dm -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
   - cat $TARGET/.output
   - screen -X -S ${SESSION} kill
 
