@@ -3,4 +3,6 @@ e3-*
 *.list
 .#*
 *~
+.cmd
+.output
 
