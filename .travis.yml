@@ -31,9 +31,8 @@ after_success:
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
-  - iocsh.bash .cmd > .output
-  - pid=$!
-  - kill -INT $pid
+  - iocsh.bash .cmd > .output&
+  - kill -INT $!
   - cat .output
   - rm .output
  
