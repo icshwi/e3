@@ -10,9 +10,9 @@ git:
 
 env:
    - TARGET=${HOME}/build/1 BASE=3.15.5  REQUIRE=3.0.0 BUILDING_MOD=c
-   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=c
-   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=c
-   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=c
+#   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctia4
+#   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctia
+#   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
 
 
 before_install:
@@ -31,7 +31,6 @@ script:
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
 #  - iocsh.bash .cmd
-  - iocsh.bash .cmd 2>&1 > output& 
+  - iocsh.bash .cmd 2>&1 &
   - kill -9 $!
-  - cat output
  
