@@ -15,25 +15,18 @@ env:
   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
   
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree 
-  - cp -r $TRAVIS_BUILD_DIR ${TARGET}
-  - cd ${TARGET}
-  - echo ${PWD}
+  - sudo apt-get -qq update > /dev/null 2>&1  
+  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree  > /dev/null 2>&1  
+  - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
 
 install:
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
 script:
   - bash e3.bash -${BUILDING_MOD} all2
-
-after_success:
-  - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} cmd
-  - cat .cmd
+  - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - nohup iocsh.bash .cmd > .output
-  - kill -9 $!
-  - ls -lta .output
   - cat .output
 
   
