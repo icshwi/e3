@@ -32,9 +32,9 @@ after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
   - nohup iocsh.bash .cmd > .output
-  - IOCSH_PID=$!
+  - kill -9 $!
+  - ls -lta .output
   - cat .output
-  - kill -INT ${IOCSH_PID}
-  - ls -ltar .output
+
   
  
