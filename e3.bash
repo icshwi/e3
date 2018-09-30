@@ -369,6 +369,65 @@ function module_loading_test_on_iocsh
     
 }
 
+
+
+function only_module_loading_test_on_iocsh
+{
+    
+    local IOC_TEST=/tmp/module_loading_test.cmd
+    
+    {
+	local PREFIX_MODULE="EPICS_MODULE_NAME:="
+	local PREFIX_LIBVERSION="E3_MODULE_VERSION:="
+	local mod=""
+	local ver=""
+	printf "var requireDebug 1\n";
+	for rep in  ${module_list[@]}; do
+	    while read line; do
+		if [[ $line =~ "${PREFIX_LIBVERSION}" ]] ; then
+		    ver=${line#$PREFIX_LIBVERSION}
+		elif [[ $line =~ "${PREFIX_MODULE}" ]] ; then
+		    mod=${line#$PREFIX_MODULE}
+		fi
+	    done < ${SC_TOP}/${rep}/configure/CONFIG_MODULE
+	    if [ "${mod}" = "StreamDevice" ]; then
+		mod="stream"
+	    fi
+	    if [ "${mod}" = "ethercatmc" ]; then
+		mod="EthercatMC"
+	    fi
+	    printf "#\n#\n"
+	    printf "# >>>>>\n";
+	    printf "# >>>>> MODULE Loading ........\n";
+	    printf "# >>>>> MODULE NAME ..... ${mod}\n";
+	    printf "# >>>>>        VER  ..... ${ver}\n";
+	    printf "# >>>>>\n";
+
+	    # if [[ ${mod} == AD* ]]; then
+	    # 	printf "#--------------------------------------- \n";
+	    # 	printf "# In ADSupport, ADCore, and ADSimDector, \n";
+	    # 	printf "# Simply ignore the following errors : \n";
+	    # 	printf " epicsEnvSet(\"TOP\",\"${SC_TOP}/${rep}\")\n"
+	    # 	printf " cd ${SC_TOP}/${rep}\n"
+	    # 	printf " < ${SC_TOP}/${rep}/cmds/load_libs.cmd\n"
+	    # 	printf "#--------------------------------------- \n";
+	    # fi
+	    printf "require ${mod},${ver}\n";
+	    printf "# >>>>>\n";
+	    printf "#\n#\n"
+	done
+	
+    }  > ${IOC_TEST}
+
+    exec iocsh.bash ${IOC_TEST}
+
+#    sleep 30s;
+#    kill -SIGINT ${APP_PID};
+# stty sane > /dev/null 2>&1
+    
+}
+
+
 function all_base
 {
     clean_base;
@@ -610,6 +669,7 @@ case "$1" in
     push)   git_push        ;;
     # Module Loading Test
     load) module_loading_test_on_iocsh;;
+    onlyload) only_module_loading_test_on_iocsh;;
     # Print Version Information in e3-* directory
     vbase) print_version_info_base    ;;
     vreq)  print_version_info_require ;;
