@@ -32,7 +32,7 @@ after_script:
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
-  - iocsh.bash .cmd > ${TARGET}/output&
+  - iocsh.bash .cmd > .output&
   - kill -9 $!
-  - cat ${TARGET}/output
+  - cat .output
  
