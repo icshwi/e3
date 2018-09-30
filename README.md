@@ -15,11 +15,12 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 * Debian 8 
 * Debian 9    
 * CentOS 7
+* Ubuntu 14.04 LTS (with travis-ci)
 * Ubuntu 18.04
 
 ### Building Test (Not all modules)
 * Raspbian Stretch    
-* Ubuntu 14.04.05 LTS (travis-ci)
+
 * Ubuntu 16.04.3 LTS 
 * Ubuntu 17.10 (Artful Aardvark)
 * LinuxMint 18.3 (sylvia) 
