@@ -23,13 +23,12 @@ before_install:
   - echo ${PWD}
 
 install:
-  - bash e3_building_test.bash -t ${TARGET}/epics -b ${BASE} -r ${REQUIRE}
+  - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
 script:
   - bash e3.bash -${BUILDING_MOD} all2
-  - echo ${PWD}
-  - tree ${PWD}
-  - cat ${TARGET}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - bash e3.bash -${BUILDING_MOD} load &> requiring_test_log&
+  - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+  - cd ${TARGET}
+  - bash e3.bash -${BUILDING_MOD} load &> ${TARGET}/requiring_test_log&
   - kill -9 $!
-  - cat requiring_test_log
+  - cat ${TARGET}/requiring_test_log
