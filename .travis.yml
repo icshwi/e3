@@ -30,7 +30,8 @@ script:
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
-  - iocsh.bash .cmd 2>&1 > output&
-  - kill -9 $!
-  - cat output
+  - iocsh.bash .cmd
+#  - iocsh.bash .cmd 2>&1 > output&
+#  - kill -9 $!
+#  - cat output
  
