@@ -27,7 +27,7 @@ install:
 script:
   - bash e3.bash -${BUILDING_MOD} all2
 
-after_successfter_sucesst:
+after_success:
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash e3.bash -${BUILDING_MOD} cmd
   - cat .cmd
