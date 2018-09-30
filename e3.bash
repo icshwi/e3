@@ -371,10 +371,10 @@ function module_loading_test_on_iocsh
 
 
 
-function only_module_loading_test_on_iocsh
+function generate_startup_script
 {
     
-    local IOC_TEST=/tmp/module_loading_test.cmd
+    local IOC_TEST=.cmd
     
     {
 	local PREFIX_MODULE="EPICS_MODULE_NAME:="
@@ -419,7 +419,7 @@ function only_module_loading_test_on_iocsh
 	
     }  > ${IOC_TEST}
 
-    exec iocsh.bash ${IOC_TEST} 2&> loading_test&
+#    exec "iocsh.bash ${IOC_TEST} 2&> loading_test"
     
 }
 
@@ -665,7 +665,7 @@ case "$1" in
     push)   git_push        ;;
     # Module Loading Test
     load) module_loading_test_on_iocsh;;
-    onlyload) only_module_loading_test_on_iocsh;;
+    cmds) generate_startup_script;;
     # Print Version Information in e3-* directory
     vbase) print_version_info_base    ;;
     vreq)  print_version_info_require ;;

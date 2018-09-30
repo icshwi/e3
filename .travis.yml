@@ -1,5 +1,5 @@
 sudo: enabled
-dist: xenial
+dist: trusty
 language: generic
 
 branches:
@@ -28,7 +28,9 @@ install:
 script:
   - bash e3.bash -${BUILDING_MOD} all2
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - cd ${TARGET}
-  - bash e3.bash -${BUILDING_MOD} onlyload 
-  - cat loading_test
+  - bash e3.bash -${BUILDING_MOD} cmd
+  - cat .cmd
+  - iocsh.bash .cmd 2&> output&
+  - kill -9 $!
+  - cat output
  
