@@ -33,9 +33,16 @@ script:
   - bash e3.bash -${BUILDING_MOD} all2
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - echo "logfile $TARGET/.output" > ${TARGET}/.screenrc
-  - screen -c ${TARGET}/.screenrc -dm -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
-  - cat $TARGET/.output
+  - |
+    echo "logfile ${TARGET}/output.log"  > ${TARGET}/.screenrc
+    echo "logfile flush 1"           >> ${TARGET}/.screenrc
+    echo "log on"                    >> ${TARGET}/.screenrc
+    echo "logtstamp after 1"         >> ${TARGET}/.screenrc
+    echo "logtstamp on"              >> ${TARGET}/.screenrc
+  - cat ${TARGET}/.screenrc 
+  - screen -c ${TARGET}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
+  - sleep 2
+  - cat ${TARGET}/output.log
   - screen -X -S ${SESSION} kill
 
 
