@@ -8,11 +8,19 @@ branches:
 git:
   submodules: false
 
-matrix:
-  include:
-    # works on Precise and Trusty
-    - os: linux
-      addons:
+
+  
+env:
+  global:
+   - TARGET=${HOME}/build/1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctia4
+   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctia4
+   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctia
+   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
+
+   matrix:
+     include:
+       - os: linux
+         addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
@@ -53,13 +61,8 @@ matrix:
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        
   
-env:
-   - TARGET=${HOME}/build/1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctia4
-   - TARGET=${HOME}/build/2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctia4
-   - TARGET=${HOME}/build/3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctia
-   - TARGET=${HOME}/build/4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctia
-
 
 before_install:
   - eval "${MATRIX_EVAL}"
