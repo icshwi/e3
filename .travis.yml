@@ -24,11 +24,8 @@ install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} i2all
-
-# Reduce the base installtion output due to travis log file limitation 4MB
-script:
   - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} breq 
+  - bash e3.bash -${BUILDING_MOD} breq
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
