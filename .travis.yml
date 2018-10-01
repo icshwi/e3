@@ -8,10 +8,6 @@ branches:
 git:
   submodules: false
   
-addons:
-  hosts:
-    - ioctest
-
   
 env:
   - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctia4
@@ -27,19 +23,14 @@ install:
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
 script:
-  - bash e3.bash -${BUILDING_MOD} all2
-  - bash e3.bash -${BUILDING_MOD} cmd
+  - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} i2all
+  - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} breq 
+  - bash e3.bash -${BUILDING_MOD} bmod
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - |
-    echo "logfile ${TARGET}/output.log"  > ${TARGET}/.screenrc
-    echo "logfile flush 1"              >> ${TARGET}/.screenrc
-    echo "log on"                       >> ${TARGET}/.screenrc
-    echo "logtstamp after 1"            >> ${TARGET}/.screenrc
-    echo "logtstamp on"                 >> ${TARGET}/.screenrc
-  - cat ${TARGET}/.screenrc 
-  - screen -c ${TARGET}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
-  - sleep 2 
-  - cat ${TARGET}/output.log
+  - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
+
 
 
 
