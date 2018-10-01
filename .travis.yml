@@ -21,15 +21,17 @@ before_install:
 
 install:
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
-
-# Reduce the base installtion output due to travis log file limitation 4MB
-script:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} i2all
+
+# Reduce the base installtion output due to travis log file limitation 4MB
+script:
   - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} breq 
   - bash e3.bash -${BUILDING_MOD} bmod
+
+after_success:
   - bash e3.bash -${BUILDING_MOD} cmd	
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
