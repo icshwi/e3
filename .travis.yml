@@ -38,9 +38,9 @@ script:
     echo "logtstamp on"                 >> ${TARGET}/.screenrc
   - cat ${TARGET}/.screenrc 
   - screen -c ${TARGET}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "iocsh.bash .cmd"
-  - sleep 2
+  - sleep 2 
   - cat ${TARGET}/output.log
-  - screen -X -S ${SESSION} kill
+
 
 
   
