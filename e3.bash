@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, September 28 12:01:27 CEST 2018
-#   version : 0.5.7
+#   date    : Monday, October  1 12:39:55 CEST 2018
+#   version : 0.5.8
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -375,13 +375,15 @@ function generate_startup_script
 {
     
     local IOC_TEST=.cmd
+
+    printf "Generating a startup script ... in $IOC_TEST\n";
     
     {
 	local PREFIX_MODULE="EPICS_MODULE_NAME:="
 	local PREFIX_LIBVERSION="E3_MODULE_VERSION:="
 	local mod=""
 	local ver=""
-	printf "var requireDebug 1\n";
+#	printf "var requireDebug 1\n";
 	for rep in  ${module_list[@]}; do
 	    while read line; do
 		if [[ $line =~ "${PREFIX_LIBVERSION}" ]] ; then
@@ -419,7 +421,6 @@ function generate_startup_script
 	
     }  > ${IOC_TEST}
 
-#    exec "iocsh.bash ${IOC_TEST} 2&> loading_test"
     
 }
 
@@ -607,19 +608,14 @@ case "$1" in
 	echo ""
 	;;
     *)
-	echo ""
 	;;
 
 esac
 
 
 case "$1" in
-    env)
-	print_module_list
-	;;
-    vars)
-	print_module_list
-	;; 
+    env)   print_module_list ;;
+    vars)  print_module_list ;;
     # all : clean, clone, init, build, and all
     clean) clean_all     ;;
     call)  clean_all     ;;
@@ -649,7 +645,7 @@ case "$1" in
     cmod)  clean_modules ;;
     gmod)  clone_modules ;;
     imod)   init_modules ;;
-    i2mod)  init2_modules ;;
+    i2mod) init2_modules ;;
     bmod)  build_modules ;;
     mod)     all_modules ;;
     pmod)    git_pull_modules ;;
@@ -665,7 +661,8 @@ case "$1" in
     push)   git_push        ;;
     # Module Loading Test
     load) module_loading_test_on_iocsh;;
-    cmd) generate_startup_script;;
+    # Module Loading Test Startup Script for Travis-ci
+    cmd)       generate_startup_script;;
     # Print Version Information in e3-* directory
     vbase) print_version_info_base    ;;
     vreq)  print_version_info_require ;;
