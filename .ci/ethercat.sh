@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+
 git clone https://github.com/icshwi/etherlabmaster
 cd etherlabmaster
 make init
@@ -12,6 +13,6 @@ sudo tee /etc/ld.so.conf.d/e3_ethercat.conf >/dev/null <<"EOF"
 /opt/etherlab/lib 
 EOF
 
-sudo ldconfig 
-exit
+sudo ldconfig
 
+export LD_LIBRARY_PATH=/opt/etherlab/lib
