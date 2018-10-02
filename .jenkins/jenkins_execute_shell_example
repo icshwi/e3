@@ -10,14 +10,12 @@ BUILDING_MOD=ctifea4bl
 # For 7.0.1.1 (exclude 4, so o option is mandatory)
 BUILDING_MOD=ctifeablo
 
-SESSION="e3"
+
 
 
 bash e3_building_test.bash -t ${E3_PATH} -b ${BASE} -r ${REQUIRE}
 bash e3.bash -${BUILDING_MOD} all
 
-bash e3.bash -${BUILDING_MOD} cmd
-# source doesn't work at jenkins
-. ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-bash .ci/screen.bash ${SCREEN_CONF_PATH} ${SESSION} .cmd
+bash e3.bash -${BUILDING_MOD} cmd	
+bash .jenkins/screen_iocsh_jenkins.bash ${E3_PATH}  ${BASE} ${REQUIRE}
 

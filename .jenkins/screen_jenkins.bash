@@ -22,9 +22,11 @@ EOF
 
 screen -dm -L -S ${SESSIONNAME} /bin/bash -c "iocsh.bash ${STARTUP}"
 
-sleep 2
+sleep 10
 
 cat ${HOME}/output.log
+
+sleep 5
 
 killall screen
 
