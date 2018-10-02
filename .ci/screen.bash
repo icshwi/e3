@@ -1,9 +1,7 @@
 #!/bin/bash
 
-
-SCREENPATH=$1
-SESSIONNAME=$2
-STARTUP=$3
+SESSIONNAME=$1
+STARTUP=$2
 
 # https://superuser.com/questions/235760/ld-library-path-unset-by-screen
 # LD_LIBRARY_PATH unset within screen
