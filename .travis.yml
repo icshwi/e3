@@ -1,17 +1,20 @@
 sudo: enabled
+
 dist: trusty
+
 language: generic
 
 branches:
   only:
     - master
+
 git:
   submodules: false
   
   
 env:
-  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ce
-  #  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
+  - SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ce
+  # - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
   # - TARGET=${HOME}/build/2 SESSION=2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctiea4
   # - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctieao	
   # - TARGET=${HOME}/build/4 SESSION=4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctieao
@@ -24,8 +27,8 @@ before_install:
   - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
   - bash .ci/ethercat.sh  > /dev/null 2>&1  
   - . .ci/ethercat_libpath.sh
-  - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
-  - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
+  - echo ${PWD}
+  - bash e3_building_test.bash -t ${PWD}/epics -b ${BASE} -r ${REQUIRE}
 
 install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
@@ -37,7 +40,8 @@ install:
 
 after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
-  - . ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash && bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
+  - . ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+  - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
 
 
   

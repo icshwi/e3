@@ -5,6 +5,13 @@ TARGET_PATH=$1
 SESSION_NAME=$2
 STARTUP=$3
 
+# https://superuser.com/questions/235760/ld-library-path-unset-by-screen
+# LD_LIBRARY_PATH unset within screen
+
+sudo chgrp root $(which screen)
+chmod 777 /var/run/screen
+
+
 cat > ${TARGET_PATH}/.screenrc <<EOF
 
 logfile ${TARGET_PATH}/output.log
