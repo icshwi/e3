@@ -17,6 +17,7 @@ bash e3_building_test.bash -t ${E3_PATH} -b ${BASE} -r ${REQUIRE}
 bash e3.bash -${BUILDING_MOD} all
 
 bash e3.bash -${BUILDING_MOD} cmd
-source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+# source doesn't work at jenkins
+. ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
 bash .ci/screen.bash ${SCREEN_CONF_PATH} ${SESSION} .cmd
 

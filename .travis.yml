@@ -22,7 +22,8 @@ before_install:
   - mkdir -p ${HOME}/.ssh
   - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
   - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
-  - bash .ci/ethercat.sh
+  - bash .ci/ethercat.sh  > /dev/null 2>&1  
+  - . .ci/ethercat_libpath.sh
   - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
@@ -36,9 +37,7 @@ install:
 
 after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
-  - export LD_LIBRARY_PATH=/opt/etherlab/lib
-  - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
+  - . ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash && bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
 
 
   

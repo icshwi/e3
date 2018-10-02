@@ -9,12 +9,12 @@ make patch
 make build
 make install
 
-sudo tee /etc/ld.so.conf.d/ethercat.conf >/dev/null <<"EOF"
+sudo tee /etc/ld.so.conf.d/ethercat.conf >/dev/null <<EOF
 /opt/etherlab/lib 
 EOF
 
+echo "Reading /etc/ld.so.conf.d/ethercat.conf"
 cat /etc/ld.so.conf.d/ethercat.conf
 
-sudo ldconfig
-
-export LD_LIBRARY_PATH=/opt/etherlab/lib
+echo "Updating ldconfig..."
+sudo /sbin/ldconfig
