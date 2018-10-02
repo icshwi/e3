@@ -184,8 +184,8 @@ cat ${SC_TOP}/RELEASE.local
 echo ">>>"
 
 
-git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
-git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
+#git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
+#git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
 
 
 echo ""

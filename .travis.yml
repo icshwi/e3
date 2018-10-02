@@ -21,7 +21,7 @@ before_install:
   - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ~/.netrc
   - mkdir -p ${HOME}/.ssh
   - echo -e "Host *\n StrictHostKeyChecking no" >  ${HOME}/.ssh/config
-  - bash .ci/ethercat.sh
+  - bash .ci/ethercat.sh  > /dev/null 2>&1 
   - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
