@@ -42,7 +42,7 @@ install:
 after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - bash .ci/screen.bash ${E3_PATH} ${SESSION} .cmd
+  - bash .ci/screen.bash ${SESSION} .cmd
 
 
   

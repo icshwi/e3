@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-TARGET_PATH=$1
-SESSION_NAME=$2
+SCREENPATH=$1
+SESSIONNAME=$2
 STARTUP=$3
 
 # https://superuser.com/questions/235760/ld-library-path-unset-by-screen
@@ -12,9 +12,9 @@ sudo chgrp root $(which screen)
 sudo chmod 777 /var/run/screen
 
 
-cat > ${TARGET_PATH}/.screenrc <<EOF
+cat > ${HOME}/.screenrc <<EOF
 
-logfile ${TARGET_PATH}/output.log
+logfile ${HOME}/output.log
 logfile flush 1
 log on
 logtstamp after 1
@@ -22,11 +22,11 @@ logtstamp on
 EOF
 
 
-screen -c ${TARGET_PATH}/.screenrc -dm -L -S ${SESSION_NAME} /bin/bash -c "iocsh.bash ${STARTUP}"
+screen -dm -L -S ${SESSIONNAME} /bin/bash -c "iocsh.bash ${STARTUP}"
 
 sleep 2
 
-cat ${TARGET_PATH}/output.log
+cat ${HOME}/output.log
 
 killall screen
 
