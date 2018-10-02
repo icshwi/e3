@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, October  1 12:39:55 CEST 2018
-#   version : 0.5.8
+#   date    : Tuesday, October  2 21:59:58 CEST 2018
+#   version : 0.5.9
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -383,7 +383,12 @@ function generate_startup_script
 	local PREFIX_LIBVERSION="E3_MODULE_VERSION:="
 	local mod=""
 	local ver=""
-#	printf "var requireDebug 1\n";
+	#	printf "var requireDebug 1\n";
+
+	local etherlab_lib=/opt/etherlab/lib/libethercat.so
+	local load_cmd="dlload"
+	printf "${load_cmd} ${etherlab_lib}\n";
+	
 	for rep in  ${module_list[@]}; do
 	    while read line; do
 		if [[ $line =~ "${PREFIX_LIBVERSION}" ]] ; then
