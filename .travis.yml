@@ -10,10 +10,11 @@ git:
   
   
 env:
-  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
-  - TARGET=${HOME}/build/2 SESSION=2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctiea4
-  - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctieao	
-  - TARGET=${HOME}/build/4 SESSION=4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctieao
+  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ce
+  #  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
+  # - TARGET=${HOME}/build/2 SESSION=2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctiea4
+  # - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctieao	
+  # - TARGET=${HOME}/build/4 SESSION=4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctieao
   
 before_install:
   - sudo apt-get -qq update > /dev/null 2>&1  
@@ -21,7 +22,7 @@ before_install:
   - mkdir -p ${HOME}/.ssh
   - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
   - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
-  - bash .ci/ethercat.sh > /dev/null 2>&1  
+  - bash .ci/ethercat.sh
   - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
@@ -34,7 +35,8 @@ install:
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
-  - bash e3.bash -${BUILDING_MOD} cmd	
+  - bash e3.bash -${BUILDING_MOD} cmd
+  - export LD_LIBRARY_PATH=/opt/etherlab/lib
   - source ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
 
