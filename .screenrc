@@ -1,0 +1,5 @@
+logfile /home/jhlee/e3/output.log
+logfile flush 1
+log on
+logtstamp after 1
+logtstamp on
