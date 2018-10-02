@@ -13,7 +13,7 @@ git:
   
   
 env:
-  - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ce
+  - E3_PATH=${TRAVIS_BUILD_DIR}/epics SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ce
   # - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
   # - TARGET=${HOME}/build/2 SESSION=2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctiea4
   # - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctieao	
@@ -21,15 +21,15 @@ env:
   
 before_install:
   - sudo apt-get -qq update > /dev/null 2>&1
-  - sudo apt-get install -y  linux-headers-$(uname -r)
-  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree screen libraw1394-dev
+  - sudo apt-get install -y linux-headers-$(uname -r)  > /dev/null 2>&1
+  - sudo apt-get install -y build-essential  > /dev/null 2>&1
+  - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree screen libraw1394-dev   > /dev/null 2>&1
   - mkdir -p ${HOME}/.ssh
   - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
   - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
   - bash .ci/ethercat.sh  > /dev/null 2>&1  
-  - . .ci/ethercat_libpath.sh
-  - echo ${PWD}
-  - bash e3_building_test.bash -t ${PWD}/epics -b ${BASE} -r ${REQUIRE}
+  - source .ci/ethercat_libpath.sh
+  - bash e3_building_test.bash -t ${E3_PATH} -b ${BASE} -r ${REQUIRE}
 
 install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
@@ -41,8 +41,8 @@ install:
 
 after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
-  - . ${TARGET}/.epics/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - bash .ci/screen.bash ${TARGET} ${SESSION} .cmd
+  - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+  - bash .ci/screen.bash ${E3_PATH} ${SESSION} .cmd
 
 
   

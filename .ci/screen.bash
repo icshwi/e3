@@ -9,7 +9,7 @@ STARTUP=$3
 # LD_LIBRARY_PATH unset within screen
 
 sudo chgrp root $(which screen)
-chmod 777 /var/run/screen
+sudo chmod 777 /var/run/screen
 
 
 cat > ${TARGET_PATH}/.screenrc <<EOF
