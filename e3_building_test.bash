@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Saturday, September 29 23:01:53 CEST 2018
-# version : 0.0.4
+# Date    : Tuesday, October  2 15:53:19 CEST 2018
+# version : 0.0.5
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -183,9 +183,6 @@ echo ">>> RELEASE.local"
 cat ${SC_TOP}/RELEASE.local
 echo ">>>"
 
-
-#git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
-#git config --global url."git@gitlab.esss.lu.se:".insteadOf https://gitlab.esss.lu.se/
 
 
 echo ""
