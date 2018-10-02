@@ -12,17 +12,16 @@ git:
 env:
   - TARGET=${HOME}/build/1 SESSION=1 BASE=3.15.5  REQUIRE=3.0.0  BUILDING_MOD=ctiea4
   - TARGET=${HOME}/build/2 SESSION=2 BASE=3.15.5  REQUIRE=3.0.2  BUILDING_MOD=ctiea4
-  - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctiea	
-  - TARGET=${HOME}/build/4 SESSION=4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctiea
+  - TARGET=${HOME}/build/3 SESSION=3 BASE=7.0.1.1 REQUIRE=3.0.0  BUILDING_MOD=ctieao	
+  - TARGET=${HOME}/build/4 SESSION=4 BASE=7.0.1.1 REQUIRE=3.0.2  BUILDING_MOD=ctieao
   
 before_install:
-
   - sudo apt-get -qq update > /dev/null 2>&1  
   - sudo apt-get install -y realpath ipmitool libtool automake re2c tclx build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev tree screen libraw1394-dev linux-source linux-headers-$(uname -r) > /dev/null 2>&1
-  - echo "Bitbucket Configuration"  
-  - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ~/.netrc
-  - mkdir -p ${HOME}/.ssh && echo -e "Host *\n StrictHostKeyChecking no" >  ${HOME}/.ssh/config
-  - bash .ci/ethercat.sh  
+  - mkdir -p ${HOME}/.ssh
+  - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
+  - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
+  - bash .ci/ethercat.sh > /dev/null 2>&1  
   - cp -r $TRAVIS_BUILD_DIR ${TARGET} && cd ${TARGET} && echo ${PWD}
   - bash e3_building_test.bash -t ${TARGET}/.epics -b ${BASE} -r ${REQUIRE}
 
