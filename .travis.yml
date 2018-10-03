@@ -41,6 +41,7 @@ install:
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
+  - ldd ${E3_PATH}/base-${BASE}/bin/linux-x86_64/softIoc*
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${SESSION} .cmd
