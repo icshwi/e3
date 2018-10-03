@@ -6,3 +6,5 @@ echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWOR
 
 bash .ci/ethercat.sh  > /dev/null 2>&1 
 #  source .ci/ethercat_libpath.sh
+
+exit $?

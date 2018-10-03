@@ -110,6 +110,7 @@ E3_BASE_VERSION:=${BASE_VERSION}
 #E3_CROSS_COMPILER_TARGET_ARCHS =
 "
 
+rm ${SC_TOP}/CONFIG_BASE.local
 cat > ${SC_TOP}/CONFIG_BASE.local <<EOF
 $config_base
 EOF
@@ -158,6 +159,7 @@ config_require="
 EPICS_MODULE_TAG:=tags/v${REQUIRE_VERSION}
 "
 
+rm -f ${SC_TOP}/REQUIRE_CONFIG_MODULE.local
 cat > ${SC_TOP}/REQUIRE_CONFIG_MODULE.local <<EOF
 $config_require
 EOF
@@ -175,7 +177,7 @@ E3_REQUIRE_VERSION:=${REQUIRE_VERSION}
 E3_SEQUENCER_VERSION:=${SEQ_VERSION}
 "
 
-
+rm ${SC_TOP}/RELEASE.local
 cat > ${SC_TOP}/RELEASE.local <<EOF
 $release
 EOF
@@ -192,4 +194,4 @@ echo "bash e3.bash req"
 echo "bash e3.bash -c mod"
 
 
-exit
+exit $?

@@ -24,4 +24,4 @@ cat ${HOME}/output.log
 
 killall screen
 
-exit
+exit $?
