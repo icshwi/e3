@@ -23,19 +23,21 @@ before_install:
   - sudo apt-get install -y linux-headers-$(uname -r)  > /dev/null 2>&1
   - sudo apt-get install -y build-essential realpath ipmitool libtool automake tclx  tree screen re2c darcs > /dev/null 2>&1
   - sudo apt-get install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libsnmp-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev  > /dev/null 2>&1
-  - mkdir -p ${HOME}/.ssh
-  - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
-  - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
-  - bash .ci/ethercat.sh  > /dev/null 2>&1  
+  - bash .ci/before_install_conf.bash
+#  - mkdir -p ${HOME}/.ssh
+#  - echo -e "Host *\n StrictHostKeyChecking no" > ${HOME}/.ssh/config
+#  - echo -e "machine bitbucket.org\n  login jeonghanlee\n  password $CI_USER_PASSWORD" > ${HOME}/.netrc	
+#  - bash .ci/ethercat.sh  > /dev/null 2>&1
 #  - source .ci/ethercat_libpath.sh
   - bash e3_building_test.bash -t ${E3_PATH} -b ${BASE} -r ${REQUIRE}
 
 install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} i2all
+  - bash e3.bash -${BUILDING_MOD} i2all > /dev/null 2>&1
+#  - bash e3.bash -${BUILDING_MOD} i2all
   - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} breq
+  - bash e3.bash -${BUILDING_MOD} breq  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
