@@ -35,5 +35,5 @@ cat ${E3_PATH}/output.log
 
 sleep 5
 
-killall screen
+screen -X -S ${SESSION} kill
 
