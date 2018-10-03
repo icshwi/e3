@@ -35,14 +35,18 @@ before_install:
 install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
-#  - bash e3.bash -${BUILDING_MOD} i2all > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} i2all
-  - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} i2all > /dev/null 2>&1
+  - cat e3-base/epics-base/modules/pva2pva/pdbApp/Makefile
+  - cd e3-base/epics-base/modules/pva2pva && git diff
+  - cd -
+#  - bash e3.bash -${BUILDING_MOD} i2all
+#  - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} bbase
   - bash e3.bash -${BUILDING_MOD} breq  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
-  - ldd ${E3_PATH}/base-${BASE}/bin/linux-x86_64/softIoc*
+  - ldd ${E3_PATH}/base-${BASE}/bin/linux-x86_64/softIocPVA
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${SESSION} .cmd
