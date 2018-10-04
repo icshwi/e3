@@ -20,51 +20,51 @@ env:
     - SESSION=2 BASE=3.15.5   REQUIRE=3.0.2  BUILDING_MOD=ctiea4l
     - SESSION=3 BASE=7.0.1.1  REQUIRE=3.0.0  BUILDING_MOD=ctieaol
     - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=ctieaol
-  
-    include:
-      # works on Precise and Trusty
-      - os: linux
-        addons:
-          apt:
-            sources:
-              - ubuntu-toolchain-r-test
-            packages:
-              - g++-4.9
-          env:
-            - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+matrix:  
+ include:
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
 
     # works on Precise and Trusty
-      - os: linux
-        addons:
-          apt:
-            sources:
-              - ubuntu-toolchain-r-test
-            packages:
-              - g++-5
-          env:
-            - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5" 
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5" 
 
     # works on Precise and Trusty
-      - os: linux
-        addons:
-          apt:
-            sources:
-              - ubuntu-toolchain-r-test
-            packages:
-              - g++-6
-        env:
-          - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
     # works on Precise and Trusty
-      - os: linux
-        addons:
-          apt:
-            sources:
-              - ubuntu-toolchain-r-test
-            packages:
-              - g++-7
-        env:
-          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
         
 # env:
