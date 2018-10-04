@@ -2,7 +2,7 @@ sudo: enabled
 
 dist: trusty
 
-language: cpp
+language: generic
 
 branches:
   only:
@@ -10,8 +10,8 @@ branches:
 
 git:
   submodules: false
-
-
+  
+  
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
@@ -20,8 +20,8 @@ env:
     - SESSION=2 BASE=3.15.5   REQUIRE=3.0.2  BUILDING_MOD=ctiea4l
     - SESSION=3 BASE=7.0.1.1  REQUIRE=3.0.0  BUILDING_MOD=ctieaol
     - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=ctieaol
-
- 
+#  - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=cao
+  
 before_install:
   - sudo apt-get -qq update > /dev/null 2>&1
   - sudo apt-get install -y linux-headers-$(uname -r)  > /dev/null 2>&1
