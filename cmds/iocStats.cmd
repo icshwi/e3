@@ -1,9 +1,16 @@
-require iocStats, ae5d083
+require iocStats,ae5d083
 
-epicsEnvSet("PREF", "E3Test")
-epicsEnvSet("IOCST", "IocStat")
-epicsEnvSet("IOC",  ${PREF})
+epicsEnvSet("SEC", "SEC")
+epicsEnvSet("SUB", "SUB01")
+epicsEnvSet("P", "$(SEC)-$(SUB):")
+epicsEnvSet("DIS", "DIS")
+epicsEnvSet("DEV", "DEV-01")
+epicsEnvSet("R", "$(DIS)-$(DEV)")
+epicsEnvSet("IOCNAME", "$(P)$(R)")
 
-#dbLoadRecords("moduleversion.db", "IOC=${IOC}")
-dbLoadRecords("iocAdminSoft.db","IOC=${PREF}:${IOCST}")
+
+loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
+
+iocInit()
+
 dbl > "${IOC}_PVs.list"
