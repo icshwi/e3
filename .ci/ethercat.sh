@@ -19,4 +19,4 @@ cat /etc/ld.so.conf.d/ethercat.conf
 echo "Updating ldconfig..."
 sudo /sbin/ldconfig
 
-exit $?
+#exit $?
