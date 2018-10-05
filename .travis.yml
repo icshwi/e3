@@ -16,10 +16,11 @@ env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
   matrix:
-    - SESSION=1 BASE=3.15.5   REQUIRE=3.0.0  BUILDING_MOD=ctiea4l
-    - SESSION=2 BASE=3.15.5   REQUIRE=3.0.2  BUILDING_MOD=ctiea4l
-    - SESSION=3 BASE=7.0.1.1  REQUIRE=3.0.0  BUILDING_MOD=ctieaol
-    - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=ctieaol
+#    - SESSION=1 BASE=3.15.5      REQUIRE=3.0.0  BUILDING_MOD=ctiea4l
+    - SESSION=2 BASE=3.15.5      REQUIRE=3.0.2  BUILDING_MOD=ctiea4l
+    - SESSION=3 BASE=3.15.6-rc1  REQUIRE=3.0.2  BUILDING_MOD=ctiea4l
+#    - SESSION=4 BASE=7.0.1.1     REQUIRE=3.0.0  BUILDING_MOD=ctieaol
+    - SESSION=5 BASE=7.0.1.1     REQUIRE=3.0.2  BUILDING_MOD=ctieaol
 #  - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=cao
   
 before_install:
@@ -34,18 +35,11 @@ install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} i2all > /dev/null 2>&1
-#  - bash e3.bash -${BUILDING_MOD} i2all
-#  - cat e3-base/epics-base/modules/pva2pva/pdbApp/Makefile
-#  - cd e3-base/epics-base/modules/pva2pva && git diff
-#  - cd -
-
-#  - bash e3.bash -${BUILDING_MOD} bbase
   - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} breq  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
-#  - ldd ${E3_PATH}/base-${BASE}/bin/linux-x86_64/softIocPVA
   - bash e3.bash -${BUILDING_MOD} cmd
   - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${SESSION} .cmd
