@@ -389,6 +389,7 @@ function generate_startup_script
 		mod="EthercatMC"
 	    fi
 	    printf "require ${mod},${ver}\n";
+	    printf "\n";
 	done
 	
     }  > ${IOC_TEST}
