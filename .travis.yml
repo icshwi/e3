@@ -14,25 +14,22 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-#    - MOD_GA=ctieal
-    - MOD_GA=c
+    - MOD_GA=ctieal
+#    - MOD_GA=c
   matrix:
-#    - SESSION=1 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.0  MOD_GB=4
+    - SESSION=1 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.0  MOD_GB=4
     - SESSION=2 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.2  MOD_GB=4
-#   - SESSION=3 BASE=3.15.6  TAG=3.15.6-rc1  REQUIRE=3.0.0  MOD_GB=4
-#    - SESSION=4 BASE=3.15.6  TAG=3.15.6-rc1  REQUIRE=3.0.2  MOD_GB=4
-#   - SESSION=5 BASE=7.0.1.1 TAG=7.0.1.1     REQUIRE=3.0.0  MOD_GB=o
-#    - SESSION=6 BASE=7.0.1.1 TAG=7.0.1.1     REQUIRE=3.0.2  MOD_GB=o
+    - SESSION=3 BASE=3.15.6  TAG=3.15.6-rc1  REQUIRE=3.0.0  MOD_GB=4
+    - SESSION=4 BASE=3.15.6  TAG=3.15.6-rc1  REQUIRE=3.0.2  MOD_GB=4
+    - SESSION=5 BASE=7.0.1.1 TAG=7.0.1.1     REQUIRE=3.0.0  MOD_GB=o
+    - SESSION=6 BASE=7.0.1.1 TAG=7.0.1.1     REQUIRE=3.0.2  MOD_GB=o
 #  - SESSION=4 BASE=7.0.1.1  REQUIRE=3.0.2  BUILDING_MOD=cao
   
 before_install:
   - sudo apt-get -qq update  > /dev/null 2>&1 
   - sudo apt-get install -y linux-headers-$(uname -r)   > /dev/null 2>&1 
   - sudo apt-get install -y build-essential realpath ipmitool libtool automake tclx  tree screen re2c darcs  > /dev/null 2>&1 
-  - sudo apt-get install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev > /dev/null 2>&1
-  - sudo apt-get install -u libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev > /dev/null 2>&1 
-  - sudp apt-get install -y libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev  > /dev/null 2>&1
-  - sudp apt-get install -y libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev  > /dev/null 2>&1
+  - sudo apt-get install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev  > /dev/null 2>&1
   - bash .ci/before_install_conf.bash
   - bash e3_building_test.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup
 
@@ -42,7 +39,7 @@ install:
   - bash e3.bash -${MOD_GA}${MOD_GB} i2all  > /dev/null 2>&1
   - bash e3.bash -${MOD_GA}${MOD_GB} bbase  > /dev/null 2>&1
   - bash e3.bash -${MOD_GA}${MOD_GB} breq   > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} bmod   
+  - bash e3.bash -${MOD_GA}${MOD_GB} bmod
 
 after_success:
   - bash e3.bash -${MOD_GA}${MOD_GB} cmd
