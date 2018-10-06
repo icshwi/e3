@@ -255,10 +255,9 @@ source tools/use_sshkey.sh
 
 ## Examples :
 
+* Example 1
 
 
-
-* 
 ```
 $ ./e3.bash -ctia4 call
 $ ./e3.bash -ctia4 gall
@@ -268,21 +267,24 @@ $ ./e3.bash -ctia4 ball
 $ ./e3.bash -ctia4 load 
 ```
 
-* 
+* Example 2
+
 ```
-$ ./e3.bash -c iall
-$ ./e3.bash -c ball
+$ ./e3.bash -c all
 $ ./e3.bash -c load
 ```
 
-## Customized e3 Building
+## Customized e3 Building Configuration
 
 If one would like to see the upcoming EPICS 7 with e3
 
 ```
-$ bash  e3_building_test.bash -t /epics/test -b 7.0.1.1
+$ bash e3_building_config.bash -t /epics/test -b 7.0.1.1 setup 
 $ bash e3.bash base
 $ bash e3.bash req
-$ bash e3.bash -cti mod
+$ bash e3.bash -ctiao mod
 ```
-Note that the -4 option is not necessary, because 7 has 4 already in base.
+Note that the -4 option is not necessary, but -o option is, because 7 has 4 already in base.
+
+
+Please look at [README_developing.md](./README_developing.md) in more detail. 
