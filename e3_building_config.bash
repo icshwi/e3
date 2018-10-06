@@ -44,14 +44,17 @@ declare -gr DEFAULT_SEQ_VERSION="2.1.21"
 
 function yes_or_no_to_go() {
 
-    printf  "> \n";
-    printf  "> This procedure could help users to setup \n"
-    printf  "> configuration for e3 installation.\n"
-    printf  "> \n";
-    read -p ">> Do you want to continue (y/n)? " answer
+    printf  ">> \n";
+    printf  "  The following configuration for e3 installation\n"
+    printf  "  will be generated :\n"
+
+    print_options
+    
+    printf  "\n";
+    read -p ">> Do you want to continue (y/N)? " answer
     case ${answer:0:1} in
 	y|Y )
-	    print_options
+	    printf "\n"
 	    ;;
 	* )
             printf ">> Stop here. \n";
