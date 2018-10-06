@@ -29,7 +29,7 @@ env:
 before_install:
   - bash .ci/before_install_pkgs.bash 
   - bash .ci/before_install_conf.bash
-  - bash e3_building_test.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}"
+  - bash e3_building_test.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
