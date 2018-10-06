@@ -42,17 +42,36 @@ declare -gr DEFAULT_REQ_VERSION="3.0.2"
 declare -gr DEFAULT_SEQ_VERSION="2.1.21"
 
 
+function yes_or_no_to_go() {
+
+    printf  "> \n";
+    printf  "> This procedure could help users to setup \n"
+    printf  "> configuration for e3 installation.\n"
+    printf  "> \n";
+    read -p ">> Do you want to continue (y/n)? " answer
+    case ${answer:0:1} in
+	y|Y )
+	    print_options
+	    ;;
+	* )
+            printf ">> Stop here. \n";
+	    exit;
+    ;;
+    esac
+
+}
+
+
 
 function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-s <sequencer_version>] [-c <base_tag>] " ;
+	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-c <base_tag>] setup" ;
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
 	echo "               -r : default ${DEFAULT_REQ_VERSION}"
-	echo "               -s : default ${DEFAULT_SEQ_VERSION}"
 	echo "               -c : default ${DEFAULT_BASE_VERSION}"
 	echo "";
 	echo " bash $0 -t /epics/test/ -r 3.0.0"
@@ -63,27 +82,35 @@ function usage
 }
 
 
-options="t:b:r:s:c:h"
+function print_options
+{
+    printf "\n"
+    printf ">> Set the global configuration as follows:\n";
+    printf ">>\n";
+    printf "  EPICS TARGET        : %s\n" "${TARGET}"
+    printf "  EPICS_BASE VERSION  : %s\n" "${BASE_VERSION}"
+    printf "  E3_REQUIRE_VERSION  : %s\n" "${REQUIRE_VERSION}"
+    printf "  EPICS_MODULE_TAG    : %s\n" "${BASE_TAG}"
+    printf "  EPICS_BASE          : %s\n" "${EPICS_BASE_TARGET}"
+    printf "  E3_REQUIRE_LOCATION : %s\n" "${REQUIRE_TARGET}"
+#    printf "  SEQ VERSION     : %s\n" "${SQU_VERSION}"
+}
+
+
+options=":t:b:r:s:c:h:y"
+ANSWER="NO"
+
 
 
 while getopts "${options}" opt; do
     case "${opt}" in
-        t)
-            TARGET=${OPTARG} ;
-            ;;
-	b)
-	    BASE_VERSION=${OPTARG} ;
-            ;;
-	r)
-	    REQUIRE_VERSION=${OPTARG} ;
-            ;;
-	s)
-	    SQU_VERSION=${OPTARG} ;
-            ;;
-	c)
-	    BASE_TAG=${OPTARG} ;
-            ;;
-	:)
+        t) TARGET=${OPTARG}       ;;
+	b) BASE_VERSION=${OPTARG} ;;
+      	r) REQUIRE_VERSION=${OPTARG} ;;
+       	s) SQU_VERSION=${OPTARG} ;;
+      	c) BASE_TAG=${OPTARG} ;;
+	y) ANSWER="YES" ;;
+   	:)
 	    echo "Option -$OPTARG requires an argument." >&2
 	    exit 1
 	    ;;
@@ -99,25 +126,45 @@ done
 shift $((OPTIND-1))
 
 if [ -z "$TARGET" ]; then
+#    printf ">> No TARGET PATH is defined, use the default one %s\n" "${DEFAULT_TAGET_PATH}"
     TARGET=${DEFAULT_TARGET_PATH}
 fi
 
 if [ -z "$BASE_VERSION" ]; then
-    printf "No BASE version is defined, use the default one %s\n" "${DEFAULT_BASE_VERSION}"
+#    printf ">> No BASE version is defined, use the default one %s\n" "${DEFAULT_BASE_VERSION}"
     BASE_VERSION=${DEFAULT_BASE_VERSION}
 fi
 
 if [ -z "$REQUIRE_VERSION" ]; then
-    printf "No REQUIRE version is defined, use the default one %s\n" "${DEFAULT_REQ_VERSION}"
+#    printf ">> No REQUIRE version is defined, use the default one %s\n" "${DEFAULT_REQ_VERSION}"
     REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
 fi
 
 if [ -z "$BASE_TAG" ]; then
-    printf "No BASE_TAG is defined, use the same as BASE_VERSION %s\n" "${BASE_VERSION}"
+#    printf ">> No BASE_TAG is defined, use the same as BASE_VERSION %s\n" "${BASE_VERSION}"
     BASE_TAG=${BASE_VERSION}
 fi
 
+EPICS_BASE_TARGET=${TARGET}/base-${BASE_VERSION}
+REQUIRE_TARGET=${EPICS_BASE_TARGET}/require/${REQUIRE_VERSION}
 
+case "$1" in
+
+    setup)
+	if [ "$ANSWER" == "NO" ]; then
+	    yes_or_no_to_go
+	else
+	    print_options
+	fi
+	;;
+    *)
+	usage
+	;;
+
+esac
+
+
+exit
 
 epics_base="${TARGET}/base-${BASE_VERSION}"
 
