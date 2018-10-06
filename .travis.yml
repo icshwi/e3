@@ -31,7 +31,7 @@ before_install:
   - sudo apt-get install -y build-essential realpath ipmitool libtool automake tclx  tree screen re2c darcs  > /dev/null 2>&1 
   - sudo apt-get install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev  > /dev/null 2>&1
   - bash .ci/before_install_conf.bash
-  - bash e3_building_test.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup
+  - bash e3_building_config.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
