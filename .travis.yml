@@ -35,12 +35,12 @@ before_install:
   - bash e3_building_test.bash -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}"
 
 install:
-  - bash e3.bash -${BUILDING_MOD} call   ${VERBOSE1}
-  - bash e3.bash -${BUILDING_MOD} gall   ${VERBOSE1}
-  - bash e3.bash -${BUILDING_MOD} i2all  ${VERBOSE1}
-  - bash e3.bash -${BUILDING_MOD} bbase  ${VERBOSE1}
-  - bash e3.bash -${BUILDING_MOD} breq   ${VERBOSE1}
-  - bash e3.bash -${BUILDING_MOD} bmod   ${VERBOSE0}
+  - bash e3.bash -${BUILDING_MOD} call   > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} gall   > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} i2all  > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} bbase  > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} breq   > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} bmod   
 
 after_success:
   - bash e3.bash -${BUILDING_MOD} cmd
