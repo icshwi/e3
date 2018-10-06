@@ -9,9 +9,9 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 ## Tested Platforms
 
 * Building, requiring (loading), and running modules should be tested carefully if one would like to run an EPICS IOC within e3.
-* The following Linux distribution covers Building and Requireing Tests.
+* The following Linux distribution covers Building and Requiring Tests.
 
-### Building and Requring Tests
+### Building and Requiring Tests
 * Debian 8 
 * Debian 9    
 * CentOS 7
@@ -87,14 +87,19 @@ e3 (master)$ bash e3.bash -c mod
 e3 (master)$ bash e3.bash -c load
 
 ```
+If one see the clean ioc shell prompt, e3 is ready to use. Please exit this test ioc.
 
 
-If one see the clean ioc shell, the environment is ready to use. However, one should source the dynamic environment via
+### Enable e3 in only current terminal
+
+Technically, one can have multiple e3 and community EPICS environment in a single host. To enable e3, please do the following command:
 
 ```
 e3 (master)$ source tools/setenv 
 ```
-, because it gives us more flexible way to have more than one EPICS environment in a host machine. Since then, one can run the example ioc through
+The above environment file will be generated automatically through building procedure. 
+
+Since then, one can run the example ioc through
 
 ```
 e3 (master)$  iocsh.bash cmds/iocStats.cmd 
@@ -242,7 +247,7 @@ Usage    : ./e3.bash [ -ctifealbo ] <option>
 
 ## SSH KEY Usage
 
-One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one.
+One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one. **Note that ESS gitlab repository cannot be accessiable outside the ESS network. Several modules (in the group t and b) cannot be cloned**. 
 
 ```
 source tools/use_sshkey.sh
@@ -255,12 +260,12 @@ source tools/use_sshkey.sh
 
 * 
 ```
-$ ./e3.bash -ctifea call
-$ ./e3.bash -ctifea gall
-$ ./e3.bash -ctifea vall
-$ ./e3.bash -ctifea iall
-$ ./e3.bash -ctifea ball
-$ ./e3.bash -ctifea load 
+$ ./e3.bash -ctia4 call
+$ ./e3.bash -ctia4 gall
+$ ./e3.bash -ctia4 vall
+$ ./e3.bash -ctia4 iall
+$ ./e3.bash -ctia4 ball
+$ ./e3.bash -ctia4 load 
 ```
 
 * 
@@ -278,6 +283,6 @@ If one would like to see the upcoming EPICS 7 with e3
 $ bash  e3_building_test.bash -t /epics/test -b 7.0.1.1
 $ bash e3.bash base
 $ bash e3.bash req
-$ bash e3.bash -c mod
+$ bash e3.bash -cti mod
 ```
 Note that the -4 option is not necessary, because 7 has 4 already in base.

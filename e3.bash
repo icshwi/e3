@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Saturday, October  6 23:53:15 CEST 2018
-#   version : 0.6.0
+#   date    : Sunday, October  7 00:36:50 CEST 2018
+#   version : 0.6.1
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -203,6 +203,8 @@ function build_require
 	    die 1 "${rep} doesn't exist";
 	fi
     done
+
+    generate_setenv;
 }
 
 ## REQUIRE
@@ -220,6 +222,7 @@ function devbuild_require
 	    die 1 "${rep} doesn't exist";
 	fi
     done
+    generate_setenv;
 }
 
 
@@ -294,6 +297,8 @@ function build_modules
 	fi
 	printf "\n";
     done
+    generate_setenv;
+
 }
 
 
@@ -391,6 +396,22 @@ function generate_startup_script
     
 }
 
+
+function generate_setenv
+{
+    local E3ENVFILE=""
+    local SETENV="${SC_TOP}/tools/setenv"
+    local modules_path=$(make -C ${SC_TOP}/e3-require/ vars |grep ^E3_MODULES_PATH | cut -f 3 -d ' ')
+    local module_name=$(make -C ${SC_TOP}/e3-require/ vars |grep ^E3_MODULE_NAME | cut -f 3 -d ' ')
+    local module_version=$(make -C ${SC_TOP}/e3-require/ vars |grep ^E3_MODULE_VERSION | cut -f 3 -d ' ')
+    local E3ENVFILE=${modules_path}/${module_name}/${module_version}/bin/setE3Env.bash
+
+    printf ">>\n"
+    printf "  Creating %s .... \n" ${SETENV}
+    printf "  Please, source it, if one would like to activate e3\n";
+    printf "  source tools/setenv \n"
+    echo "source ${E3ENVFILE}"  > ${SETENV};
+}
 
 function all_base
 {
@@ -516,6 +537,7 @@ function usage
 	echo "";
        	echo "           load   : Load all installed Modules into iocsh.bash";
 	echo "           cmd    : create .cmd file in ${SC_TOP}";
+	echo "        setenv    : create setenv in ${SC_TOP}/tools";
 	echo ""
 	echo ""           
 	echo ""    
@@ -631,6 +653,7 @@ case "$1" in
     load) module_loading_test_on_iocsh;;
     # Module Loading Test Startup Script for Travis-ci
     cmd)       generate_startup_script;;
+    setenv)    generate_setenv;;
     # Print Version Information in e3-* directory
     vbase) print_version_info_base    ;;
     vreq)  print_version_info_require ;;
