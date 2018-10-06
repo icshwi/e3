@@ -18,7 +18,7 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Saturday, October  6 14:12:45 CEST 2018
+# Date    : Saturday, October  6 21:53:32 CEST 2018
 # version : 0.0.7
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
@@ -162,9 +162,6 @@ case "$1" in
 	;;
 
 esac
-
-
-exit
 
 epics_base="${TARGET}/base-${BASE_VERSION}"
 
