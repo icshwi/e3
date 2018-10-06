@@ -35,9 +35,9 @@ before_install:
 install:
   - bash e3.bash -${BUILDING_MOD} call  > /dev/null 2>&1
   - bash e3.bash -${BUILDING_MOD} gall  > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} i2all > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} bbase > /dev/null 2>&1
-  - bash e3.bash -${BUILDING_MOD} breq  > /dev/null 2>&1
+  - bash e3.bash -${BUILDING_MOD} i2all
+  - bash e3.bash -${BUILDING_MOD} bbase 
+  - bash e3.bash -${BUILDING_MOD} breq 
   - bash e3.bash -${BUILDING_MOD} bmod
 
 after_success:
