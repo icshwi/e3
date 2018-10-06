@@ -18,14 +18,21 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, October  2 15:53:19 CEST 2018
-# version : 0.0.5
+# Date    : Saturday, October  6 14:12:45 CEST 2018
+# version : 0.0.7
+
+#           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
+#                 
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
 
 declare -g TARGET="";
+declare -g BASE_VERSION="";
+declare -g REQUIRE_VERSION="";
+declare -g SQU_VERSION="";
+declare -g BASE_TAG="";
 
 
 
@@ -35,16 +42,18 @@ declare -gr DEFAULT_REQ_VERSION="3.0.2"
 declare -gr DEFAULT_SEQ_VERSION="2.1.21"
 
 
+
 function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-s <sequencer_version>] " ;
+	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-s <sequencer_version>] [-c <base_tag>] " ;
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
 	echo "               -r : default ${DEFAULT_REQ_VERSION}"
 	echo "               -s : default ${DEFAULT_SEQ_VERSION}"
+	echo "               -c : default ${DEFAULT_BASE_VERSION}"
 	echo "";
 	echo " bash $0 -t /epics/test/ -r 3.0.0"
 	echo ""
@@ -54,7 +63,7 @@ function usage
 }
 
 
-options=":t:b:r:s:h"
+options="t:b:r:s:c:h"
 
 
 while getopts "${options}" opt; do
@@ -70,6 +79,9 @@ while getopts "${options}" opt; do
             ;;
 	s)
 	    SQU_VERSION=${OPTARG} ;
+            ;;
+	c)
+	    BASE_TAG=${OPTARG} ;
             ;;
 	:)
 	    echo "Option -$OPTARG requires an argument." >&2
@@ -100,12 +112,18 @@ if [ -z "$REQUIRE_VERSION" ]; then
     REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
 fi
 
+if [ -z "$BASE_TAG" ]; then
+    printf "No BASE_TAG is defined, use the same as BASE_VERSION %s\n" "${BASE_VERSION}"
+    BASE_TAG=${BASE_VERSION}
+fi
+
+
 
 epics_base="${TARGET}/base-${BASE_VERSION}"
 
 config_base="
 E3_EPICS_PATH:=${TARGET}
-EPICS_BASE_TAG:=tags/R${BASE_VERSION}
+EPICS_BASE_TAG:=tags/R${BASE_TAG}
 E3_BASE_VERSION:=${BASE_VERSION}
 #E3_CROSS_COMPILER_TARGET_ARCHS =
 "
