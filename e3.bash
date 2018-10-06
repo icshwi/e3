@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Saturday, October  6 20:30:37 CEST 2018
-#   version : 0.5.10
+#   date    : Saturday, October  6 23:53:15 CEST 2018
+#   version : 0.6.0
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -337,21 +337,9 @@ function module_loading_test_on_iocsh
 		mod="EthercatMC"
 	    fi
 	    printf "#\n#\n"
-	    printf "# >>>>>\n";
 	    printf "# >>>>> MODULE Loading ........\n";
 	    printf "# >>>>> MODULE NAME ..... ${mod}\n";
 	    printf "# >>>>>        VER  ..... ${ver}\n";
-	    printf "# >>>>>\n";
-
-	    # if [[ ${mod} == AD* ]]; then
-	    # 	printf "#--------------------------------------- \n";
-	    # 	printf "# In ADSupport, ADCore, and ADSimDector, \n";
-	    # 	printf "# Simply ignore the following errors : \n";
-	    # 	printf " epicsEnvSet(\"TOP\",\"${SC_TOP}/${rep}\")\n"
-	    # 	printf " cd ${SC_TOP}/${rep}\n"
-	    # 	printf " < ${SC_TOP}/${rep}/cmds/load_libs.cmd\n"
-	    # 	printf "#--------------------------------------- \n";
-	    # fi
 	    printf "require ${mod},${ver}\n";
 	    printf "# >>>>>\n";
 	    printf "#\n#\n"
@@ -361,10 +349,6 @@ function module_loading_test_on_iocsh
 
     exec iocsh.bash ${IOC_TEST}
 
-#    sleep 30s;
-#    kill -SIGINT ${APP_PID};
-# stty sane > /dev/null 2>&1
-    
 }
 
 
@@ -372,7 +356,7 @@ function module_loading_test_on_iocsh
 function generate_startup_script
 {
     
-    local IOC_TEST=.cmd
+    local IOC_TEST=${SC_TOP}/.cmd
 
     printf "Generating a startup script ... in $IOC_TEST\n";
     
@@ -381,8 +365,6 @@ function generate_startup_script
 	local PREFIX_LIBVERSION="E3_MODULE_VERSION:="
 	local mod=""
 	local ver=""
-	#	printf "var requireDebug 1\n";
-
 	local etherlab_lib=/opt/etherlab/lib/libethercat.so
 	local load_cmd="dlload"
 	printf "${load_cmd} ${etherlab_lib}\n";
@@ -401,25 +383,7 @@ function generate_startup_script
 	    if [ "${mod}" = "ethercatmc" ]; then
 		mod="EthercatMC"
 	    fi
-	    printf "#\n#\n"
-	    printf "# >>>>>\n";
-	    printf "# >>>>> MODULE Loading ........\n";
-	    printf "# >>>>> MODULE NAME ..... ${mod}\n";
-	    printf "# >>>>>        VER  ..... ${ver}\n";
-	    printf "# >>>>>\n";
-
-	    # if [[ ${mod} == AD* ]]; then
-	    # 	printf "#--------------------------------------- \n";
-	    # 	printf "# In ADSupport, ADCore, and ADSimDector, \n";
-	    # 	printf "# Simply ignore the following errors : \n";
-	    # 	printf " epicsEnvSet(\"TOP\",\"${SC_TOP}/${rep}\")\n"
-	    # 	printf " cd ${SC_TOP}/${rep}\n"
-	    # 	printf " < ${SC_TOP}/${rep}/cmds/load_libs.cmd\n"
-	    # 	printf "#--------------------------------------- \n";
-	    # fi
 	    printf "require ${mod},${ver}\n";
-	    printf "# >>>>>\n";
-	    printf "#\n#\n"
 	done
 	
     }  > ${IOC_TEST}
@@ -551,6 +515,7 @@ function usage
 	echo "         allall   : Print ALL Version Information in e3-* by using \"make vars\"";
 	echo "";
        	echo "           load   : Load all installed Modules into iocsh.bash";
+	echo "           cmd    : create .cmd file in ${SC_TOP}";
 	echo ""
 	echo ""           
 	echo ""    
