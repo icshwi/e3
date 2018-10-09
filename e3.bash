@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Sunday, October  7 00:36:50 CEST 2018
-#   version : 0.6.1
+#   date    : Monday, October  8 20:39:43 CEST 2018
+#   version : 0.6.2
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -55,6 +55,7 @@ function init_base
 	    make init   ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
 	    make pkgs
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
+	    make vars
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make gbase\" first"
@@ -75,6 +76,7 @@ function init2_base
 	    make checkout
 	    make pkgs
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
+	    make vars
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make gbase\" first"
@@ -100,7 +102,6 @@ function build_base
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make vars
 	    make build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    popd
 	else
@@ -119,6 +120,7 @@ function init_require
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
+	    make vars
 	    popd
 	else
 	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
@@ -137,6 +139,7 @@ function init2_require
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
+	    make vars
 	    popd
 	else
 	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
@@ -154,7 +157,7 @@ function devinit_require
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make devinit ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
-	    make devenv;
+	    make devvars;
 	    popd
 	else
 	    die 1 "${rep} doesn't exist. Please make sure \"make greq\" first"
@@ -195,7 +198,6 @@ function build_require
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make vars
 	    make build   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make install ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
@@ -214,7 +216,6 @@ function devbuild_require
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make devvars
 	    make devbuild   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make devinstall ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
@@ -239,6 +240,7 @@ function init_modules
 	    pushd ${rep}
 	    make init ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
 	    make patch
+	    make vars
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make -g all gmod\" first";
@@ -262,6 +264,7 @@ function init2_modules
 	    pushd ${rep}
 	    make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
 	    make patch
+	    make vars
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist. Please make sure \"make -g all gmod\" first";
@@ -288,7 +291,6 @@ function build_modules
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make vars
 	    make build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make install  ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
