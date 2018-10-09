@@ -13,4 +13,4 @@ loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
 
 iocInit()
 
-dbl > "${IOC}_PVs.list"
+dbl > "${IOCNAME}_PVs.list"
