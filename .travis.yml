@@ -14,7 +14,7 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-    - MOD_GA=ctieal
+    - MOD_GA=ctifeal
 #    - MOD_GA=c
   matrix:
     - SESSION=1 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.0  MOD_GB=4
