@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, October  8 20:39:43 CEST 2018
-#   version : 0.6.2
+#   date    : Wednesday, October 10 19:29:28 CEST 2018
+#   version : 0.6.3
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -49,11 +49,17 @@ function make_init2
 function init_base
 {
     local rep="";
+    local answer="$1"; shift;
+
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make init   ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
-	    make pkgs
+	    if [ -z "${answer}" ] ; then
+		make pkgs
+	    else
+	    	echo "$answer" | make pkgs
+	    fi
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
 	    make vars
 	    popd
@@ -68,13 +74,18 @@ function init_base
 function init2_base
 {
     local rep="";
+    local answer="$1"; shift;
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    git submodule sync
 	    git submodule update --init --recursive
 	    make checkout
-	    make pkgs
+	    if [ -z "${answer}" ] ; then
+		make pkgs
+	    else
+	    	echo "$answer" | make pkgs
+	    fi
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
 	    make vars
 	    popd
@@ -449,7 +460,8 @@ function all_modules
 
 function init_all
 {
-    init_base;
+    local answer="$1"; shift;
+    init_base "${answer}" ;
     init_require;
     init_modules;
 }
@@ -457,7 +469,8 @@ function init_all
 
 function init2_all
 {
-    init2_base;
+    local answer="$1"; shift;
+    init2_base "${answer}" ;
     init2_require;
     init2_modules;
 }
@@ -472,18 +485,20 @@ function build_all
 
 function all2_all
 {
+    local answer="$1"; shift;
     clean_all;
     clone_all;
-    init2_all;
+    init2_all "${answer}";
     build_all;
 }
 
 
 function all_all
 {
+    local answer="$1"; shift;
     clean_all;
     clone_all;
-    init_all;
+    init_all "${answer}";
     build_all;
 }
 
@@ -613,16 +628,16 @@ case "$1" in
     clean) clean_all     ;;
     call)  clean_all     ;;
     gall)  clone_all     ;;
-    iall)  init_all      ;;
-    i2all) init2_all     ;;
-    ball)  build_all     ;;
-    all)   all_all       ;;
-    all2)  all2_all      ;;
+    iall)  init_all   "$2"   ;;
+    i2all) init2_all  "$2"   ;;
+    ball)  build_all         ;;
+    all)   all_all    "$2"   ;;
+    all2)  all2_all   "$2"   ;;
     # BASE : clean, clone, init, build, and all
     cbase) clean_base    ;;
     gbase) clone_base    ;;
-    ibase)  init_base    ;;
-    i2base)  init2_base  ;;
+    ibase)  init_base   "$2" ;;
+    i2base)  init2_base "$2" ;;
     bbase) build_base    ;;
     base)    all_base    ;;
     # REQUIRE : clean, clone, init, build, and all
