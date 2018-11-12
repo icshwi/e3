@@ -6,10 +6,8 @@ e3-asyn
 e3-busy
 e3-modbus
 e3-ipmiComm
-# sequencer 2.1 for base 3.15.5
-e3-sequencer
 # sequencer 2.2 for base 3.15.5 and 7.0.0.1
-#e3-seq
+e3-seq
 e3-sscan
 e3-std
 e3-ip
