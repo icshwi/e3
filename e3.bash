@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, November 12 10:07:59 CET 2018
-#   version : 0.6.4
+#   date    : Monday, November 12 13:16:14 CET 2018
+#   version : 0.6.5
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -465,29 +465,12 @@ function all_modules
     build_modules;
 }
 
-# function init_all
-# {
-#     local answer="$1"; shift;
-#     init_base "${answer}" ;
-#     init_require;
-#     init_modules;
-# }
-
-
 # function init2_all
 # {
 #     local answer="$1"; shift;
 #     init2_base "${answer}" ;
 #     init2_require;
 #     init2_modules;
-# }
-
-
-# function build_all
-# {
-#     build_base;
-#     build_require;
-#     build_modules;
 # }
 
 function all2_all
@@ -499,6 +482,7 @@ function all2_all
     build_base;
     init2_require;
     build_require;
+    init2_modules;
     build_modules;
 }
 
@@ -512,6 +496,7 @@ function all_all
     build_base;
     init_require;
     build_require;
+    init_modules;
     build_modules;
 }
 
@@ -532,9 +517,9 @@ function usage
 	echo ""
 	echo "           call   : Clean all (base, require, selected module group)";
 	echo "           gall   : Clone all (base, require, selected module group)";
-	echo "           iall   : Init  all (base, require, selected module group)";
-	echo "           ball   : Build, Install all (base, require, selected module group)";
-	echo "            all   : call, gall, iall, ball";
+#	echo "           iall   : Init  all (base, require, selected module group)";
+#	echo "           ball   : Build, Install all (base, require, selected module group)";
+	echo "            all   : call, gall, ibase, bbase, ireq, breq, imod, bmod";
 	echo ""
 	echo "           cbase  : Clean Base";
 	echo "           gbase  : Clone Base";
@@ -641,9 +626,9 @@ case "$1" in
     clean) clean_all     ;;
     call)  clean_all     ;;
     gall)  clone_all     ;;
-    iall)  init_all   "$2"   ;;
-    i2all) init2_all  "$2"   ;;
-    ball)  build_all         ;;
+#    iall)  init_all   "$2"   ;;
+#    i2all) init2_all  "$2"   ;;
+#    ball)  build_all         ;;
     all)   all_all    "$2"   ;;
     all2)  all2_all   "$2"   ;;
     # BASE : clean, clone, init, build, and all
