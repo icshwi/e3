@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, October 10 19:29:28 CEST 2018
-#   version : 0.6.3
+#   date    : Monday, November 12 10:07:59 CET 2018
+#   version : 0.6.4
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -40,7 +40,7 @@ declare -ga module_list=()
 function make_init2
 {
     git submodule update --init --recursive ;
-    git submodule update --remote ;
+    git submodule update --remote --merge;
     make checkout
 }
 
@@ -239,13 +239,14 @@ function devbuild_require
 
 
 
-
+## init_modules and init2_modules are needed
+## to be installed before. 
 function init_modules
 {
     local rep="";
     # git credential cache set to 30 mins (enough) in order to minimize the same password, and username again again
     # in bitbucket and gitlab.esss.se
-    git config credential.helper 'cache --timeout=1800'
+#    git config credential.helper 'cache --timeout=1800'
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
@@ -259,7 +260,7 @@ function init_modules
 	printf "\n";
     done
     # git credential exit, so we clear 30 mins cache
-    git credential-cache exit
+#    git credential-cache exit
     
 }
 
@@ -269,11 +270,17 @@ function init2_modules
     local rep="";
     # git credential cache set to 30 mins (enough) in order to minimize the same password, and username again again
     # in bitbucket and gitlab.esss.se
-    git config credential.helper 'cache --timeout=1800'
+ #   git config credential.helper 'cache --timeout=1800'
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ; 
+	    isItLocal=$(find -type d -name "*loc")
+	    if [[ $(checkIfVar "${isItLocal}") -eq "NON_EXIST" ]] ; then
+		make_init2 ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
+		printf ">>>>     The %s has the REMOTE sources.\n" "${rep}"
+	    else
+		printf ">>>>     The %s has the LOCAL sources.\n" "${rep}"
+	    fi
 	    make patch
 	    make vars
 	    popd
@@ -283,7 +290,7 @@ function init2_modules
 	printf "\n";
     done
     # git credential exit, so we clear 30 mins cache
-    git credential-cache exit
+  #  git credential-cache exit
     
 }
 
@@ -458,38 +465,41 @@ function all_modules
     build_modules;
 }
 
-function init_all
-{
-    local answer="$1"; shift;
-    init_base "${answer}" ;
-    init_require;
-    init_modules;
-}
+# function init_all
+# {
+#     local answer="$1"; shift;
+#     init_base "${answer}" ;
+#     init_require;
+#     init_modules;
+# }
 
 
-function init2_all
-{
-    local answer="$1"; shift;
-    init2_base "${answer}" ;
-    init2_require;
-    init2_modules;
-}
+# function init2_all
+# {
+#     local answer="$1"; shift;
+#     init2_base "${answer}" ;
+#     init2_require;
+#     init2_modules;
+# }
 
 
-function build_all
-{
-    build_base;
-    build_require;
-    build_modules;
-}
+# function build_all
+# {
+#     build_base;
+#     build_require;
+#     build_modules;
+# }
 
 function all2_all
 {
     local answer="$1"; shift;
     clean_all;
     clone_all;
-    init2_all "${answer}";
-    build_all;
+    init2_base "${answer}";
+    build_base;
+    init2_require;
+    build_require;
+    build_modules;
 }
 
 
@@ -498,8 +508,11 @@ function all_all
     local answer="$1"; shift;
     clean_all;
     clone_all;
-    init_all "${answer}";
-    build_all;
+    init_base "${answer}";
+    build_base;
+    init_require;
+    build_require;
+    build_modules;
 }
 
 

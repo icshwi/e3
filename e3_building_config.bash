@@ -18,11 +18,11 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Saturday, October  6 21:53:32 CEST 2018
-# version : 0.0.7
+# Date    : Saturday, November 10 17:25:05 CET 2018
+# version : 0.0.8
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
-#                 
+#           0.0.8 : Require 3.0.4, Remove SEQ,         
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -38,8 +38,8 @@ declare -g BASE_TAG="";
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
 declare -gr DEFAULT_BASE_VERSION="3.15.5"
-declare -gr DEFAULT_REQ_VERSION="3.0.2"
-declare -gr DEFAULT_SEQ_VERSION="2.1.21"
+declare -gr DEFAULT_REQ_VERSION="3.0.4"
+#declare -gr DEFAULT_SEQ_VERSION="2.2.6"
 
 
 function yes_or_no_to_go() {
@@ -192,32 +192,37 @@ epics315string="3.15."
 printf "EPICS %s is detected\n" "${BASE_VERSION}"
 printf "\n";
 
-if test "${BASE_VERSION#*$epics7string}" != "$BASE_VERSION"; then
+
+## From Saturday, November 10 17:14:32 CET 2018,
+## We use sequencer 2.2 as the default, because
+## it supports base 3.15.5 and base 7.
+## 
+# if test "${BASE_VERSION#*$epics7string}" != "$BASE_VERSION"; then
 
  
-    printf "Switch sequrencer to 2.2\n"
+#     printf "Switch sequrencer to 2.2\n"
     
-    sed -i 's/^#e3-seq/e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
-    sed -i 's/^e3-sequencer/#e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
+#     sed -i 's/^#e3-seq/e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
+#     sed -i 's/^e3-sequencer/#e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
 
-    cat ${SC_TOP}/configure/MODULES_COMMON
-    if [ -z "$SEQ_VERSION" ]; then
-	SEQ_VERSION="2.2.6"
-    fi
-elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
-    printf "Switch sequrencer to 2.1\n"
+#     cat ${SC_TOP}/configure/MODULES_COMMON
+#     if [ -z "$SEQ_VERSION" ]; then
+# 	SEQ_VERSION="2.2.6"
+#     fi
+# elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
+#     printf "Switch sequrencer to 2.1\n"
     
-    sed -i 's/^e3-seq/#e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
-    sed -i 's/^#e3-sequencer/e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
+#     sed -i 's/^e3-seq/#e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
+#     sed -i 's/^#e3-sequencer/e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
 
-    cat ${SC_TOP}/configure/MODULES_COMMON
-      if [ -z "$SEQ_VERSION" ]; then
-	  SEQ_VERSION=${DEFAULT_SEQ_VERSION}
-      fi
-else
-    printf "Don't support it\n";
-    exit
-fi
+#     cat ${SC_TOP}/configure/MODULES_COMMON
+#       if [ -z "$SEQ_VERSION" ]; then
+# 	  SEQ_VERSION=${DEFAULT_SEQ_VERSION}
+#       fi
+# else
+#     printf "Don't support it\n";
+#     exit
+# fi
 
 
 config_require="
@@ -238,8 +243,6 @@ echo ">>>"
 release="
 EPICS_BASE:=${epics_base}
 E3_REQUIRE_VERSION:=${REQUIRE_VERSION}
-#E3_SEQUENCER_NAME:=sequencer
-E3_SEQUENCER_VERSION:=${SEQ_VERSION}
 "
 
 rm ${SC_TOP}/RELEASE.local
