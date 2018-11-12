@@ -14,8 +14,8 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-    - MOD_GA=ctifeal
-#    - MOD_GA=c
+#    - MOD_GA=ctifeal
+    - MOD_GA=c
   matrix:
 #    - SESSION=1 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.0  MOD_GB=4
 #    - SESSION=2 BASE=3.15.5  TAG=3.15.5      REQUIRE=3.0.2  MOD_GB=4
@@ -35,7 +35,7 @@ before_install:
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
   - bash e3.bash -${MOD_GA}${MOD_GB} gall   > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} i2all  > /dev/null 2>&1
+  - bash e3.bash -${MOD_GA}${MOD_GB} i2all  
   - bash e3.bash -${MOD_GA}${MOD_GB} bbase  > /dev/null 2>&1
   - bash e3.bash -${MOD_GA}${MOD_GB} breq   > /dev/null 2>&1
   - bash e3.bash -${MOD_GA}${MOD_GB} bmod
