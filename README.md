@@ -57,6 +57,8 @@ $ ./e3.bash req
 
 ### Install common modules within the e3 directory
 
+One should install base and require first before each modules's configuration.
+
 ```
 e3 (master)$ bash e3.bash -c vars
 
@@ -183,18 +185,19 @@ Each base, Require module, and others modules have its own MAKEFILE and its own 
 ```
 e3 (master)$ ./e3.bash 
 
-
-Usage    : ./e3.bash [ -ctifealbo ] <option> 
+Usage    : e3.bash [ -ctifealb4do ] <option> 
 
 
            -c     : common      : epics modules
            -t     : timing      : mrf timing modules
+           -4     : epics v4    : EPICS V4 modules (testing)
            -i{c}  : ifc free    : ifc modules without user accounts
            -f{ci} : ifc nonfree : ifc modules with user accounts
            -e{c}  : ecat        : ethercat modules
            -a{c}  : area        : area detector modules / BI Modules
            -l{c}  : llrf        : old LLRF modules
            -b{ca} : bi          : beam instrumentation modules (based on AD)
+           -d     : developing  : no dependency, one should installl all before
            {c,ci} : dep modules : enable by default if not defined (dependent modules)
              -o   : only        : ignore dependent modules
                                   the option -e is actually -ec. And -eo means -e.
@@ -206,9 +209,7 @@ Usage    : ./e3.bash [ -ctifealbo ] <option>
 
            call   : Clean all (base, require, selected module group)
            gall   : Clone all (base, require, selected module group)
-           iall   : Init  all (base, require, selected module group)
-           ball   : Build, Install all (base, require, selected module group)
-            all   : call, gall, iall, ball
+            all   : call, gall, ibase, bbase, ireq, breq, imod, bmod
 
            cbase  : Clean Base
            gbase  : Clone Base
@@ -224,7 +225,7 @@ Usage    : ./e3.bash [ -ctifealbo ] <option>
 
            cmod   : Clean Modules (selected module group)
            gmod   : Clone Modules (selected module group)
-          imod   : Init  Modules (selected module group)
+           imod   : Init  Modules (selected module group)
            bmod   : Build, Install Modules (selected module group)
             mod   : cmod, mod, imod, bmod
 
@@ -241,6 +242,8 @@ Usage    : ./e3.bash [ -ctifealbo ] <option>
          allall   : Print ALL Version Information in e3-* by using "make vars"
 
            load   : Load all installed Modules into iocsh.bash
+           cmd    : create .cmd file in /home/jhlee/e3-upgraded
+        setenv    : create setenv in /home/jhlee/e3-upgraded/tools
 
 
 ```
