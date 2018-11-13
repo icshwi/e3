@@ -74,10 +74,10 @@ function usage
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
-	echo "               -r : default ${DEFAULT_REQ_VERSION}"
+#	echo "               -r : default ${DEFAULT_REQ_VERSION}"
 	echo "               -c : default ${DEFAULT_BASE_VERSION}"
 	echo "";
-	echo " bash $0 -t /epics/test/ -r 3.0.0"
+	echo " bash $0 -t /epics/test/ -r 3.0.4"
 	echo ""
 	
     } 1>&2;
