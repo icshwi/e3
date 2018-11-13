@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, November 12 13:16:14 CET 2018
-#   version : 0.6.5
+#   date    : Tuesday, November 13 15:42:01 CET 2018
+#   version : 0.6.6
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -503,6 +503,39 @@ function all_all
 
 
 
+function configuration_update_modules
+{
+    local rep="";
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    printf "We are updating the configuration for %s\n", "${rep}"
+	    e3TemplateGenerator -u ${rep}
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	printf "\n";
+    done
+
+}
+
+
+
+function git_diff_modules
+{
+    local rep="";
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    printf "We are updating the configuration for %s\n", "${rep}"
+	    pushd ${rep}
+	    git diff
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	printf "\n";
+    done
+
+}
 
 
 function usage
@@ -677,6 +710,8 @@ case "$1" in
     vall)  print_version_info_all     ;;
     # Call *make vars in each e3-* directory
     allall)  print_version_really_everything   ;;
+    cupdate) configuration_update_modules ;;
+    gitdiff) git_diff_modules ;;
     *)    usage;;
 esac
 
