@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Tuesday, November 13 15:42:01 CET 2018
-#   version : 0.6.6
+#   date    : Wednesday, November 14 15:03:36 CET 2018
+#   version : 0.6.7
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -28,6 +28,7 @@ GIT_CMD="git clone"
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
+declare -gr SC_LOGDATE="$(date +%y%m%d%H%M)"
 
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
@@ -428,8 +429,15 @@ function generate_setenv
     local E3ENVFILE=${modules_path}/${module_name}/${module_version}/bin/setE3Env.bash
 
     printf ">>\n"
+    if [[ $(checkIfFile "${SETENV}") -eq "EXIST" ]]; then
+	printf "  We've found the existent %s\n" "${SETENV}"
+	printf "  Rename it to %s\n" "${SETENV}_${SC_LOGDATE}"
+	printf "  Still, it can be used in order to set old existent e3.\n";
+	mv ${SETENV} ${SETENV}_${SC_LOGDATE}
+    fi
+    printf ">>\n";
     printf "  Creating %s .... \n" ${SETENV}
-    printf "  Please, source it, if one would like to activate e3\n";
+    printf "  Please, source it, if one would like to activate latest installed e3.\n";
     printf "  source tools/setenv \n"
     echo "source ${E3ENVFILE}"  > ${SETENV};
 }

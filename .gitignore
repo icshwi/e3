@@ -5,10 +5,13 @@ e3-*
 *~
 .cmd
 .output
-tools/setenv
+tools/setenv*
 *.local
 RULES*
 CONFIG*
 DEFINES_FT
 DECOUPLE_FLAGS
 cmds/test.cmd
+test
+*.Makefile
+
