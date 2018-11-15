@@ -18,11 +18,13 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Saturday, November 10 17:25:05 CET 2018
-# version : 0.0.8
+# Date    : Thursday, November 15 20:32:02 CET 2018
+# version : 0.0.9
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
-#           0.0.8 : Require 3.0.4, Remove SEQ,         
+#           0.0.8 : Require 3.0.4, Remove SEQ,
+#           0.0.9 : force not to use below require 3.0.4
+#
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -42,7 +44,49 @@ declare -gr DEFAULT_REQ_VERSION="3.0.4"
 #declare -gr DEFAULT_SEQ_VERSION="2.2.6"
 
 
-function yes_or_no_to_go() {
+
+function require_code_generator #@ Generator REQUIRE version
+{
+    #@ USAGE: REQ_CODE=$(require_code_generator ${require_version})
+
+    local require_full_version=$1; shift;
+    
+    local require_version=$(echo $require_full_version  | grep -o '[^-]*$')
+    local require_ver_maj=$(echo $require_version | cut -d. -f1)
+    local require_ver_mid=$(echo $require_version | cut -d. -f2)
+    local require_ver_min=$(echo $require_version | cut -d. -f3)
+
+    local req_code="";
+    
+    if [[ ${#require_ver_maj} -lt 2 ]] ; then
+	require_ver_maj="00${require_ver_maj}"
+	require_ver_maj="${require_ver_maj: -2}"
+    fi
+    
+    if [[ ${#require_ver_mid} -lt 2 ]] ; then
+	require_ver_mid="00${require_ver_mid}"
+	require_ver_mid="${require_ver_mid: -2}"
+    fi
+    
+    if [[ ${#require_ver_min} -lt 2 ]] ; then
+	require_ver_min="00${require_ver_min}"
+	require_ver_min="${require_ver_min: -2}"
+    fi
+    
+    # if [[ ${#require_ver_patch} -lt 2 ]] ; then
+    # 	require_ver_patch="00${require_ver_patch}"
+    # 	require_ver_patch="${require_ver_patch: -2}"
+    # fi
+
+ #   req_code=${require_ver_maj}${require_ver_mid}${require_ver_min}${require_ver_patch}
+    req_code=${require_ver_maj}${require_ver_mid}${require_ver_min}
+
+    echo "$req_code";
+
+}
+
+function yes_or_no_to_go
+{
 
     printf  ">> \n";
     printf  "  The following configuration for e3 installation\n"
@@ -74,10 +118,10 @@ function usage
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
-#	echo "               -r : default ${DEFAULT_REQ_VERSION}"
+	echo "               -r : default ${DEFAULT_REQ_VERSION}"
 	echo "               -c : default ${DEFAULT_BASE_VERSION}"
 	echo "";
-	echo " bash $0 -t /epics/test/ -r 3.0.4"
+	echo " bash $0 -t /epics/ -r 3.0.4 setup"
 	echo ""
 	
     } 1>&2;
@@ -141,6 +185,14 @@ fi
 if [ -z "$REQUIRE_VERSION" ]; then
 #    printf ">> No REQUIRE version is defined, use the default one %s\n" "${DEFAULT_REQ_VERSION}"
     REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
+else
+    REQCODE=$(require_code_generator ${REQUIRE_VERSION})
+#    printf "%s\n" "${REQCODE}"
+    if [[ ${REQCODE} -le 030003 ]]; then
+	printf ">>\n"
+	printf "   REQUIRE Version should be larger than or equal to %s\n" "${DEFAULT_REQ_VERSION}"
+  	REQUIRE_VERSION=${DEFAULT_REQ_VERSION}
+    fi
 fi
 
 if [ -z "$BASE_TAG" ]; then
@@ -175,8 +227,12 @@ E3_BASE_VERSION:=${BASE_VERSION}
 #E3_CROSS_COMPILER_TARGET_ARCHS =
 "
 
-rm ${SC_TOP}/CONFIG_BASE.local
-cat > ${SC_TOP}/CONFIG_BASE.local <<EOF
+local_file=${SC_TOP}/CONFIG_BASE.local
+if [[ $(checkIfFile "${local_file}") -eq "EXIST" ]]; then
+    rm -f ${local_file}
+fi
+	    
+cat > ${local_file} <<EOF
 $config_base
 EOF
 
@@ -184,7 +240,7 @@ echo ""
 echo ">>> EPICS BASE Configuration "
 echo ""
 echo ">>> CONFIG_BASE.local"
-cat ${SC_TOP}/CONFIG_BASE.local
+cat ${local_file}
 echo ">>>"
 
 epics7string="7."
@@ -229,13 +285,17 @@ config_require="
 EPICS_MODULE_TAG:=tags/v${REQUIRE_VERSION}
 "
 
-rm -f ${SC_TOP}/REQUIRE_CONFIG_MODULE.local
-cat > ${SC_TOP}/REQUIRE_CONFIG_MODULE.local <<EOF
+local_file=${SC_TOP}/REQUIRE_CONFIG_MODULE.local
+if [[ $(checkIfFile "${local_file}") -eq "EXIST" ]]; then
+    rm -f ${local_file}
+fi
+
+cat > ${local_file} <<EOF
 $config_require
 EOF
 
 echo ">>> REQUIRE_CONFIG_MODULE"
-cat ${SC_TOP}/REQUIRE_CONFIG_MODULE.local
+cat ${local_file}
 echo ">>>"
 
 
@@ -245,21 +305,25 @@ EPICS_BASE:=${epics_base}
 E3_REQUIRE_VERSION:=${REQUIRE_VERSION}
 "
 
-rm ${SC_TOP}/RELEASE.local
-cat > ${SC_TOP}/RELEASE.local <<EOF
+local_file=${SC_TOP}/RELEASE.local
+if [[ $(checkIfFile "${local_file}") -eq "EXIST" ]]; then
+    rm -f ${local_file}
+fi
+
+cat > ${local_file} <<EOF
 $release
 EOF
 echo ">>> RELEASE.local"
-cat ${SC_TOP}/RELEASE.local
+cat ${local_file}
 echo ">>>"
 
 
 
 echo ""
 echo ">>> Run the following..."
-echo "bash e3.bash base"
-echo "bash e3.bash req"
-echo "bash e3.bash -c mod"
+echo "    bash e3.bash base"
+echo "    bash e3.bash req"
+echo "    bash e3.bash -c mod"
 
 
 exit $?
