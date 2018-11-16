@@ -14,4 +14,6 @@ DECOUPLE_FLAGS
 cmds/test.cmd
 test
 *.Makefile
+cmds/random.cmd
+cmds/random_tmp
 
