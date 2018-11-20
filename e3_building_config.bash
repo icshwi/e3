@@ -44,7 +44,6 @@ declare -gr DEFAULT_REQ_VERSION="3.0.4"
 #declare -gr DEFAULT_SEQ_VERSION="2.2.6"
 
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
-. ${SC_TOP}/.cfgs/.e3_modules_list.cfg
 
 function require_code_generator #@ Generator REQUIRE version
 {
