@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Friday, January  4 17:19:42 CET 2019
-# version : 1.0.1
+# Date    : Saturday, January  5 00:41:55 CET 2019
+# version : 1.0.2
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -173,12 +173,12 @@ fi
 if [ "$RESETCA" == "YES" ]; then
     reset_ca_addr;
     sleep 2;
+    clear;
 fi
 
 pvs_from_list "${LIST}" "${SUBSTRING}"
 
 if [ -z "$WATCH" ]; then
-    clear;
     getValue_pvlist
 else
     # This is the fake watch
