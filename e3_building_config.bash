@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#  Copyright (c) 2018 Jeong Han Lee
-#  Copyright (c) 2018 European Spallation Source ERIC
+#  Copyright (c) 2018        Jeong Han Lee
+#  Copyright (c) 2018 - 2019 European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -18,13 +18,13 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Thursday, November 15 20:32:02 CET 2018
-# version : 0.0.9
+# Date    : Friday, January  4 16:47:35 CET 2019
+# version : 0.1.0
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
 #           0.0.9 : force not to use below require 3.0.4
-#
+#           0.1.0 : create RELEASE_DEV.local as the same as RELEASE.local
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -317,6 +317,20 @@ echo ">>> RELEASE.local"
 cat ${local_file}
 echo ">>>"
 
+
+# It is the convenient for the developing mode within e3 source directory
+#
+local_file=${SC_TOP}/RELEASE_DEV.local
+if [[ $(checkIfFile "${local_file}") -eq "EXIST" ]]; then
+    rm -f ${local_file}
+fi
+
+cat > ${local_file} <<EOF
+$release
+EOF
+echo ">>> RELEASE_DEV.local"
+cat ${local_file}
+echo ">>>"
 
 
 echo ""
