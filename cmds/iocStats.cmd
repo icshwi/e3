@@ -1,16 +1,16 @@
 require iocStats,ae5d083
 
-epicsEnvSet("SEC", "SEC")
-epicsEnvSet("SUB", "SUB01")
-epicsEnvSet("P", "$(SEC)-$(SUB):")
-epicsEnvSet("DIS", "DIS")
-epicsEnvSet("DEV", "DEV-01")
-epicsEnvSet("R", "$(DIS)-$(DEV)")
-epicsEnvSet("IOCNAME", "$(P)$(R)")
+epicsEnvSet("TOP", "$(E3_CMD_TOP)")
 
+system "bash $(TOP)/random.bash"
+
+iocshLoad "$(TOP)/random.cmd"
+
+epicsEnvSet("P", "IOC-$(NUM)")
+epicsEnvSet("IOCNAME", "$(P)")
 
 loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
 
 iocInit()
 
-dbl > "${IOCNAME}_PVs.list"
+dbl > "$(TOP)/../${IOCNAME}_PVs.list"
