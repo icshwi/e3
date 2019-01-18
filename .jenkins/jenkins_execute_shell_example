@@ -14,8 +14,10 @@ BUILDING_MOD=ctifeablo
 
 
 bash e3_building_test.bash -t ${E3_PATH} -b ${BASE} -r ${REQUIRE}
-bash e3.bash -${BUILDING_MOD} all
+bash e3.bash base
+bash e3.bash req
+bash e3.bash -${BUILDING_MOD} mod
+bash e3.bash -${BUILDING_MOD} cmd
 
-bash e3.bash -${BUILDING_MOD} cmd	
 bash .jenkins/screen_iocsh_jenkins.bash ${E3_PATH}  ${BASE} ${REQUIRE}
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#  Copyright (c) 2017 - Present  Jeong Han Lee
-#  Copyright (c) 2017 - Present  European Spallation Source ERIC
+#  Copyright (c) 2017 - 2019  Jeong Han Lee
+#  Copyright (c) 2017 - 2019  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, November 14 15:03:36 CET 2018
-#   version : 0.6.7
+#   date    : Friday, January 18 23:28:16 CET 2019
+#   version : 0.6.8
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -50,16 +50,13 @@ function make_init2
 function init_base
 {
     local rep="";
-    local answer="$1"; shift;
 
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
 	    make init   ||  die 1 "${FUNCNAME[*]} : MAKE init ERROR at ${rep}: Please check it" ;
-	    if [ -z "${answer}" ] ; then
-		make pkgs
-	    else
-	    	echo "$answer" | make pkgs
+	    if [ "$ANSWER" == "YES" ]; then
+	    	make pkgs
 	    fi
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
 	    make vars
@@ -82,10 +79,8 @@ function init2_base
 	    git submodule sync
 	    git submodule update --init --recursive
 	    make checkout
-	    if [ -z "${answer}" ] ; then
-		make pkgs
-	    else
-	    	echo "$answer" | make pkgs
+	    if [ "$ANSWER" == "YES" ]; then
+	    	make pkgs
 	    fi
 	    make patch  ||  die 1 "${FUNCNAME[*]} : MAKE patch ERROR at ${rep}: Please check it" ;
 	    make vars
@@ -641,7 +636,6 @@ module_list_func
 
 # print_list
 
-
 case "$1" in
 
     *mod) 
@@ -659,6 +653,14 @@ case "$1" in
 
 esac
 
+filter="pkg"
+
+arg=$2
+
+if test "${arg#*$filter}" != "$arg"; then
+   ANSWER="YES"
+fi
+
 
 case "$1" in
     env)   print_module_list ;;
@@ -670,13 +672,13 @@ case "$1" in
 #    iall)  init_all   "$2"   ;;
 #    i2all) init2_all  "$2"   ;;
 #    ball)  build_all         ;;
-    all)   all_all    "$2"   ;;
-    all2)  all2_all   "$2"   ;;
+#    all)   all_all    "$2"   ;;
+#    all2)  all2_all   "$2"   ;;
     # BASE : clean, clone, init, build, and all
     cbase) clean_base    ;;
     gbase) clone_base    ;;
-    ibase)  init_base   "$2" ;;
-    i2base)  init2_base "$2" ;;
+    ibase)   init_base   ;;
+    i2base)  init2_base  ;;
     bbase) build_base    ;;
     base)    all_base    ;;
     # REQUIRE : clean, clone, init, build, and all

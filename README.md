@@ -45,9 +45,13 @@ $ git clone https://github.com/icshwi/e3
 
 ### Install base within the e3 directory
 
+**NOTICE**, before going to run the next command, please install all required packages by oneself. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. 
+
+
 ```
 $ ./e3.bash base
 ```
+
 
 ### Install require within the e3 directory
 ```
@@ -291,3 +295,7 @@ Note that the -4 option is not necessary, but -o option is, because 7 has 4 alre
 
 
 Please look at [README_developing.md](./README_developing.md) in more detail. 
+
+
+----
+[1] https://github.com/jeonghanlee/pkg_automation
