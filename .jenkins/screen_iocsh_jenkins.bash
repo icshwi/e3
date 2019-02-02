@@ -8,9 +8,9 @@ declare -gr SC_TOP="${SC_SCRIPT%/*}"
 E3_PATH="$1"
 BASE="$2"
 REQUIRE="$3"
+C=$(tr -cd 0-9 </dev/urandom | head -c 8)
 
-
-SESSION="${BASE}-${REQUIRE}"
+SESSION="${BASE}-${REQUIRE}-${C}"
 
 #source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
 
