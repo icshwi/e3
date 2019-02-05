@@ -50,13 +50,15 @@ $ git clone https://github.com/icshwi/e3
 
 
 ```
-$ ./e3.bash base
+$ bash e3_building_config.bash -t ${HOME}/epics setup
+
+$ bash e3.bash base
 ```
 
 
 ### Install require within the e3 directory
 ```
-$ ./e3.bash req
+$ bash e3.bash req
 ```
 
 
