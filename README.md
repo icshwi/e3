@@ -38,6 +38,7 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 Note that the user account should be in sudo group. And please install "git" and "make" first.  
 
 ### Get e3
+
 ```
 $ git clone https://github.com/icshwi/e3
 
@@ -45,7 +46,7 @@ $ git clone https://github.com/icshwi/e3
 
 ### Install base within the e3 directory
 
-**NOTICE**, before going to run the next command, please install all required packages by oneself. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. 
+**NOTICE**, before going to run the next command, please install all required packages by oneself. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. One can see the e3 training workbook for the up-to-date information [2].
 
 
 ```
@@ -64,35 +65,36 @@ $ ./e3.bash req
 One should install base and require first before each modules's configuration.
 
 ```
-e3 (master)$ bash e3.bash -c vars
+$ bash e3.bash -c vars
 
 >> Vertical display for the selected modules :
 
  Modules List 
-    0 : e3-iocStats
-    1 : e3-autosave
-    2 : e3-asyn
-    3 : e3-busy
-    4 : e3-modbus
-    5 : e3-ipmiComm
-    6 : e3-sequencer
-    7 : e3-sscan
-    8 : e3-std
-    9 : e3-ip
-   10 : e3-calc
-   11 : e3-delaygen
-   12 : e3-pcre
-   13 : e3-StreamDevice
-   14 : e3-s7plc
-   15 : e3-recsync
-   16 : e3-MCoreUtils
+    0 : e3-ess
+    1 : e3-iocStats
+    2 : e3-autosave
+    3 : e3-caPutLog
+    4 : e3-asyn
+    5 : e3-busy
+    6 : e3-modbus
+    7 : e3-ipmiComm
+    8 : e3-seq
+    9 : e3-sscan
+   10 : e3-std
+   11 : e3-ip
+   12 : e3-calc
+   13 : e3-delaygen
+   14 : e3-pcre
+   15 : e3-StreamDevice
+   16 : e3-s7plc
+   17 : e3-recsync
 
 
 e3 (master)$ bash e3.bash -c mod
 
 e3 (master)$ bash e3.bash -c load
-
 ```
+
 If one see the clean ioc shell prompt, e3 is ready to use. Please exit this test ioc.
 
 
@@ -115,64 +117,66 @@ Open another terminal, set the environment via source first, then
 run the caget_pvs.bash with the generated pv list file.
 
 ```
-e3 (master)$ bash caget_pvs.bash E3Test_PVs.list
-.............
-.............
->> Unset ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST
-Set ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST 
->> Print ... 
-EPICS_CA_ADDR_LIST      : 192.168.178.32
-EPICS_CA_AUTO_ADDR_LIST : YES
->> Get PVs .... 
-E3Test:IocStat:READACF         0
-E3Test:IocStat:SYSRESET        0
-E3Test:IocStat:SysReset        0
-E3Test:IocStat:HEARTBEAT       475
-E3Test:IocStat:START_CNT       1
-E3Test:IocStat:CA_UPD_TIME     15
-E3Test:IocStat:FD_UPD_TIME     20
-E3Test:IocStat:LOAD_UPD_TIME   10
-E3Test:IocStat:MEM_UPD_TIME    10
-E3Test:IocStat:CA_CLNT_CNT     0
-E3Test:IocStat:CA_CONN_CNT     0
-E3Test:IocStat:RECORD_CNT      64
-E3Test:IocStat:FD_MAX          1024
-E3Test:IocStat:FD_CNT          7
-E3Test:IocStat:SYS_CPU_LOAD    2.70259
-E3Test:IocStat:IOC_CPU_LOAD    0.0250239
-E3Test:IocStat:LOAD            0.0250239
-E3Test:IocStat:CPU_CNT         4
-E3Test:IocStat:SUSP_TASK_CNT   0
-E3Test:IocStat:MEM_USED        6.0416e+06
-E3Test:IocStat:MEM_FREE        6.07656e+09
-E3Test:IocStat:MEM_MAX         8.16186e+09
-E3Test:IocStat:PROCESS_ID      22653
-E3Test:IocStat:PARENT_ID       22623
-E3Test:IocStat:GTIM_TIME       8.93189e+08
-E3Test:IocStat:ACCESS          Running
-E3Test:IocStat:GTIM_RESET      Reset
-E3Test:IocStat:GTIM_ERR_CNT    0
+e3 (master)$ bash caget_pvs.bash -l IOC-9999_PVs.list 
 .............
 .............
 
-e3 (master)$  bash caget_pvs.bash E3Test_PVs.list "LOAD"
->> Unset ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST
-Set ... EPICS_CA_ADDR_LIST and EPICS_CA_AUTO_ADDR_LIST 
->> Print ... 
-EPICS_CA_ADDR_LIST      : 192.168.178.32
-EPICS_CA_AUTO_ADDR_LIST : YES
->> Get PVs .... 
-E3Test:IocStat:LOAD_UPD_TIME   10
-E3Test:IocStat:SYS_CPU_LOAD    4.85465
-E3Test:IocStat:IOC_CPU_LOAD    0
-E3Test:IocStat:LOAD            0
+IOC-9999-IocStats:ACCESS       Running
+IOC-9999-IocStats:APP_DIR 160 47 104 111 109 101 47 106 104 108 101 101 47 101 51 45 51 46 49 53 46 53 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+IOC-9999-IocStats:APP_DIR1     /home/jhlee/e3-3.15.5
+IOC-9999-IocStats:APP_DIR2     
+IOC-9999-IocStats:CA_ADDR_LIST 
+IOC-9999-IocStats:CA_AUTO_ADDR YES
+IOC-9999-IocStats:CA_BEAC_TIME 15.0
+IOC-9999-IocStats:CA_CLNT_CNT  0
+IOC-9999-IocStats:CA_CONN_CNT  0
+IOC-9999-IocStats:CA_CONN_TIME 30.0
+IOC-9999-IocStats:CA_MAX_ARRAY 16384
+IOC-9999-IocStats:CA_RPTR_PORT 5065
+IOC-9999-IocStats:CA_SRCH_TIME 300.0
+IOC-9999-IocStats:CA_SRVR_PORT 5064
+IOC-9999-IocStats:CA_UPD_TIME  15
+IOC-9999-IocStats:CPU_CNT      4
+IOC-9999-IocStats:ENGINEER     jhlee
+IOC-9999-IocStats:EPICS_VERS   EPICS R3.15.5-E3-3.15.5-patch
+IOC-9999-IocStats:FD_CNT       7
+IOC-9999-IocStats:FD_FREE      1017
+IOC-9999-IocStats:FD_MAX       1024
+IOC-9999-IocStats:FD_UPD_TIME  20
+IOC-9999-IocStats:GTIM_CUR_SRC OS Clock
+IOC-9999-IocStats:GTIM_ERR_CNT 0
+IOC-9999-IocStats:GTIM_EVT_SRC No working providers
+IOC-9999-IocStats:GTIM_HI_SRC  OS Clock
+IOC-9999-IocStats:GTIM_RESET   Reset
+IOC-9999-IocStats:GTIM_TIME    9.18241e+08
+IOC-9999-IocStats:HEARTBEAT    17
+IOC-9999-IocStats:HOSTNAME     faiserver
+IOC-9999-IocStats:IOC_CPU_LOAD 0
+IOC-9999-IocStats:IOC_LOG_INET 
+IOC-9999-IocStats:IOC_LOG_PORT 7004
+IOC-9999-IocStats:KERNEL_VERS  Linux 4.9.0-8-amd64 x86_64
+IOC-9999-IocStats:LOAD         0
+.............
 ```
 
-The useful options are
+```
+e3 (master)$   bash caget_pvs.bash -l IOC-9999_PVs.list -f "LOAD"
+
+>> Selected PV and its value with caget
+IOC-9999-IocStats:IOC_CPU_LOAD 0.0250242
+IOC-9999-IocStats:LOAD         0.0250242
+IOC-9999-IocStats:LOAD_UPD_TIME 10
+IOC-9999-IocStats:SYS_CPU_LOAD 30.2042
 
 ```
-$ bash caget_pvs.bash E3Test_PVs.list EPICS_VERS
-$ watch -n 1 "bash caget_pvs.bash E3Test_PVs.list HEARTBEAT"
+
+The most useful option is the fake watch with `-w` option such as 
+
+```
+$ bash caget_pvs.bash -l IOC-9999_PVs.list -f "HEARTBEAT" -w 1
+```
+```
+$ watch -n 1 "bash caget_pvs.bash -l IOC-9999_PVs.list -f "HEARTBEAT"
 ```
 
 If one would like to do more, please visit https://github.com/icshwi/e3training
@@ -260,26 +264,6 @@ One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree*
 source tools/use_sshkey.sh
 ```
 
-## Examples :
-
-* Example 1
-
-
-```
-$ ./e3.bash -ctia4 call
-$ ./e3.bash -ctia4 gall
-$ ./e3.bash -ctia4 vall
-$ ./e3.bash -ctia4 iall
-$ ./e3.bash -ctia4 ball
-$ ./e3.bash -ctia4 load 
-```
-
-* Example 2
-
-```
-$ ./e3.bash -c all
-$ ./e3.bash -c load
-```
 
 ## Customized e3 Building Configuration
 
@@ -291,11 +275,12 @@ $ bash e3.bash base
 $ bash e3.bash req
 $ bash e3.bash -ctiao mod
 ```
-Note that the -4 option is not necessary, but -o option is, because 7 has 4 already in base.
+Note that the -4 option is not necessary, but **-o** option is, because 7 has 4 already in base.
 
 
 Please look at [README_developing.md](./README_developing.md) in more detail. 
 
 
 ----
-[1] https://github.com/jeonghanlee/pkg_automation
+[1] https://github.com/jeonghanlee/pkg_automation   
+[2] https://github.com/icshwi/e3training/blob/master/workbook/chapter1.md

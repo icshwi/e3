@@ -2,7 +2,9 @@ require iocStats,ae5d083
 
 epicsEnvSet("TOP", "$(E3_CMD_TOP)")
 
-epicsEnvSet("NUM", "9999")
+system "bash $(TOP)/random.bash"
+
+iocshLoad "$(TOP)/random.cmd"
 
 epicsEnvSet("P", "IOC-$(NUM)")
 epicsEnvSet("IOCNAME", "$(P)")
