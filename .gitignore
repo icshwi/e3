@@ -16,4 +16,5 @@ test
 *.Makefile
 cmds/random.cmd
 cmds/random_tmp
+core*
 
