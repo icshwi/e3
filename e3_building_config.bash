@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#  Copyright (c) 2018        Jeong Han Lee
-#  Copyright (c) 2018 - 2019 European Spallation Source ERIC
+#  Copyright (c) 2018 - 2009  Jeong Han Lee
+#  Copyright (c) 2018 - 2019  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -18,30 +18,37 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Friday, January  4 16:47:35 CET 2019
-# version : 0.1.0
+# Date    : Tuesday, February 26 22:45:08 CET 2019
+# version : 0.1.1
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
 #           0.0.9 : force not to use below require 3.0.4
 #           0.1.0 : create RELEASE_DEV.local as the same as RELEASE.local
+#           0.1.1 : add TOOLCHAIN_PATH and TOOLCHAIN_VER in CONFIG_BASE.local
+#
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
+declare -g  SC_VERSION="v0.1.1"
 
 declare -g TARGET="";
 declare -g BASE_VERSION="";
 declare -g REQUIRE_VERSION="";
 declare -g SQU_VERSION="";
 declare -g BASE_TAG="";
-
+declare -g TOOLCHAIN_PATH="";
+declare -g TOOLCHAIN_VER="";
 
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
 declare -gr DEFAULT_BASE_VERSION="3.15.5"
 declare -gr DEFAULT_REQ_VERSION="3.0.4"
 #declare -gr DEFAULT_SEQ_VERSION="2.2.6"
+declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
+declare -gr DEFAULT_TOOLCHAIN_VER="current"
+
 
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
 
@@ -114,14 +121,16 @@ function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-c <base_tag>] setup" ;
+	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-c <base_tag>] [-p <toolchain_path>] [-v <toolchain_ver>] setup" ;
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
 	echo "               -r : default ${DEFAULT_REQ_VERSION}"
 	echo "               -c : default ${DEFAULT_BASE_VERSION}"
+	echo "               -p : default ${DEFAULT_TOOLCHAIN_PATH}"
+	echo "               -v : default ${DEFAULT_TOOLCHAIN_VER}"
 	echo "";
-	echo " bash $0 -t /epics/ -r 3.0.4 setup"
+	echo " bash $0 -t \${HOME} -r 3.0.4 setup"
 	echo ""
 	
     } 1>&2;
@@ -134,29 +143,32 @@ function print_options
     printf "\n"
     printf ">> Set the global configuration as follows:\n";
     printf ">>\n";
-    printf "  EPICS TARGET        : %s\n" "${TARGET}"
-    printf "  EPICS_BASE VERSION  : %s\n" "${BASE_VERSION}"
-    printf "  E3_REQUIRE_VERSION  : %s\n" "${REQUIRE_VERSION}"
-    printf "  EPICS_MODULE_TAG    : %s\n" "${BASE_TAG}"
-    printf "  EPICS_BASE          : %s\n" "${EPICS_BASE_TARGET}"
-    printf "  E3_REQUIRE_LOCATION : %s\n" "${REQUIRE_TARGET}"
-#    printf "  SEQ VERSION     : %s\n" "${SQU_VERSION}"
+    printf "  EPICS TARGET                     : %s\n" "${TARGET}"
+    printf "  EPICS_BASE                       : %s\n" "${EPICS_BASE_TARGET}"
+    printf "  EPICS_BASE VERSION               : %s\n" "${BASE_VERSION}"
+    printf "  EPICS_MODULE_TAG                 : %s\n" "${BASE_TAG}"
+    printf "  E3_REQUIRE_VERSION               : %s\n" "${REQUIRE_VERSION}"
+    printf "  E3_REQUIRE_LOCATION              : %s\n" "${REQUIRE_TARGET}"
+    printf "  E3_CROSS_COMPILER_TOOLCHAIN_PATH : %s\n" "${TOOLCHAIN_PATH}"
+    printf "  E3_CROSS_COMPILER_TOOLCHAIN_VER  : %s\n" "${TOOLCHAIN_VER}"
 }
 
 
-options=":t:b:r:s:c:h:y"
+options=":t:b:r:s:c:h:p:v:y"
 ANSWER="NO"
 
 
 
 while getopts "${options}" opt; do
     case "${opt}" in
-        t) TARGET=${OPTARG}       ;;
-	b) BASE_VERSION=${OPTARG} ;;
+        t) TARGET=${OPTARG}          ;;
+	b) BASE_VERSION=${OPTARG}    ;;
       	r) REQUIRE_VERSION=${OPTARG} ;;
-       	s) SQU_VERSION=${OPTARG} ;;
-      	c) BASE_TAG=${OPTARG} ;;
-	y) ANSWER="YES" ;;
+       	s) SQU_VERSION=${OPTARG}     ;;
+      	c) BASE_TAG=${OPTARG}        ;;
+	p) TOOLCHAIN_PATH=${OPTARG}  ;;
+	v) TOOLCHAIN_VER=${OPTARG}   ;;
+	y) ANSWER="YES"              ;;
    	:)
 	    echo "Option -$OPTARG requires an argument." >&2
 	    exit 1
@@ -195,6 +207,14 @@ else
     fi
 fi
 
+if [ -z "$TOOLCHAIN_PATH" ]; then
+    TOOLCHAIN_PATH=${DEFAULT_TOOLCHAIN_PATH}
+fi
+
+if [ -z "$TOOLCHAIN_VER" ]; then
+    TOOLCHAIN_VER=${DEFAULT_TOOLCHAIN_VER}
+fi
+
 if [ -z "$BASE_TAG" ]; then
 #    printf ">> No BASE_TAG is defined, use the same as BASE_VERSION %s\n" "${BASE_VERSION}"
     BASE_TAG=${BASE_VERSION}
@@ -224,7 +244,8 @@ config_base="
 E3_EPICS_PATH:=${TARGET}
 EPICS_BASE_TAG:=tags/R${BASE_TAG}
 E3_BASE_VERSION:=${BASE_VERSION}
-#E3_CROSS_COMPILER_TARGET_ARCHS =
+E3_CROSS_COMPILER_TOOLCHAIN_VER=${TOOLCHAIN_VER}
+E3_CROSS_COMPILER_TOOLCHAIN_PATH=${TOOLCHAIN_PATH}
 "
 
 local_file=${SC_TOP}/CONFIG_BASE.local
