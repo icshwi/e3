@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Friday, January 18 23:28:16 CET 2019
-#   version : 0.6.8
+#   date    : Wednesday, February 27 22:42:26 CET 2019
+#   version : 0.6.9
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -30,6 +30,7 @@ declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
 declare -gr SC_LOGDATE="$(date +%y%m%d%H%M)"
 
+# We use only ONE base, and REQUIRE even if it is used as array
 declare -ga base_list=("e3-base")
 declare -ga require_list=("e3-require")
 declare -ga module_list=()
@@ -722,6 +723,7 @@ case "$1" in
     allall)  print_version_really_everything   ;;
     cupdate) configuration_update_modules ;;
     gitdiff) git_diff_modules ;;
+    checksudo) check_sudo_permission_needed ;;
     *)    usage;;
 esac
 
