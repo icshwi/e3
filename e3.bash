@@ -720,11 +720,11 @@ case "$1" in
     vmod)  print_version_info_modules ;;
     vall)  print_version_info_all     ;;
     # Call *make vars in each e3-* directory
-    allall)  print_version_really_everything   ;;
-    cupdate) configuration_update_modules ;;
-    gitdiff) git_diff_modules ;;
+    allall)    print_version_really_everything   ;;
+    cupdate)   configuration_update_modules ;;
+    gitdiff)   git_diff_modules ;;
     checksudo) check_sudo_permission_needed ;;
-    *)    usage;;
+    *)         usage;;
 esac
 
 exit 0;
