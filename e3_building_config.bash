@@ -44,7 +44,7 @@ declare -g TOOLCHAIN_VER="";
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
 declare -gr DEFAULT_BASE_VERSION="3.15.5"
-declare -gr DEFAULT_REQ_VERSION="3.0.4"
+declare -gr DEFAULT_REQ_VERSION="3.0.5"
 #declare -gr DEFAULT_SEQ_VERSION="2.2.6"
 declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
 declare -gr DEFAULT_TOOLCHAIN_VER="current"
