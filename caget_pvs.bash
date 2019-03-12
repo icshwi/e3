@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : han.lee@esss.se
-# Date    : Saturday, January  5 00:41:55 CET 2019
-# version : 1.0.2
+# Date    : Tuesday, March 12 14:56:05 CET 2019
+# version : 1.0.3
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -127,9 +127,17 @@ function getValue_pvlist
 {
     local pv;
     printf "\n>> Selected PV and its value with %s\n" "${GET_CMD}"
-    for pv in ${pvlist[@]}; do
-	${GET_CMD} $pv
-    done
+    if hash ${GET_CMD} 2>/dev/null ; then
+	for pv in ${pvlist[@]}; do
+	    ${GET_CMD} $pv
+	done
+    else
+	printf "\n>>>> We cannot run $0\n";
+	printf "     because we cannot find $GET_CMD in the system\n"
+	printf "     please source setE3Env.bash first\n"
+	printf "\n"
+	exit;
+    fi
     printf "\n";
 }
 
