@@ -34,18 +34,19 @@ before_install:
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} gall   > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} i2base > /dev/null 2>&1  
-  - bash e3.bash -${MOD_GA}${MOD_GB} bbase  > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} i2req  > /dev/null 2>&1  
-  - bash e3.bash -${MOD_GA}${MOD_GB} breq   > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} i2mod  > /dev/null 2>&1  
-  - bash e3.bash -${MOD_GA}${MOD_GB} bmod
+  - bash e3.bash  base
+  # -
+  # - bash e3.bash -${MOD_GA}${MOD_GB} i2base > /dev/null 2>&1  
+  # - bash e3.bash -${MOD_GA}${MOD_GB} bbase  > /dev/null 2>&1
+  # - bash e3.bash -${MOD_GA}${MOD_GB} i2req  > /dev/null 2>&1  
+  # - bash e3.bash -${MOD_GA}${MOD_GB} breq   > /dev/null 2>&1
+  # - bash e3.bash -${MOD_GA}${MOD_GB} i2mod  > /dev/null 2>&1  
+  # - bash e3.bash -${MOD_GA}${MOD_GB} bmod
 
 after_success:
-  - bash e3.bash -${MOD_GA}${MOD_GB} cmd
-  - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-  - bash .ci/screen.bash ${SESSION} .cmd
+  # - bash e3.bash -${MOD_GA}${MOD_GB} cmd
+  # - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+  # - bash .ci/screen.bash ${SESSION} .cmd
 
 
   
