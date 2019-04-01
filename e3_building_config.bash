@@ -168,7 +168,7 @@ function print_options
 }
 
 
-options=":t:b:r:s:c:h:p:n:m:l:k"
+options=":t:b:r:s:c:h:p:n:m:l:k:y"
 ANSWER="NO"
 
 
