@@ -1,6 +1,6 @@
 sudo: enabled
 
-dist: trusty
+dist: xenial
 
 language: generic
 
