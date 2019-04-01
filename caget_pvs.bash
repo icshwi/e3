@@ -17,9 +17,9 @@
 #  this program. If not, see https://www.gnu.org/licenses/gpl-2.0.txt
 #
 # Author  : Jeong Han Lee
-# email   : han.lee@esss.se
-# Date    : Tuesday, March 12 14:56:05 CET 2019
-# version : 1.0.3
+# email   : jeonghan.lee@gmail.com
+# Date    : Monday, April  1 09:53:22 CEST 2019
+# version : 1.0.4
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -126,10 +126,12 @@ function pvs_from_list
 function getValue_pvlist
 {
     local pv;
+    local sleep_interval=.2
     printf "\n>> Selected PV and its value with %s\n" "${GET_CMD}"
     if hash ${GET_CMD} 2>/dev/null ; then
 	for pv in ${pvlist[@]}; do
-	    ${GET_CMD} $pv
+	    ${GET_CMD} "$pv"
+	    sleep ${sleep_interval}
 	done
     else
 	printf "\n>>>> We cannot run $0\n";
