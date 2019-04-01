@@ -35,7 +35,9 @@ before_install:
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
-  - bash e3.bash  base
+  - bash e3.bash base
+  - bash e3.bash req
+  - bash e3.bash -${MOD_GA}${MOD_GB} mod
   # -
   # - bash e3.bash -${MOD_GA}${MOD_GB} i2base > /dev/null 2>&1  
   # - bash e3.bash -${MOD_GA}${MOD_GB} bbase  > /dev/null 2>&1
