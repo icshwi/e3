@@ -18,20 +18,22 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, February 26 22:45:08 CET 2019
-# version : 0.1.1
+# Date    : Monday, April  1 12:12:40 CEST 2019
+# version : 0.2.0
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
 #           0.0.9 : force not to use below require 3.0.4
 #           0.1.0 : create RELEASE_DEV.local as the same as RELEASE.local
 #           0.1.1 : add TOOLCHAIN_PATH and TOOLCHAIN_VER in CONFIG_BASE.local
+#           0.2.0 : add ifc14xx and cct toolchain environment varialbes
+#                   move the default the epics base version to 3.15.6 
 #
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
-declare -g  SC_VERSION="v0.1.1"
+declare -g  SC_VERSION="v0.2.0"
 
 declare -g TARGET="";
 declare -g BASE_VERSION="";
@@ -43,11 +45,14 @@ declare -g TOOLCHAIN_VER="";
 
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
-declare -gr DEFAULT_BASE_VERSION="3.15.5"
+declare -gr DEFAULT_BASE_VERSION="3.15.6"
 declare -gr DEFAULT_REQ_VERSION="3.0.5"
-#declare -gr DEFAULT_SEQ_VERSION="2.2.6"
-declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
-declare -gr DEFAULT_TOOLCHAIN_VER="current"
+#declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
+#declare -gr DEFAULT_TOOLCHAIN_VER="current"
+declare -gr DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_PATH="/opt/ifc14xx"
+declare -gr DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_VER="2.6-4.14"
+declare -gr DEFAULT_E3_CC_POKY_TOOLCHAIN_PATH="/opt/cct"
+declare -gr DEFAULT_E3_CC_POKY_TOOLCHAIN_VER="2.6-4.14"
 
 
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
@@ -121,16 +126,23 @@ function usage
 {
     {
 	echo "";
-	echo "Usage    : $0 [-t <target_path>] [-b <base_version>] [-r <require_version>] [-c <base_tag>] [-p <toolchain_path>] [-v <toolchain_ver>] setup" ;
+	echo "Usage    : $0 options setup ";
+	echo "";
+	echo "              possbile options";
+	echo "";
+	echo "              [-t <target_path>]     [-b <base_version>]      [-r <require_version>] [-c <base_tag>] ";
+        echo "              [-n <ifc14xx_cc_path>] [-m <ifc14xx_cc_version] [-l <poky_cc_path]     [-k <poky_cc_version>] ";
 	echo "";
 	echo "               -t : default ${DEFAULT_TARGET_PATH}"
 	echo "               -b : default ${DEFAULT_BASE_VERSION}"
 	echo "               -r : default ${DEFAULT_REQ_VERSION}"
 	echo "               -c : default ${DEFAULT_BASE_VERSION}"
-	echo "               -p : default ${DEFAULT_TOOLCHAIN_PATH}"
-	echo "               -v : default ${DEFAULT_TOOLCHAIN_VER}"
+	echo "               -n : default ${DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_PATH}"
+	echo "               -m : default ${DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_VER}"
+	echo "               -l : default ${DEFAULT_E3_CC_POKY_TOOLCHAIN_PATH}"
+	echo "               -k : default ${DEFAULT_E3_CC_POKY_TOOLCHAIN_VER}"
 	echo "";
-	echo " bash $0 -t \${HOME} -r 3.0.4 setup"
+	echo " bash $0 -t \${HOME} -r ${DEFAULT_REQ_VERSION} setup"
 	echo ""
 	
     } 1>&2;
@@ -149,12 +161,14 @@ function print_options
     printf "  EPICS_MODULE_TAG                 : %s\n" "${BASE_TAG}"
     printf "  E3_REQUIRE_VERSION               : %s\n" "${REQUIRE_VERSION}"
     printf "  E3_REQUIRE_LOCATION              : %s\n" "${REQUIRE_TARGET}"
-    printf "  E3_CROSS_COMPILER_TOOLCHAIN_PATH : %s\n" "${TOOLCHAIN_PATH}"
-    printf "  E3_CROSS_COMPILER_TOOLCHAIN_VER  : %s\n" "${TOOLCHAIN_VER}"
+    printf "  E3_CC_IFC14XX_TOOLCHAIN_PATH     : %s\n" "${IFC14XX_TOOLCHAIN_PATH}"
+    printf "  E3_CC_IFC14XX_TOOLCHAIN_VER      : %s\n" "${IFC14XX_TOOLCHAIN_VER}"
+    printf "  E3_CC_POKY_TOOLCHAIN_PATH        : %s\n" "${POKY_TOOLCHAIN_PATH}"
+    printf "  E3_CC_POKY_TOOLCHAIN_VER         : %s\n" "${POKY_TOOLCHAIN_VER}"
 }
 
 
-options=":t:b:r:s:c:h:p:v:y"
+options=":t:b:r:s:c:h:p:n:m:l:k:y"
 ANSWER="NO"
 
 
@@ -166,8 +180,10 @@ while getopts "${options}" opt; do
       	r) REQUIRE_VERSION=${OPTARG} ;;
        	s) SQU_VERSION=${OPTARG}     ;;
       	c) BASE_TAG=${OPTARG}        ;;
-	p) TOOLCHAIN_PATH=${OPTARG}  ;;
-	v) TOOLCHAIN_VER=${OPTARG}   ;;
+	n) IFC14XX_TOOLCHAIN_PATH=${OPTARG}  ;;
+	m) IFC14XX_TOOLCHAIN_VER=${OPTARG}   ;;
+	l) POKY_TOOLCHAIN_PATH=${OPTARG}  ;;
+        k) POKY_TOOLCHAIN_VER=${OPTARG}   ;;
 	y) ANSWER="YES"              ;;
    	:)
 	    echo "Option -$OPTARG requires an argument." >&2
@@ -207,13 +223,23 @@ else
     fi
 fi
 
-if [ -z "$TOOLCHAIN_PATH" ]; then
-    TOOLCHAIN_PATH=${DEFAULT_TOOLCHAIN_PATH}
+if [ -z "$IFC14XX_TOOLCHAIN_PATH" ]; then
+    IFC14XX_TOOLCHAIN_PATH=${DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_PATH}
 fi
 
-if [ -z "$TOOLCHAIN_VER" ]; then
-    TOOLCHAIN_VER=${DEFAULT_TOOLCHAIN_VER}
+if [ -z "$IFC14XX_TOOLCHAIN_VER" ]; then
+    IFC14XX_TOOLCHAIN_VER=${DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_VER}
 fi
+
+
+if [ -z "$POKY_TOOLCHAIN_PATH" ]; then
+    POKY_TOOLCHAIN_PATH=${DEFAULT_E3_CC_POKY_TOOLCHAIN_PATH}
+fi
+
+if [ -z "$POKY_TOOLCHAIN_VER" ]; then
+    POKY_TOOLCHAIN_VER=${DEFAULT_E3_CC_POKY_TOOLCHAIN_VER}
+fi
+
 
 if [ -z "$BASE_TAG" ]; then
 #    printf ">> No BASE_TAG is defined, use the same as BASE_VERSION %s\n" "${BASE_VERSION}"
@@ -244,8 +270,10 @@ config_base="
 E3_EPICS_PATH:=${TARGET}
 EPICS_BASE_TAG:=tags/R${BASE_TAG}
 E3_BASE_VERSION:=${BASE_VERSION}
-E3_CROSS_COMPILER_TOOLCHAIN_VER=${TOOLCHAIN_VER}
-E3_CROSS_COMPILER_TOOLCHAIN_PATH=${TOOLCHAIN_PATH}
+E3_CC_IFC14XX_TOOLCHAIN_PATH:=${IFC14XX_TOOLCHAIN_PATH}
+E3_CC_IFC14XX_TOOLCHAIN_VER:=${IFC14XX_TOOLCHAIN_VER}
+E3_CC_POKY_TOOLCHAIN_PATH:=${POKY_TOOLCHAIN_PATH}
+E3_CC_POKY_TOOLCHAIN_VER:=${POKY_TOOLCHAIN_VER}
 "
 
 local_file=${SC_TOP}/CONFIG_BASE.local
