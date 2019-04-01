@@ -35,7 +35,7 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 
 * This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
 
-Note that the user account should be in sudo group. And please install "git" and "make" first.  
+Note that the user account should be in sudo group. And please install "git" and "make" first.
 
 ### Get e3
 
@@ -46,7 +46,7 @@ $ git clone https://github.com/icshwi/e3
 
 ### Install base within the e3 directory
 
-**NOTICE**, before going to run the next command, please install all required packages by oneself. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. One can see the e3 training workbook for the up-to-date information [2].
+**NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. One can see the e3 training workbook for the up-to-date information [2]. 
 
 
 ```
