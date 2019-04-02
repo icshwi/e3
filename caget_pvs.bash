@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Copyright (c) 2016 - Present Jeong Han Lee
+#  Copyright (c) 2016 - 2019    Jeong Han Lee
 #  Copyright (c) 2016 - Present European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Monday, April  1 09:53:22 CEST 2019
-# version : 1.0.4
+# Date    : Tuesday, April  2 21:52:21 CEST 2019
+# version : 1.0.5
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -126,7 +126,7 @@ function pvs_from_list
 function getValue_pvlist
 {
     local pv;
-    local sleep_interval=.2
+    local sleep_interval=.001
     printf "\n>> Selected PV and its value with %s\n" "${GET_CMD}"
     if hash ${GET_CMD} 2>/dev/null ; then
 	for pv in ${pvlist[@]}; do
