@@ -14,7 +14,7 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-    - MOD_GA=ctifeal
+    - MOD_GA=eal
   matrix:
     - SESSION=1 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.0.5  MOD_GB=4
     - SESSION=2 BASE=3.15.6  TAG=3.15.6   REQUIRE=3.0.5  MOD_GB=4
@@ -27,8 +27,8 @@ before_install:
   - sudo apt-get install -y build-essential realpath ipmitool libtool automake tclx  tree screen re2c darcs  > /dev/null 2>&1 
   - sudo apt-get install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev > /dev/null 2>&1
   - sudo apt-get install -y libtirpc-dev > /dev/null 2>&1
-  - bash .ci/before_install_conf.bash
-  - bash e3_building_config.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup
+  - bash .ci/before_install_conf.bash > /dev/null 2>&1
+  - bash e3_building_config.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup > /dev/null 2>&1
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
@@ -36,8 +36,9 @@ install:
   - bash e3.bash ibase                       > /dev/null 2>&1
   - bash e3.bash bbase                     
   - bash e3.bash req                        > /dev/null 2>&1
-  - bash e3.bash -${MOD_GA}${MOD_GB} mod
-
+  - bash e3.bash -ct mod                      > /dev/null 2>&1
+  - bash e3.bash -iflo mod                    > /dev/null 2>&1
+  - bash e3.bash -eao${MOD_GB}  mod                    > /dev/null 2>&1
 
 after_success:
   - bash e3.bash -${MOD_GA}${MOD_GB} cmd
