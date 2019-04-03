@@ -32,13 +32,13 @@ before_install:
 
 install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
-  - bash e3.bash gbase                       > /dev/null 2>&1
-  - bash e3.bash ibase                       > /dev/null 2>&1
+  - bash e3.bash gbase                      > /dev/null 2>&1
+  - bash e3.bash ibase                      > /dev/null 2>&1
   - bash e3.bash bbase                     
   - bash e3.bash req                        > /dev/null 2>&1
-  - bash e3.bash -ct mod                      > /dev/null 2>&1
-  - bash e3.bash -iflo mod                    > /dev/null 2>&1
-  - bash e3.bash -eao${MOD_GB}  mod                    > /dev/null 2>&1
+  - bash e3.bash -ct mod                    > /dev/null 2>&1
+  - bash e3.bash -ifelo mod                 > /dev/null 2>&1
+  - bash e3.bash -ao${MOD_GB}  mod          > /dev/null 2>&1
 
 after_success:
   - bash e3.bash -${MOD_GA}${MOD_GB} cmd
