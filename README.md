@@ -41,12 +41,20 @@ Note that the user account should be in sudo group. And please install "git" and
 
 ```
 $ git clone https://github.com/icshwi/e3
-
 ```
 
 ### Install base within the e3 directory
 
-**NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. One can see the e3 training workbook for the up-to-date information [2]. 
+**NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. If not, one **CANNOT** install and run e3. Please consult the reference repository [1] which may help users to install all required and additional packages before it. One can see the e3 training workbook for the up-to-date information [2]. For example, the following packages mostly are needed to compile e3 and some additional services in CentOS and Debian. Note that one may not need them all according to ones configuration.
+
+* CentOS
+```
+git tree ipmitool autoconf libtool automake m4 re2c tclx coreutils graphviz patch readline-devel libXt-devel libXp-devel libXmu-devel libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils net-snmp-devel libxml2-devel libpng12-devel libzip-devel libusb-devel python-devel darcs hdf5-devel boost-devel pcre-devel opencv-devel libcurl-devel libjpeg-turbo-devel libusbx-devel systemd-devel libraw1394.x86_64 hg libtirpc-devel liberation-fonts-common liberation-narrow-fonts liberation-mono-fonts liberation-serif-fonts liberation-sans-fonts logrotate xorg-x11-fonts-misc cpan kernel-devel symlinks dkms procServ curl
+```
+* Debian
+```
+git tree emacs ipmitool autoconf libtool automake m4 re2c tclx coreutils graphviz build-essential libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxmu6 libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev libmotif-dev libsnmp-dev re2c darcs python-dev libnetcdf-dev libhdf5-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsystemd-dev linux-source mercurial libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev libpng-dev libraw1394-11 libtirpc-dev fonts-liberation logrotate curl symlinks dkms procserv linux-headers-$(uname -r)
+```
 
 
 ```
@@ -284,5 +292,5 @@ Please look at [README_developing.md](./README_developing.md) in more detail.
 
 
 ----
-[1] https://github.com/jeonghanlee/pkg_automation   
+[1] https://github.com/jeonghanlee/pkg_automation
 [2] https://github.com/icshwi/e3training/blob/master/workbook/chapter1.md
