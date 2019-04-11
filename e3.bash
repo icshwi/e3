@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, February 27 22:42:26 CET 2019
-#   version : 0.6.9
+#   date    : Thursday, April 11 22:08:49 CEST 2019
+#   version : 0.6.10
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -37,14 +37,6 @@ declare -ga module_list=()
 
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
 . ${SC_TOP}/.cfgs/.e3_modules_list.cfg
-
-
-function make_init2
-{
-    git submodule update --init --recursive ;
-    git submodule update --remote --merge;
-    make checkout
-}
 
 
 # BASE
@@ -336,7 +328,7 @@ function module_loading_test_on_iocsh
     source tools/setE3Env.bash
     popd
     
-    local IOC_TEST=/tmp/module_loading_test.cmd
+    local IOC_TEST=$(mktemp)
     
     {
 	local PREFIX_MODULE="EPICS_MODULE_NAME:="
@@ -370,6 +362,8 @@ function module_loading_test_on_iocsh
     }  > ${IOC_TEST}
 
     exec iocsh.bash ${IOC_TEST}
+
+    
 
 }
 
@@ -469,13 +463,6 @@ function all_modules
     build_modules;
 }
 
-# function init2_all
-# {
-#     local answer="$1"; shift;
-#     init2_base "${answer}" ;
-#     init2_require;
-#     init2_modules;
-# }
 
 function all2_all
 {
@@ -554,8 +541,6 @@ function usage
 	echo ""
 	echo "           call   : Clean all (base, require, selected module group)";
 	echo "           gall   : Clone all (base, require, selected module group)";
-#	echo "           iall   : Init  all (base, require, selected module group)";
-#	echo "           ball   : Build, Install all (base, require, selected module group)";
 	echo "            all   : call, gall, ibase, bbase, ireq, breq, imod, bmod";
 	echo ""
 	echo "           cbase  : Clean Base";
@@ -670,11 +655,6 @@ case "$1" in
     clean) clean_all     ;;
     call)  clean_all     ;;
     gall)  clone_all     ;;
-#    iall)  init_all   "$2"   ;;
-#    i2all) init2_all  "$2"   ;;
-#    ball)  build_all         ;;
-#    all)   all_all    "$2"   ;;
-#    all2)  all2_all   "$2"   ;;
     # BASE : clean, clone, init, build, and all
     cbase) clean_base    ;;
     gbase) clone_base    ;;
