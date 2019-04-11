@@ -39,6 +39,14 @@ declare -ga module_list=()
 . ${SC_TOP}/.cfgs/.e3_modules_list.cfg
 
 
+function make_init2
+{
+    git submodule update --init --recursive ;
+    git submodule update --remote --merge;
+    make checkout
+}
+
+
 # BASE
 function init_base
 {
