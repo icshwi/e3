@@ -12,7 +12,7 @@ epicsEnvSet("IOCNAME", "$(P)$(R)")
 
 
 #loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
-loadIocsh("caPutLog.iocsh", "IOCNAME=$(IOCNAME)")
+iocshLoad("$(caPutLog_DIR)/caPutLog.iocsh", "IOCNAME=$(IOCNAME)")
 
 
 iocInit()

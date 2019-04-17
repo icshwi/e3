@@ -20,10 +20,10 @@ epicsEnvSet("ESS_TOP",      "$(TOP)/e3-ess")
 epicsEnvSet("LOG_PORT", "5548")
 epicsEnvSet("LOG_DEST", "10.4.4.30")
 
-loadIocsh("accessSecurityGroup.iocsh", "ASG_PATH=$(ESS_TOP)/template, ASG_FILE=unrestricted_access.asg")
-loadIocsh("iocStats.iocsh", "IOCNAME=$(P)")
-loadIocsh("iocLog.iocsh", "IOCNAME=$(IOCNAME), LOG_INET=$(LOG_DEST), LOG_INET_PORT=$(LOG_PORT)")
-loadIocsh("$(CALOGPUT_TOP)/iocsh/caPutLog.iocsh", "IOCNAME=$(IOCNAME), LOG_INET=$(LOG_DEST), LOG_INET_PORT=$(LOG_PORT)")
+iocshLoad("$(ess_DIR)/accessSecurityGroup.iocsh", "ASG_PATH=$(ESS_TOP)/template, ASG_FILE=unrestricted_access.asg")
+iocshLoad("$(iocStats_DIR)/iocStats.iocsh", "IOCNAME=$(P)")
+iocshLoad("$(ess_DIR)/iocLog.iocsh", "IOCNAME=$(IOCNAME), LOG_INET=$(LOG_DEST), LOG_INET_PORT=$(LOG_PORT)")
+iocshLoad("$(CALOGPUT_TOP)/iocsh/caPutLog.iocsh", "IOCNAME=$(IOCNAME), LOG_INET=$(LOG_DEST), LOG_INET_PORT=$(LOG_PORT)")
 
 iocInit()
 
