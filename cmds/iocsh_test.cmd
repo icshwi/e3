@@ -16,9 +16,9 @@ epicsEnvSet("IOCNAME", "$(P)$(R)")
 
 # need to define IOCNAME
 # PV names
-loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
-loadIocsh("recsync.iocsh",  "IOCNAME=$(IOCNAME)")
-loadIocsh("autosave.iocsh", "IOCNAME=$(IOCNAME), AS_TOP=/tmp")
+iocshLoad("$(iocStats_DIR)/iocStats.iocsh", "IOCNAME=$(IOCNAME)")
+iocshLoad("$(recsync_DIR)/recsync.iocsh",  "IOCNAME=$(IOCNAME)")
+iocshLoad("$(autosave_DIR)/autosave.iocsh", "IOCNAME=$(IOCNAME), AS_TOP=/tmp")
 
 
 iocInit()

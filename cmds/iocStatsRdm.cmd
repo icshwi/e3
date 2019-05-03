@@ -9,7 +9,7 @@ iocshLoad "$(TOP)/random.cmd"
 epicsEnvSet("P", "IOC-$(NUM)")
 epicsEnvSet("IOCNAME", "$(P)")
 
-loadIocsh("iocStats.iocsh", "IOCNAME=$(IOCNAME)")
+iocshLoad("$(iocStats_DIR)/iocStats.iocsh", "IOCNAME=$(IOCNAME)")
 
 iocInit()
 
