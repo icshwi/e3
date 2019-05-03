@@ -21,7 +21,7 @@ env:
     - SESSION=3 BASE=7.0.1.1 TAG=7.0.1.1  REQUIRE=3.0.5  MOD_GB=o
     - SESSION=4 BASE=7.0.2   TAG=7.0.2    REQUIRE=3.0.5  MOD_GB=o
     - SESSION=5 BASE=7.0.2.1 TAG=7.0.2.1  REQUIRE=3.0.5  MOD_GB=o
-      
+       
 before_install:
   - sudo apt-get -qq update  > /dev/null 2>&1 
   - sudo apt-get install -y linux-headers-$(uname -r)   > /dev/null 2>&1 
@@ -36,7 +36,12 @@ install:
   - bash e3.bash gbase                      > /dev/null 2>&1
   - bash e3.bash ibase                      > /dev/null 2>&1
   - bash e3.bash bbase                     
-  - bash e3.bash req                        > /dev/null 2>&1
+#  - bash e3.bash req                        > /dev/null 2>&1
+  - bash e3.bash greq
+  - cd e3-require && git checkout devel/local
+  - make -C e3-require init
+  - make -C e3-require rebuild
+  - make -C e3-require build
   - bash e3.bash -ct mod                    > /dev/null 2>&1
   - bash e3.bash -ifelo mod                 > /dev/null 2>&1
   - bash e3.bash -ao${MOD_GB}  mod          > /dev/null 2>&1
