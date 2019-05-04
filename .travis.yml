@@ -35,9 +35,9 @@ install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
   - bash e3.bash gbase                      > /dev/null 2>&1
   - bash e3.bash ibase                      > /dev/null 2>&1
-  - bash e3.bash bbase                     
+  - bash e3.bash bbase                      > /dev/null 2>&1
 #  - bash e3.bash req                        > /dev/null 2>&1
-  - bash e3.bash greq
+  - git clone https://github.com/icshwi/e3-require
   - cd e3-require && git checkout devel/local
   - make -C e3-require init
   - make -C e3-require rebuild
