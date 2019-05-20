@@ -200,7 +200,7 @@ else
 	clear;
 	printf "Fake watch with the sleep interval %s (The offset %s is introduced). \n" "${interval}" "${offset}"
 	printf "%s\n" "$LOG_DATE";
-	printf "$GET_LIST";
+	printf "$GET_LIST\n";
 	sleep ${interval}
     done;
     
