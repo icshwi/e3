@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Monday, April  1 12:12:40 CEST 2019
-# version : 0.2.0
+# Date    : Wednesday, June  5 18:48:23 CEST 2019
+# version : 0.2.1
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
@@ -28,6 +28,7 @@
 #           0.1.1 : add TOOLCHAIN_PATH and TOOLCHAIN_VER in CONFIG_BASE.local
 #           0.2.0 : add ifc14xx and cct toolchain environment varialbes
 #                   move the default the epics base version to 3.15.6 
+#           0.2.1 : move the default require 3.1.0
 #
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
@@ -46,7 +47,7 @@ declare -g TOOLCHAIN_VER="";
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
 declare -gr DEFAULT_BASE_VERSION="3.15.6"
-declare -gr DEFAULT_REQ_VERSION="3.0.5"
+declare -gr DEFAULT_REQ_VERSION="3.1.0"
 #declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
 #declare -gr DEFAULT_TOOLCHAIN_VER="current"
 declare -gr DEFAULT_E3_CC_IFC14XX_TOOLCHAIN_PATH="/opt/ifc14xx"
