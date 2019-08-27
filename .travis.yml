@@ -42,7 +42,7 @@ install:
 #  - make -C e3-require build
 #  - make -C e3-require install
   - bash e3.bash -ct mod                    > /dev/null 2>&1
-  - bash e3.bash -ifelo mod                 > /dev/null 2>&1
+  - bash e3.bash -ifeo mod                 > /dev/null 2>&1
   - bash e3.bash -ao${MOD_GB}  mod          > /dev/null 2>&1
 
 after_success:
