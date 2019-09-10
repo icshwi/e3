@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, April 11 22:08:49 CEST 2019
-#   version : 0.6.10
+#   date    : Tuesday, September 10 10:34:19 CEST 2019
+#   version : 0.6.11
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -712,6 +712,9 @@ case "$1" in
     cupdate)   configuration_update_modules ;;
     gitdiff)   git_diff_modules ;;
     checksudo) check_sudo_permission_needed ;;
+    # show version and depdendcy
+    vers) show_function "vers";;
+    dep)  show_function "dep";;
     *)         usage;;
 esac
 
