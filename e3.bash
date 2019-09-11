@@ -110,7 +110,7 @@ function build_base
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make -s build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
