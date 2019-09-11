@@ -12,24 +12,14 @@ This is the setup and maintenance scripts for the ESS EPICS Environment (E3).
 * The following Linux distribution covers Building and Requiring Tests.
 
 ### Building and Requiring Tests
-* Debian 8 
-* Debian 9    
+* Debian     
 * CentOS 7
-* Ubuntu 14.04 LTS (with travis-ci)
-* Ubuntu 18.04
-
-### Building Test (Not all modules)
-* Raspbian Stretch    
-
-* Ubuntu 16.04.3 LTS 
-* Ubuntu 17.10 (Artful Aardvark)
-* LinuxMint 18.3 (sylvia) 
-* Fedora 27 (Workstation Edition)
+* Ubuntu 
 
 
 ## Procedure to duplicate the minimal E3 in your system.
 
-* This procedure has many assumptions, so it is most-likely "doesn't work". Thus please look at the other site in order to duplicate e3 at https://github.com/icshwi/e3-builder
+* This procedure has many assumptions, so it is most-likely "doesn't work". 
 
 * However, if one would like to challenge this, please follow the below basic instruction.
 
