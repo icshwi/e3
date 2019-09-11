@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Tuesday, September 10 10:34:19 CEST 2019
-#   version : 0.6.11
+#   date    : Wednesday, September 11 09:55:55 CEST 2019
+#   version : 0.7.0
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -110,7 +110,7 @@ function build_base
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make -s build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
@@ -206,8 +206,8 @@ function build_require
     for rep in  ${require_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make build   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
-	    make install ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
+	    make -s build   ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make -s install ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
 	else
 	    die 1 "${rep} doesn't exist";
@@ -306,8 +306,8 @@ function build_modules
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
-	    make install  ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
+	    make -s build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make -s install  ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
@@ -584,6 +584,11 @@ function usage
        	echo "           load   : Load all installed Modules into iocsh.bash";
 	echo "           cmd    : create .cmd file in ${SC_TOP}";
 	echo "        setenv    : create setenv in ${SC_TOP}/tools";
+	echo "";
+	echo "           vers   : Print Source Tag / Module Versions";
+	echo "            dep   : Print DEP_VERSION information";
+	echo "        plotdep   : Plot the naive module depdendency drawing";
+	echo "      closeplot   : Close all active opened plots";
 	echo ""
 	echo ""           
 	echo ""    
@@ -713,8 +718,10 @@ case "$1" in
     gitdiff)   git_diff_modules ;;
     checksudo) check_sudo_permission_needed ;;
     # show version and depdendcy
-    vers) show_function "vers";;
-    dep)  show_function "dep";;
+    vers)      exec_makefile_rule "vers";;
+    dep)       exec_makefile_rule "dep";;
+    plotdep)   exec_makefile_rule "plotdep";;
+    closeplot) exec_makefile_rule "closeplot";;
     *)         usage;;
 esac
 
