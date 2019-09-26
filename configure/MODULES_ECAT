@@ -1,6 +1,7 @@
 e3-exprtk
-e3-motor
 e3-ecmc
-e3-ethercatmc
+e3-motor
+e3-EthercatMC
+e3-ecmccfg
 e3-ecmctraining
 
