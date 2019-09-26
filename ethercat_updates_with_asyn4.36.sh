@@ -20,18 +20,24 @@
 # Date    : Thursday, September 26 10:35:14 CEST 2019
 # version : 0.0.1
 
+GIT_URL="https://github.com/icshwi"
+GIT_CMD="git clone"
+
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
+
 
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
 
 
 pushd ${SC_TOP}
 
+rebuild_module "exprtk"       
 rebuild_module "ecmc"         "devel/R4.36"
 rebuild_module "motor"        "devel/asyn4.36"
 rebuild_module "EthercatMC"   "devel/asyn4.36"
+rebuild_module "ecmccfg" 
 
 popd
 
