@@ -17,8 +17,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Thursday, September 26 10:22:51 CEST 2019
-# version : 0.0.2
+# Date    : Thursday, September 26 10:35:14 CEST 2019
+# version : 0.0.1
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -29,18 +29,9 @@ declare -gr SC_TOP="${SC_SCRIPT%/*}"
 
 pushd ${SC_TOP}
 
-rebuild_module "asyn"         "R4-36"
-rebuild_module "modbus"       "devel/R3-0"
-rebuild_module "busy"         "devel/e45eda2"
-rebuild_module "ipmiComm"     "devel/asyn4.36"
-rebuild_module "seq"          "devel/2.2.7"
-rebuild_module "sscan"        "devel/R2-11-3"
-rebuild_module "ip"           "devel/R2-20-1"
-rebuild_module "std"          "devel/R3-6-1"
-rebuild_module "calc"         "devel/R3-7-3"
-rebuild_module "delaygen"     "devel/R1-2-1"
-rebuild_module "StreamDevice" "devel/2.8.10"
-
+rebuild_module "ecmc"         "devel/R4.36"
+rebuild_module "motor"        "devel/asyn4.36"
+rebuild_module "EthercatMC"   "devel/asyn4.36"
 
 popd
 

@@ -31,16 +31,46 @@ declare -gr SC_TOP="${SC_SCRIPT%/*}"
 . ${SC_TOP}/.cfgs/.e3_functions.cfg
 
 
+function find_dist() {
+
+    local dist_id dist_cn dist_rs PRETTY_NAME
+    
+    if [[ -f /usr/bin/lsb_release ]] ; then
+     	dist_id=$(lsb_release -is)
+     	dist_cn=$(lsb_release -cs)
+     	dist_rs=$(lsb_release -rs)
+     	echo $dist_id ${dist_cn} ${dist_rs}
+    else
+     	eval $(cat /etc/os-release | grep -E "^(PRETTY_NAME)=")
+	echo ${PRETTY_NAME}
+    fi
+
+ 
+}
+
+
+
 pushd ${SC_TOP}
 
 rebuild_module "ADSupport" "devel/R1-9"
 rebuild_module "ADCore"    "devel/R3-7"
 
-git_clone "e3-ADGenICam" 
-git_clone "e3-ADSpinnaker" 
-
+git_clone "e3-ADGenICam"
 rebuild_module "ADGenICam"
-rebuild_module "ADSpinnaker"
+
+
+dist=$(find_dist)
+
+case "$dist" in
+    *bionic*)
+	git_clone "e3-ADSpinnaker"
+	rebuild_module "ADSpinnaker"
+	;;
+     *)
+	;;
+esac
+
+
 
 popd
 
