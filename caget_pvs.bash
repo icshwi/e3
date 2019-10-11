@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, April  2 21:52:21 CEST 2019
-# version : 1.0.5
+# Date    : Friday, October 11 10:55:03 CEST 2019
+# version : 1.0.6
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -75,11 +75,12 @@ function set_ca_addr
 
 function reset_ca_addr
 {
+    local auto_addr="$1"; shift;
     printf ">> Reset EPICS CA ADDR ..... \n";
     print_ca_addr "Before Reset"
     _HOST_IP="$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')";
     unset_ca_addr 
-    set_ca_addr "$_HOST_IP" "YES"
+    set_ca_addr "$_HOST_IP" "$auto_addr"
     print_ca_addr "After  Reset"
 }
 
@@ -146,12 +147,14 @@ function getValue_pvlist
 # l:, arg is mandatory
 # c , arg is optional
 
-options="l:w:f:c7"
+options="l:w:f:cn7"
 RESETCA="NO"
+AUTO_ADDR=""
 GET_CMD="caget"
 WATCH=""
 LIST=""
 SUBSTRING=""
+AUTO_ADDR="YES"
 
 while getopts "${options}" opt; do
     case "${opt}" in
@@ -159,6 +162,7 @@ while getopts "${options}" opt; do
 	w) WATCH=${OPTARG}     ;;
 	f) SUBSTRING=${OPTARG} ;;
  	c) RESETCA="YES"       ;;
+	n) AUTO_ADDR="NO"  ;;
 	7) GET_CMD="pvget"     ;;
    	:)
 	    echo "Option -$OPTARG requires an argument." >&2
@@ -180,8 +184,10 @@ if [ -z "$LIST" ]; then
     usage;
 fi
 
+
 if [ "$RESETCA" == "YES" ]; then
-    reset_ca_addr;
+    
+    reset_ca_addr "${AUTO_ADDR}";
     sleep 2;
     clear;
 fi
