@@ -16,8 +16,6 @@ env:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
     - MOD_GA=eal
   matrix:
-    - SESSION=1 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.1.1  MOD_GB=4
-    - SESSION=2 BASE=7.0.3   TAG=7.0.3    REQUIRE=3.1.1  MOD_GB=o
     - SESSION=3 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.1.2  MOD_GB=4
     - SESSION=4 BASE=7.0.3   TAG=7.0.3    REQUIRE=3.1.2  MOD_GB=o
    
@@ -41,9 +39,9 @@ install:
 #  - make -C e3-require init
 #  - make -C e3-require build
 #  - make -C e3-require install
-  - bash e3.bash -ct mod para                  
-  - bash e3.bash -ifeo mod para               
-  - bash e3.bash -ao${MOD_GB} mod para        
+  - bash e3.bash -ct mod                  
+  - bash e3.bash -ifeo mod            
+  - bash e3.bash -ao${MOD_GB} mod     
 
 after_success:
   - bash e3.bash -${MOD_GA}${MOD_GB} cmd
