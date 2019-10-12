@@ -37,8 +37,9 @@ rebuild_module "exprtk"
 rebuild_module "ecmc"         "devel/R4.36"
 rebuild_module "motor"        "devel/asyn4.36"
 rebuild_module "EthercatMC"   "devel/asyn4.36"
-rebuild_module "ecmccfg" 
-
+rebuild_module "ecmccfg"
+rebuild_module "BeckhoffADS"
+rebuild_module "ads" 
 popd
 
 exit
