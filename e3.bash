@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, September 11 09:55:55 CEST 2019
-#   version : 0.7.0
+#   date    : Saturday, October 12 02:57:42 CEST 2019
+#   version : 0.7.1
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -110,7 +110,7 @@ function build_base
     for rep in  ${base_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make ${PARALLEL} build ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    popd
 	else
 	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
@@ -306,7 +306,7 @@ function build_modules
     for rep in  ${module_list[@]}; do
 	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
 	    pushd ${rep}
-	    make -s build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
+	    make -s ${PARALLEL} build    ||  die 1 "${FUNCNAME[*]} : Building Error at ${rep}: Please check the building error" ;
 	    make -s install  ||  die 1 "${FUNCNAME[*]} : MAKE INSTALL ERROR at ${rep}: Please check it" ;
 	    popd
 	else
@@ -466,15 +466,17 @@ function devall_require
 
 function all_modules
 {
+    local N="$1";shift;
     clean_modules;
     setup_modules;
-    build_modules;
+    build_modules "$N";
 }
 
 
 function all2_all
 {
     local answer="$1"; shift;
+    local N="$1";shift;
     clean_all;
     clone_all;
     init2_base "${answer}";
@@ -482,13 +484,14 @@ function all2_all
     init2_require;
     build_require;
     init2_modules;
-    build_modules;
+    build_modules "$N";
 }
 
 
 function all_all
 {
     local answer="$1"; shift;
+    local N="$1";shift;
     clean_all;
     clone_all;
     init_base "${answer}";
@@ -496,7 +499,7 @@ function all_all
     init_require;
     build_require;
     init_modules;
-    build_modules;
+    build_modules "$N";
 }
 
 
@@ -660,6 +663,11 @@ if test "${arg#*$filter}" != "$arg"; then
    ANSWER="YES"
 fi
 
+filter2="para"
+if test "${arg#*$filter2}" != "$arg"; then
+   PARALLEL="-j -l 4"
+fi
+
 
 case "$1" in
     env)   print_module_list ;;
@@ -673,8 +681,8 @@ case "$1" in
     gbase) clone_base    ;;
     ibase)   init_base   ;;
     i2base)  init2_base  ;;
-    bbase) build_base    ;;
-    base)    all_base    ;;
+    bbase) build_base   ;;
+    base)    all_base   ;;
     # REQUIRE : clean, clone, init, build, and all
     creq)      clean_require ;;
     greq)      clone_require ;;

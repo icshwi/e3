@@ -34,16 +34,16 @@ install:
   - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
   - bash e3.bash gbase                      > /dev/null 2>&1
   - bash e3.bash ibase                      > /dev/null 2>&1
-  - bash e3.bash bbase                      
+  - bash e3.bash bbase para                      
   - bash e3.bash req                      
 #  - bash e3.bash greq
 #  - cd e3-require && git checkout devel/local && cd ..
 #  - make -C e3-require init
 #  - make -C e3-require build
 #  - make -C e3-require install
-  - bash e3.bash -ct mod                  
-  - bash e3.bash -ifeo mod                
-  - bash e3.bash -ao${MOD_GB}  mod        
+  - bash e3.bash -ct mod para                  
+  - bash e3.bash -ifeo mod para               
+  - bash e3.bash -ao${MOD_GB} mod para        
 
 after_success:
   - bash e3.bash -${MOD_GA}${MOD_GB} cmd
