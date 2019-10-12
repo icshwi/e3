@@ -15,6 +15,10 @@ e3 (master)$ bash maintain_e3.bash -ctifealb push
 
 ```
 
+bash e3.bash -ctifeao gmod
+bash maintain_e3.bash -ctifeao copy "configure/RELEASE"
+bash maintain_e3.bash -ctifeao diff "configure/RELEASE"
+bash maintain_e3.bash -ctifeao add "configure/RELEASE"
 
 ## Commit changed files
 
