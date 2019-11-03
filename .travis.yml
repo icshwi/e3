@@ -14,10 +14,11 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-    - MOD_GA=eal
+    - MOD_GA=ea
   matrix:
-    - SESSION=3 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.1.2  MOD_GB=4
-    - SESSION=4 BASE=7.0.3   TAG=7.0.3    REQUIRE=3.1.2  MOD_GB=o
+    - SESSION=1 BASE=3.15.5   TAG=3.15.5    REQUIRE=3.1.2  MOD_GB=4
+    - SESSION=2 BASE=7.0.3    TAG=7.0.3     REQUIRE=3.1.2  MOD_GB=o
+    - SESSION=3 BASE=7.0.3.1  TAG=7.0.3.1   REQUIRE=3.1.2  MOD_GB=o
    
 before_install:
   - sudo apt-get -qq update  > /dev/null 2>&1 
@@ -40,7 +41,7 @@ install:
 #  - make -C e3-require build
 #  - make -C e3-require install
   - bash e3.bash -ct mod                  
-  - bash e3.bash -ifeo mod            
+  - bash e3.bash -ieo mod            
   - bash e3.bash -ao${MOD_GB} mod     
 
 after_success:
