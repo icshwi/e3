@@ -14,11 +14,14 @@ git:
 env:
   global:
     - E3_PATH=${TRAVIS_BUILD_DIR}/epics
-    - MOD_GA=ea
+    - MOD_G0=ct
+    - MOD_G1=ie
+    - MOD_G2=a
+    
   matrix:
-    - SESSION=1 BASE=3.15.5   TAG=3.15.5    REQUIRE=3.1.2  MOD_GB=4
-    - SESSION=2 BASE=7.0.3    TAG=7.0.3     REQUIRE=3.1.2  MOD_GB=o
-    - SESSION=3 BASE=7.0.3.1  TAG=7.0.3.1   REQUIRE=3.1.2  MOD_GB=o
+    - SESSION=1 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.1.2  MOD_GA=4
+    - SESSION=2 BASE=7.0.3   TAG=7.0.3    REQUIRE=3.1.2  MOD_GA=o
+    - SESSION=3 BASE=7.0.3.1 TAG=7.0.3.1  REQUIRE=3.1.2  MOD_GA=o
    
 before_install:
   - sudo apt-get -qq update  > /dev/null 2>&1 
@@ -30,22 +33,18 @@ before_install:
   - bash e3_building_config.bash -y -t "${E3_PATH}" -b "${BASE}" -r "${REQUIRE}" -c "${TAG}" setup 
 
 install:
-  - bash e3.bash -${MOD_GA}${MOD_GB} call   > /dev/null 2>&1
+  - bash e3.bash -${MOD_G0}${MOD_G1}${MOD_G2}${MOD_GA} call   > /dev/null 2>&1
   - bash e3.bash gbase                      > /dev/null 2>&1
   - bash e3.bash ibase                      > /dev/null 2>&1
   - bash e3.bash bbase
   - bash e3.bash req                      
-#  - bash e3.bash greq
-#  - cd e3-require && git checkout devel/local && cd ..
-#  - make -C e3-require init
-#  - make -C e3-require build
-#  - make -C e3-require install
-  - bash e3.bash -ct mod                  
-  - bash e3.bash -ieo mod            
-  - bash e3.bash -ao${MOD_GB} mod     
+  - bash e3.bash -${MOD_G0} mod                  
+  - bash e3.bash -${MOD_G1}o mod            
+  - bash e3.bash -${MOD_G2}${MOD_GA}o mod     
+
 
 after_success:
-  - bash e3.bash -${MOD_GA}${MOD_GB} cmd
+  - bash e3.bash -${MOD_G0}${MOD_G1}${MOD_G2}${MOD_GA} cmd
   - source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
   - bash .ci/screen.bash ${SESSION} .cmd
 
