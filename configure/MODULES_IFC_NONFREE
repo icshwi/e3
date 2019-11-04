@@ -1,8 +1,7 @@
 e3-tsclib
-e3-ifcdaqdrv2
+e3-ifcdaqdrv
 e3-nds3
 e3-nds3epics
-e3-ifc14edrv
-e3-ifcfastint
+#e3-ifc14edrv
 
 
