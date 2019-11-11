@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Saturday, October 12 03:23:12 CEST 2019
-# version : 0.2.3
+# Date    : Monday, November 11 12:44:38 CET 2019
+# version : 0.2.4
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
@@ -31,11 +31,12 @@
 #           0.2.1 : move the default require 3.1.0
 #           0.2.2 : require 3.1.1 and base 7.0.3
 #           0.2.3 : require 3.1.2
+#           0.2.4 : base 7.0.3.1
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
 declare -gr SC_TOP="${SC_SCRIPT%/*}"
-declare -g  SC_VERSION="v0.2.3"
+declare -g  SC_VERSION="v0.2.4"
 
 declare -g TARGET="";
 declare -g BASE_VERSION="";
@@ -47,7 +48,7 @@ declare -g TOOLCHAIN_VER="";
 
 
 declare -gr DEFAULT_TARGET_PATH="/epics"
-declare -gr DEFAULT_BASE_VERSION="7.0.3"
+declare -gr DEFAULT_BASE_VERSION="7.0.3.1"
 declare -gr DEFAULT_REQ_VERSION="3.1.2"
 #declare -gr DEFAULT_TOOLCHAIN_PATH="/opt/fsl-qoriq"
 #declare -gr DEFAULT_TOOLCHAIN_VER="current"
