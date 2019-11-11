@@ -7,7 +7,9 @@ e3-ADAndor
 e3-ADAndor3
 e3-ADPointGrey
 e3-ADProsilica
-#e3-ADSpinnaker
+e3-ADGenICam
+# Spinnaker needs Ubuntu and its SDK
+e3-ADSpinnaker
 #
 e3-ADPluginEdge
 e3-ADPluginCalib
