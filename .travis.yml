@@ -19,9 +19,7 @@ env:
     - MOD_G2=a
     
   matrix:
-    - SESSION=1 BASE=3.15.5  TAG=3.15.5   REQUIRE=3.1.2  MOD_GA=4
-    - SESSION=2 BASE=7.0.3   TAG=7.0.3    REQUIRE=3.1.2  MOD_GA=o
-    - SESSION=3 BASE=7.0.3.1 TAG=7.0.3.1  REQUIRE=3.1.2  MOD_GA=o
+    - SESSION=1 BASE=7.0.3.1 TAG=7.0.3.1  REQUIRE=3.1.2  MOD_GA=o
    
 before_install:
   - sudo apt-get -qq update  > /dev/null 2>&1 
