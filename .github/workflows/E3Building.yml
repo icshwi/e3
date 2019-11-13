@@ -1,0 +1,26 @@
+name: E3 Building 
+
+on: [push, pull_request]
+
+jobs:
+    build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }} 
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-18.04, ubuntu-16.04 ]:
+      steps:
+    - name: Install the packages for E3
+      run: |
+        sudo apt update
+        sudo apt install -y linux-headers-$(uname -r) build-essential coreutils ipmitool libtool automake tclx  tree screen re2c darcs 
+        sudo apt install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev
+        sudo apt install -y libtirpc-dev  libblosc-dev libtiff-dev
+    - uses: actions/checkout@v1
+    - name: Setup the Pre installation 
+      run: |
+        bash .ci/before_install_conf.bash 
+        bash e3_building_config.bash -y -t "${HOME}" -b "7.0.3.1" -r "3.0.2" setup 
+        ls
+        
+        
