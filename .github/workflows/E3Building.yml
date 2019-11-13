@@ -25,10 +25,10 @@ jobs:
         run: |
           bash e3.bash base
           bash e3.bash req
-          bash e3.bash -ctifeao mod
+          bash e3.bash -ctieao mod
       - name: Run IOC
         run: |
-          bash e3.bash -ctifeao cmd
+          bash e3.bash -ctieao cmd
           source ${HOME}/base-7.0.3.1/require/3.1.2/bin/setE3Env.bash
           bash .ci/screen.bash "1" .cmd  
           
