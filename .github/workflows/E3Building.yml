@@ -21,6 +21,17 @@ jobs:
         run: |
           bash .ci/before_install_conf.bash 
           bash e3_building_config.bash -y -t "${HOME}" -b "7.0.3.1" -r "3.0.2" setup 
-          ls
+      - name: Install EPICS base
+        run: |
+          bash e3.bash base
+          bash e3.bash req
+          bash e3.bash -ctifeao mod
+      - name: Run IOC
+        run: |
+          bash e3.bash -ctifeao cmd
+          source ${HOME}/base-7.0.3.1/require/3.1.2/bin/setE3Env.bash
+          bash .ci/screen.bash "1" .cmd  
+          
+            
         
         
