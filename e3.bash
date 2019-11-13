@@ -540,6 +540,31 @@ function git_diff_modules
 }
 
 
+
+
+function show_tag
+{
+    local rep="";
+    local prefix="e3-";
+    
+    foo=${string#"$prefix"}
+    
+    for rep in  ${module_list[@]}; do
+	if [[ $(checkIfDir "${rep}") -eq "$EXIST" ]]; then
+	    pushd ${rep}
+	    atag=$(git describe --tags `git rev-list --tags --max-count=1`)
+	    printf "<project path=\"0.00.000.%s\" name=\"%s\" revision=\"refs/tags/%s\" groups=\"\" />" "${rep#"$prefix"}" "$rep" "$atag";
+	    popd
+	else
+	    die 1 "${FUNCNAME[*]} : ${rep} doesn't exist";
+	fi
+	printf "\n";
+    done
+
+}
+
+
+
 function usage
 {
     usage_title;
@@ -593,6 +618,8 @@ function usage
 	echo "            dep   : Print DEP_VERSION information";
 	echo "        plotdep   : Plot the naive module depdendency drawing";
 	echo "      closeplot   : Close all active opened plots";
+	echo "";
+	echo "           tags   : Print the latest tag for a repo manifest";
 	echo ""
 	echo ""           
 	echo ""    
@@ -732,6 +759,8 @@ case "$1" in
     dep)       exec_makefile_rule "dep";;
     plotdep)   exec_makefile_rule "plotdep";;
     closeplot) exec_makefile_rule "closeplot";;
+    # show the latest tag
+    tags)      show_tag ;;
     *)         usage;;
 esac
 
