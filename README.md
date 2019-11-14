@@ -5,6 +5,10 @@ e3 developing environment
 
 This is the setup and maintenance scripts for the ESS EPICS Environment (E3). 
 
+## Notice
+This repository was developed in order to check each module compatibility easily and quickly within E3. Therefore it has no purpose to serve as a production environment. If one would like to see the reproduciable single point release of E3, please check https://github.com/icshwi/e3-manifest . By this mainfest repository the exact same E3 in many different places can be built. However, the mainfest E3 doesn't have any convenitent tools. 
+
+
 
 ## Tested Platforms
 
