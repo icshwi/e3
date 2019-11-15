@@ -15,11 +15,12 @@ jobs:
       BASE_TAG: 7.0.3.1
       E3_PATH: ${HOME}
       MODULES: ctieao
+      SESSION: "${BASE}-${REQUIRE}"
     steps:
       - name: Install the packages for E3
         run: |
           sudo apt update
-          sudo apt install -y linux-headers-$(uname -r) build-essential coreutils ipmitool libtool automake tclx  tree screen re2c darcs libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev libtirpc-dev  libblosc-dev libtiff-dev
+          sudo apt install -y linux-headers-$(uname -r) build-essential coreutils ipmitool libtool automake tclx  tree screen re2c darcs libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev libtirpc-dev  libblosc-dev libtiff-dev 
       - uses: actions/checkout@v1
       - name: Configure E3
         run: |
@@ -35,7 +36,9 @@ jobs:
       - name: Check the Compiled Modules through an IOC
         run: |
           bash e3.bash -${MODULES} cmd
-          bash .jenkins/screen_iocsh_jenkins.bash "$E3_PATH"  "$BASE" "$REQUIRE"
+          source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
+          bash .ci/screen.bash ${SESSION} .cmd
+
 
           
             
