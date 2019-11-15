@@ -13,9 +13,9 @@ jobs:
       BASE: 7.0.3.1
       REQUIRE: 3.1.2
       BASE_TAG: 7.0.3.1
-      E3_PATH: ${HOME}
+      E3_PATH: "$GITHUB_WORKSPACE"
       MODULES: ctieao
-      SESSION: "${BASE}-${REQUIRE}"
+      SESSION: "$BASE-$REQUIRE"
     steps:
       - name: Install the packages for E3
         run: |
@@ -25,19 +25,20 @@ jobs:
       - name: Configure E3
         run: |
           bash .ci/before_install_conf.bash 
-          bash e3_building_config.bash -y -t "$E3_PATH" -b "$BASE" -r "$REQUIRE" -c "${BASE_TAG}" setup 
+          bash e3_building_config.bash -y -t "$E3_PATH" -b "$BASE" -r "$REQUIRE" -c "$BASE_TAG" setup 
       - name: Install E3 Base and Require
         run: |
           bash e3.bash base
           bash e3.bash req
       - name: Install E3 Modules
         run: |
-          bash e3.bash -${MODULES} mod
+          bash e3.bash -"$MODULES" mod
       - name: Check the Compiled Modules through an IOC
         run: |
-          bash e3.bash -${MODULES} cmd
-          source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash
-          bash .ci/screen.bash ${SESSION} .cmd
+          bash e3.bash -"$MODULES" cmd
+          source "$E3_PATH"/base-"$BASE"/require/"$REQUIRE"/bin/setE3Env.bash
+          bash .ci/screen.bash "$SESSION" .cmd
+          
 
 
           
