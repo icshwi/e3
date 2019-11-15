@@ -29,11 +29,11 @@ EOF
 
 screen -c ${E3_PATH}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash && iocsh.bash ${SC_TOP}/../.cmd"
 
-sleep 10
+sleep 20
 
 cat ${E3_PATH}/output.log
 
-sleep 5
+sleep 10
 
 screen -X -S ${SESSION} quit
 

@@ -9,28 +9,34 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, ubuntu-18.04, ubuntu-16.04 ]
+    env:
+      BASE: 7.0.3.1
+      REQUIRE: 3.1.2
+      BASE_TAG: 7.0.3.1
+      E3_PATH: ${HOME}
+      MODULES: ctieao
     steps:
       - name: Install the packages for E3
         run: |
           sudo apt update
-          sudo apt install -y linux-headers-$(uname -r) build-essential coreutils ipmitool libtool automake tclx  tree screen re2c darcs 
-          sudo apt install -y libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev
-          sudo apt install -y libtirpc-dev  libblosc-dev libtiff-dev
+          sudo apt install -y linux-headers-$(uname -r) build-essential coreutils ipmitool libtool automake tclx  tree screen re2c darcs libreadline-dev libxt-dev x11proto-print-dev libxmu-headers libxmu-dev libxpm-dev libxmuu-dev libxmuu1 libpcre++-dev python-dev libnetcdf-dev libhdf5-dev libpng-dev libbz2-dev libxml2-dev libusb-dev libusb-1.0-0-dev libudev-dev libsnmp-dev libraw1394-dev libboost-dev libboost-regex-dev libboost-filesystem-dev libopencv-dev libtirpc-dev  libblosc-dev libtiff-dev
       - uses: actions/checkout@v1
-      - name: Setup the Pre installation 
+      - name: Configure E3
         run: |
           bash .ci/before_install_conf.bash 
-          bash e3_building_config.bash -y -t "${HOME}" -b "7.0.3.1" -r "3.0.2" setup 
-      - name: Install EPICS base
+          bash e3_building_config.bash -y -t "$E3_PATH" -b "$BASE" -r "$REQUIRE" -c "${BASE_TAG}" setup 
+      - name: Install E3 Base and Require
         run: |
           bash e3.bash base
           bash e3.bash req
-          bash e3.bash -ctieao mod
-      - name: Run IOC
+      - name: Install E3 Modules
         run: |
-          bash e3.bash -ctieao cmd
-          source ${HOME}/base-7.0.3.1/require/3.1.2/bin/setE3Env.bash
-          bash .ci/screen.bash "1" .cmd  
+          bash e3.bash -${MODULES} mod
+      - name: Check the Compiled Modules through an IOC
+        run: |
+          bash e3.bash -${MODULES} cmd
+          bash .jenkins/screen_iocsh_jenkins.bash "$E3_PATH"  "$BASE" "$REQUIRE"
+
           
             
         
