@@ -27,7 +27,7 @@ logtstamp on
 EOF
 
 
-screen -c ${E3_PATH}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "source ${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/setE3Env.bash && iocsh.bash ${SC_TOP}/../.cmd"
+screen -c ${E3_PATH}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/iocsh.bash ${SC_TOP}/../.cmd"
 
 sleep 20
 
