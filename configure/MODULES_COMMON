@@ -1,5 +1,4 @@
 e3-ess
-e3-iocStats
 e3-autosave
 e3-caPutLog
 e3-asyn
@@ -12,6 +11,7 @@ e3-sscan
 e3-std
 e3-ip
 e3-calc
+e3-iocStats
 e3-delaygen
 e3-pcre
 e3-StreamDevice
