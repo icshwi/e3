@@ -29,11 +29,11 @@ EOF
 
 screen -c ${E3_PATH}/.screenrc -dm -L -S ${SESSION} /bin/bash -c "${E3_PATH}/base-${BASE}/require/${REQUIRE}/bin/iocsh.bash ${SC_TOP}/../.cmd"
 
-sleep 20
+sleep 30
 
 cat ${E3_PATH}/output.log
 
-sleep 10
+sleep 30
 
 screen -X -S ${SESSION} quit
 
