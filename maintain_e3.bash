@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-#  Copyright (c) 2018 - Present  Jeong Han Lee
+#  Copyright (c) 2018 - 2019  Jeong Han Lee
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -18,8 +18,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Monday, September 17 23:40:04 CEST 2018
-#   version : 0.3.7
+#   date    : Thursday, November 21 02:20:34 CET 2019
+#   version : 0.3.8
 
 # Example, how to use
 #

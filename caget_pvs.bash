@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #  Copyright (c) 2016 - 2019    Jeong Han Lee
 #  Copyright (c) 2016 - Present European Spallation Source ERIC
