@@ -18,8 +18,8 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Monday, November 11 12:44:38 CET 2019
-# version : 0.2.4
+# Date    : Monday, November 25 22:01:38 CET 2019
+# version : 0.2.5
 
 #           0.0.7 : seperate BASE_VERSION and BASE_TAG in order to handle Release Candidate (RC)
 #           0.0.8 : Require 3.0.4, Remove SEQ,
@@ -27,11 +27,12 @@
 #           0.1.0 : create RELEASE_DEV.local as the same as RELEASE.local
 #           0.1.1 : add TOOLCHAIN_PATH and TOOLCHAIN_VER in CONFIG_BASE.local
 #           0.2.0 : add ifc14xx and cct toolchain environment varialbes
-#                   move the default the epics base version to 3.15.6 
+#                   move the default the epics base version to 3.15.6
 #           0.2.1 : move the default require 3.1.0
 #           0.2.2 : require 3.1.1 and base 7.0.3
 #           0.2.3 : require 3.1.2
 #           0.2.4 : base 7.0.3.1
+#           0.2.5 : add REQUIRE_NAME in RELEASE.local for -r option in e3TemplateGenerator
 
 declare -gr SC_SCRIPT="$(realpath "$0")"
 declare -gr SC_SCRIPTNAME=${0##*/}
@@ -65,29 +66,29 @@ function require_code_generator #@ Generator REQUIRE version
     #@ USAGE: REQ_CODE=$(require_code_generator ${require_version})
 
     local require_full_version=$1; shift;
-    
+
     local require_version=$(echo $require_full_version  | grep -o '[^-]*$')
     local require_ver_maj=$(echo $require_version | cut -d. -f1)
     local require_ver_mid=$(echo $require_version | cut -d. -f2)
     local require_ver_min=$(echo $require_version | cut -d. -f3)
 
     local req_code="";
-    
+
     if [[ ${#require_ver_maj} -lt 2 ]] ; then
 	require_ver_maj="00${require_ver_maj}"
 	require_ver_maj="${require_ver_maj: -2}"
     fi
-    
+
     if [[ ${#require_ver_mid} -lt 2 ]] ; then
 	require_ver_mid="00${require_ver_mid}"
 	require_ver_mid="${require_ver_mid: -2}"
     fi
-    
+
     if [[ ${#require_ver_min} -lt 2 ]] ; then
 	require_ver_min="00${require_ver_min}"
 	require_ver_min="${require_ver_min: -2}"
     fi
-    
+
     # if [[ ${#require_ver_patch} -lt 2 ]] ; then
     # 	require_ver_patch="00${require_ver_patch}"
     # 	require_ver_patch="${require_ver_patch: -2}"
@@ -108,7 +109,7 @@ function yes_or_no_to_go
     printf  "  will be generated :\n"
 
     print_options
-    
+
     printf  "\n";
     read -p ">> Do you want to continue (y/N)? " answer
     case ${answer:0:1} in
@@ -147,9 +148,9 @@ function usage
 	echo "";
 	echo " bash $0 -t \${HOME} -r ${DEFAULT_REQ_VERSION} setup"
 	echo ""
-	
+
     } 1>&2;
-    exit 1; 
+    exit 1;
 }
 
 
@@ -283,7 +284,7 @@ local_file=${SC_TOP}/CONFIG_BASE.local
 if [[ $(checkIfFile "${local_file}") -eq "EXIST" ]]; then
     rm -f ${local_file}
 fi
-	    
+
 cat > ${local_file} <<EOF
 $config_base
 EOF
@@ -304,12 +305,12 @@ printf "\n";
 ## From Saturday, November 10 17:14:32 CET 2018,
 ## We use sequencer 2.2 as the default, because
 ## it supports base 3.15.5 and base 7.
-## 
+##
 # if test "${BASE_VERSION#*$epics7string}" != "$BASE_VERSION"; then
 
- 
+
 #     printf "Switch sequrencer to 2.2\n"
-    
+
 #     sed -i 's/^#e3-seq/e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
 #     sed -i 's/^e3-sequencer/#e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
 
@@ -319,7 +320,7 @@ printf "\n";
 #     fi
 # elif test "${BASE_VERSION#*$epics315string}" != "$BASE_VERSION"; then
 #     printf "Switch sequrencer to 2.1\n"
-    
+
 #     sed -i 's/^e3-seq/#e3-seq/g'             ${SC_TOP}/configure/MODULES_COMMON
 #     sed -i 's/^#e3-sequencer/e3-sequencer/g' ${SC_TOP}/configure/MODULES_COMMON
 
@@ -354,6 +355,7 @@ echo ">>>"
 
 release="
 EPICS_BASE:=${epics_base}
+E3_REQUIRE_NAME:=require
 E3_REQUIRE_VERSION:=${REQUIRE_VERSION}
 "
 
