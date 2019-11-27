@@ -14,7 +14,7 @@ jobs:
       REQUIRE: 3.1.2
       BASE_TAG: 7.0.3.1
       E3_PATH: /epics
-      MODULES: ctieao
+      MODULES: ctpieao
       SESSION: "$BASE-$REQUIRE"
     steps:
       - name: Install the packages for E3
