@@ -76,23 +76,24 @@ $ bash e3.bash -c vars
 
  Modules List 
     0 : e3-ess
-    1 : e3-iocStats
-    2 : e3-autosave
-    3 : e3-caPutLog
-    4 : e3-asyn
-    5 : e3-busy
-    6 : e3-modbus
-    7 : e3-ipmiComm
-    8 : e3-seq
-    9 : e3-sscan
-   10 : e3-std
-   11 : e3-ip
-   12 : e3-calc
+    1 : e3-autosave
+    2 : e3-caPutLog
+    3 : e3-asyn
+    4 : e3-busy
+    5 : e3-modbus
+    6 : e3-ipmiComm
+    7 : e3-seq
+    8 : e3-sscan
+    9 : e3-std
+   10 : e3-ip
+   11 : e3-calc
+   12 : e3-iocStats
    13 : e3-delaygen
    14 : e3-pcre
    15 : e3-StreamDevice
    16 : e3-s7plc
    17 : e3-recsync
+   18 : e3-MCoreUtils
 
 
 e3 (master)$ bash e3.bash -c mod
@@ -198,22 +199,23 @@ Each base, Require module, and others modules have its own MAKEFILE and its own 
 ```
 e3 (master)$ ./e3.bash 
 
-Usage    : e3.bash [ -ctifealb4do ] <option> 
+Usage    : ./e3.bash [ -ctpifealb4do ] <option> 
 
 
-           -c     : common      : epics modules
-           -t     : timing      : mrf timing modules
-           -4     : epics v4    : EPICS V4 modules (testing)
-           -i{c}  : ifc free    : ifc modules without user accounts
-           -f{ci} : ifc nonfree : ifc modules with user accounts
-           -e{c}  : ecat        : ethercat modules
-           -a{c}  : area        : area detector modules / BI Modules
-           -l{c}  : llrf        : old LLRF modules
-           -b{ca} : bi          : beam instrumentation modules (based on AD)
-           -d     : developing  : no dependency, one should installl all before
-           {c,ci} : dep modules : enable by default if not defined (dependent modules)
-             -o   : only        : ignore dependent modules
-                                  the option -e is actually -ec. And -eo means -e.
+           -c     : common       : epics modules
+           -t     : timing       : mrf timing modules
+           -4     : epics v4     : EPICS V4 modules (testing)
+           -p{c}  : psi          : PSI modules
+           -i{c}  : ifc free     : ifc modules without user accounts
+           -f{ic}  : ifc nonfree : ifc modules with user accounts
+           -e{c}  : ecat         : ethercat modules
+           -a{c}  : area         : area detector modules / BI Modules
+           -l{c}  : llrf         : old LLRF modules
+           -b{ca} : bi           : beam instrumentation modules (based on AD)
+           -d     : developing   : no dependency, one should installl all before
+           {c,ci} : dep modules  : enable by default if not defined (dependent modules)
+             -o   : only         : ignore dependent modules
+                                   the option -e is actually -ec. And -eo means -e.
 
 
  < option > 
@@ -251,12 +253,32 @@ Usage    : e3.bash [ -ctifealb4do ] <option>
            vreq   : Print REQUIRE Version Information in e3-*
            vmod   : Print MODULES Version Information in e3-*
            vall   : Print ALL     Version Information in e3-*
+           vins   : Print INSTALLED Version Information for locally installed e3 modules
 
          allall   : Print ALL Version Information in e3-* by using "make vars"
 
            load   : Load all installed Modules into iocsh.bash
-           cmd    : create .cmd file in /home/jhlee/e3-upgraded
-        setenv    : create setenv in /home/jhlee/e3-upgraded/tools
+           cmd    : create .cmd file in /home/jhlee/e3-7.0.3.1
+        setenv    : create setenv in /home/jhlee/e3-7.0.3.1/tools
+
+           vers   : Print Source Tag / Module Versions
+            dep   : Print DEP_VERSION information
+        plotdep   : Plot the naive module depdendency drawing
+      closeplot   : Close all active opened plots
+
+           tags   : Print the latest tag for a repo manifest
+
+
+
+  Examples : 
+
+          ./e3.bash creq 
+          ./e3.bash -ctpifealb cmod
+          ./e3.bash -t env
+          ./e3.bash base
+          ./e3.bash req
+          ./e3.bash -e cmod
+          ./e3.bash -t load
 
 
 ```
@@ -275,10 +297,10 @@ source tools/use_sshkey.sh
 If one would like to see the upcoming EPICS 7 with e3
 
 ```
-$ bash e3_building_config.bash -t /epics/test -b 7.0.1.1 setup 
+$ bash e3_building_config.bash -t /epics/test -b 7.0.3.1 setup 
 $ bash e3.bash base
 $ bash e3.bash req
-$ bash e3.bash -ctiao mod
+$ bash e3.bash -ctpiao mod
 ```
 Note that the -4 option is not necessary, but **-o** option is, because 7 has 4 already in base.
 

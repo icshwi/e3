@@ -19,8 +19,8 @@
 #
 #   author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Saturday, October 12 02:57:42 CEST 2019
-#   version : 0.7.1
+#   date    : Wednesday, November 27 16:59:39 CET 2019
+#   version : 0.7.2
 
 GIT_URL="https://github.com/icshwi"
 GIT_CMD="git clone"
@@ -627,7 +627,7 @@ function usage
 	echo "  Examples : ";
 	echo ""
 	echo "          $0 creq "
-	echo "          $0 -ctifealb cmod";
+	echo "          $0 -ctpifealb cmod";
 	echo "          $0 -t env";
 	echo "          $0 base";
         echo "          $0 req";
@@ -647,6 +647,7 @@ while getopts "${options}" opt; do
     case "${opt}" in
 	c) common="1"  ;;
 	t) timing="1"  ;;
+	p) psi="1"     ;;
 	i) ifcfree="1" ;;
 	f) ifcnfree="1";;
 	e) ecat="1"    ;;

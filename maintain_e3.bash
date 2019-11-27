@@ -548,6 +548,7 @@ while getopts "${options}" opt; do
     case "${opt}" in
 	c) common="1"  ;;
 	t) timing="1"  ;;
+	p) psi="1"     ;;
 	i) ifcfree="1" ;;
 	f) ifcnfree="1";;
 	e) ecat="1"    ;;
