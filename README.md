@@ -209,7 +209,7 @@ Usage    : ./e3.bash [ -ctpifealb4do ] <option>
            -f{ic}  : ifc nonfree : ifc modules with user accounts
            -e{c}  : ecat         : ethercat modules
            -a{c}  : area         : area detector modules / BI Modules
-           -l{c}  : llrf         : old LLRF modules
+           -l{c}  : llrf         : LLRF modules
            -b{ca} : bi           : beam instrumentation modules (based on AD)
            -d     : developing   : no dependency, one should installl all before
            {c,ci} : dep modules  : enable by default if not defined (dependent modules)
