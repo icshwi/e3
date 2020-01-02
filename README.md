@@ -1,7 +1,6 @@
 e3 developing environment
 ======
 [![Build Status](https://github.com/icshwi/e3/workflows/E3%20Building/badge.svg)](https://github.com/icshwi/e3/actions?workflow=E3+Building)
-[![Build Status](https://travis-ci.org/icshwi/e3.svg?branch=master)](https://travis-ci.org/icshwi/e3)
 
 This is the setup and maintenance scripts for the ESS EPICS Environment (E3). 
 
