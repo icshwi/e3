@@ -5,14 +5,14 @@ e3 developing environment
 This is the setup and maintenance scripts for the ESS EPICS Environment (E3). 
 
 ## Notice
-This repository was developed in order to check each module compatibility easily and quickly within E3. Therefore it has no purpose to serve as a production environment. If one would like to see the reproduciable single point release of E3, please check https://github.com/icshwi/e3-manifest . By this mainfest repository the exact same E3 in many different places can be built. However, the mainfest E3 doesn't have any convenitent tools. 
+This repository was developed in order to check each module compatibility easily and quickly within E3. Therefore it has no purpose to serve as a production environment. If one would like to see a reproducable single point release of E3, please check https://github.com/icshwi/e3-manifest . By this manifest repository the exactly same E3 can be built in many different places. However, the manifest E3 doesn't have any convenient tools. 
 
 
 
 ## Tested Platforms
 
 * Building, requiring (loading), and running modules should be tested carefully if one would like to run an EPICS IOC within e3.
-* The following Linux distribution covers Building and Requiring Tests.
+* The following Linux distributions cover Building and Requiring Tests.
 
 ### Building and Requiring Tests
 * Debian     
@@ -22,11 +22,11 @@ This repository was developed in order to check each module compatibility easily
 
 ## Procedure to duplicate the minimal E3 in your system.
 
-* This procedure has many assumptions, so it is most-likely "doesn't work". 
+* This procedure has many assumptions, so it most likely doesn't work "out of the box". 
 
-* However, if one would like to challenge this, please follow the below basic instruction.
+* However, if one would like to challenge this, please follow the below basic instructions.
 
-* This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is the system which I can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
+* This script, e3.bash, is not the proper tool to deploy the E3 in any production environment, but it is a system with which one can design, develop, and debug E3 in many different scenarios.  One can use it to duplicate the E3 in most Linux flavor without any difficulties. 
 
 Note that the user account should be in sudo group. And please install "git" and "make" first.
 
@@ -38,7 +38,7 @@ $ git clone https://github.com/icshwi/e3
 
 ### Install base within the e3 directory
 
-**NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. For CentOS **8**, one should carefully install all necessary packages with their various repositories and with source codes first. If not, one **CANNOT** install and run e3. One can see the e3 training workbook for the up-to-date information [1]. For example, the following packages mostly are needed to compile e3 and some additional services in CentOS and Debian. Note that one may not need them all according to ones configuration.
+**NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. For CentOS **8**, one should carefully install all necessary packages with their various repositories and with source codes first. If not, one **CANNOT** install and run e3. One can see the e3 training workbook for the up-to-date information [1]. For example, the following packages mostly are needed to compile e3 and some additional services in CentOS and Debian. Note that one may not need them all according to one's configuration.
 
 * CentOS **7**
 ```
@@ -110,19 +110,19 @@ e3 (master)$ bash e3.bash -c mod
 e3 (master)$ bash e3.bash -c load
 ```
 
-If one see the clean ioc shell prompt, e3 is ready to use. Please exit this test ioc.
+If you see the clean ioc shell prompt, e3 is ready to use. Please exit this test ioc.
 
 
 ### Enable e3 in only current terminal
 
-Technically, one can have multiple e3 and community EPICS environment in a single host. To enable e3, please do the following command:
+Technically, one can have multiple e3 and community EPICS environments in a single host. To enable e3, please use the following command:
 
 ```
 e3 (master)$ source tools/setenv 
 ```
-The above environment file will be generated automatically through building procedure. 
+The above environment file will be generated automatically by the building procedure. 
 
-Since then, one can run the example ioc through
+After this, you can run the example ioc through
 
 ```
 e3 (master)$  iocsh.bash cmds/iocStats.cmd 
@@ -194,12 +194,12 @@ $ bash caget_pvs.bash -l IOC-9999_PVs.list -f "HEARTBEAT" -w 1
 $ watch -n 1 "bash caget_pvs.bash -l IOC-9999_PVs.list -f "HEARTBEAT"
 ```
 
-If one would like to do more, please visit https://github.com/icshwi/e3training
+If you would like to do more, please visit https://github.com/icshwi/e3training
 
 
 ## Outside the e3 directory
 
-Each base, Require module, and others modules have its own MAKEFILE and its own configuration files. Thus, one can put e3-base, e3-require, and all other e3-modules in any directories where one would like to keep.
+Each base, Require module, and other modules have its own MAKEFILE and its own configuration files. Thus, one can put e3-base, e3-require, and all other e3-modules in any directories where one would like to keep them.
 
 
 
@@ -294,7 +294,7 @@ Usage    : ./e3.bash [ -ctpifealb4do ] <option>
 
 ## SSH KEY Usage
 
-One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one. **Note that ESS gitlab repository cannot be accessiable outside the ESS network. Several modules (in the group t and b) cannot be cloned**. 
+One needs to have the ESS bitbucket/gitlab accout in order to use  *ifc nonfree* and *llrf* modules. The procedure **make init** will ask the ESS user name and its password several times. In order not to type account and password many time, one can add the ssh key in the account configurations in bitbucket and gitlab. After that, the following command should be executed in order to use the different url instead of the default one. **Note that ESS gitlab repository cannot be accessible outside the ESS network. Several modules (in the group t and b) cannot be cloned**. 
 
 ```
 source tools/use_sshkey.sh
@@ -303,7 +303,7 @@ source tools/use_sshkey.sh
 
 ## Customized e3 Building Configuration
 
-If one would like to see the upcoming EPICS 7 with e3
+To build EPICS 7 with e3
 
 ```
 $ bash e3_building_config.bash -t /epics/test -b 7.0.3.1 setup 
@@ -311,10 +311,10 @@ $ bash e3.bash base
 $ bash e3.bash req
 $ bash e3.bash -ctpiao mod
 ```
-Note that the -4 option is not necessary, but **-o** option is, because 7 has 4 already in base.
+Note that the -4 option is not necessary, but **-o** option is, because EPICS 7 has the "EPICS 4" modules (pvAccess, etc) already in base.
 
 
-Please look at [README_developing.md](./README_developing.md) in more detail. 
+Please look at [README_developing.md](./README_developing.md) for more details. 
 
 
 ----
