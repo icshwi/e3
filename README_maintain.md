@@ -22,7 +22,7 @@ bash maintain_e3.bash -ctifeao add "configure/RELEASE"
 
 ## Commit changed files
 
-Edit all *.Makefile in the following repositories, and commit their changes to its own repositories.
+Edit all *.Makefile in the following repositories, and commit their changes to their respective repositories.
 
 ```
 $ ./maintain_e3.bash -eo env
@@ -44,7 +44,7 @@ $ ./maintain_e3.bash -eo push
 ```
 
 
-## Compare what difference in different forms
+## Compare the differences in different forms
 
 * Show all difference in all changed files
 
