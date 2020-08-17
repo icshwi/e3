@@ -43,10 +43,11 @@ $ git clone https://github.com/icshwi/e3
 * CentOS **7**
 ```  
 * Note there is also a temporary internal mirror of CentOS packages required for E3 available inside ESS network.*  
-For configruation details look here: https://gitlab.esss.lu.se/icshwi/centos_mirror_proxy.    
+For configruation details look here: https://gitlab.esss.lu.se/icshwi/centos_mirror_proxy.  
+
 Otherwise the required packages can be installed manually from CentOS community mirrors as below:  
-sudo yum --enablerepo=extras install epel-release  
-sudo yum install -y git tree ipmitool autoconf libtool automake m4 re2c tclx \
+$ sudo yum --enablerepo=extras install epel-release  
+$ sudo yum install -y git tree ipmitool autoconf libtool automake m4 re2c tclx \
 coreutils graphviz patch readline-devel libXt-devel libXp-devel libXmu-devel \
 libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils \
 net-snmp-devel libxml2-devel libpng12-devel libzip-devel libusb-devel \
