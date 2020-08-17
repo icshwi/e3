@@ -41,7 +41,10 @@ $ git clone https://github.com/icshwi/e3
 **NOTICE**, before going to run the next command, **PLEASE INSTALL ALL REQUIRED PACKAGES FIRST**. For CentOS **8**, one should carefully install all necessary packages with their various repositories and with source codes first. If not, one **CANNOT** install and run e3. One can see the e3 training workbook for the up-to-date information [1]. For example, the following packages mostly are needed to compile e3 and some additional services in CentOS and Debian. Note that one may not need them all according to one's configuration.
 
 * CentOS **7**
-```
+```  
+* Note there is also a temporary internal mirror of CentOS packages required for E3 available inside ESS network. For configruation details look here: https://gitlab.esss.lu.se/icshwi/centos_mirror_proxy  
+Otherwise the required packages can be installed manually from CentOS community mirrors as below:  
+sudo yum --enablerepo=extras install epel-release  
 sudo yum install -y git tree ipmitool autoconf libtool automake m4 re2c tclx \
 coreutils graphviz patch readline-devel libXt-devel libXp-devel libXmu-devel \
 libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils \
