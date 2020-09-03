@@ -607,6 +607,7 @@ function usage
 	echo "           vmod   : Print MODULES Version Information in e3-*";
 	echo "           vall   : Print ALL     Version Information in e3-*";
 	echo "           vins   : Print INSTALLED Version Information for locally installed e3 modules";
+	echo "          vdep    : Print module depedency names and versions.";
 	echo "";
 	echo "         allall   : Print ALL Version Information in e3-* by using \"make vars\"";
 	echo "";
@@ -750,6 +751,7 @@ case "$1" in
     vmod)  print_version_info_modules ;;
     vall)  print_version_info_all     ;;
     vins)  print_installed_modules    ;;
+    vdep)  print_depend_modules    ;;
     # Call *make vars in each e3-* directory
     allall)    print_version_really_everything   ;;
     cupdate)   configuration_update_modules ;;
