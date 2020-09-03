@@ -1,3 +1,7 @@
+# Deprecation notice
+
+2020-08-26: This remote has been deprecated. Moved to https://gitlab.esss.lu.se/e3/e3.
+
 e3 developing environment
 ======
 [![Build Status](https://github.com/icshwi/e3/workflows/E3%20Building/badge.svg)](https://github.com/icshwi/e3/actions?workflow=E3+Building)
