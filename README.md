@@ -272,6 +272,7 @@ Usage    : ./e3.bash [ -ctpifealb4do ] <option>
            vmod   : Print MODULES Version Information in e3-*
            vall   : Print ALL     Version Information in e3-*
            vins   : Print INSTALLED Version Information for locally installed e3 modules
+           vdep   : Print DEPENDENCY Version Information in e3-*
 
          allall   : Print ALL Version Information in e3-* by using "make vars"
 
