@@ -589,7 +589,7 @@ function usage
 	echo "           greq   : Clone Require";
 	echo "           ireq   : Init  Require";
 	echo "           breq   : Build, Install Require";
-	echo "            req   : creq, gbase ireq, breq";
+	echo "            req   : creq, greq, ireq, breq";
 	echo ""           
 	echo "           cmod   : Clean Modules (selected module group)";
 	echo "           gmod   : Clone Modules (selected module group)";
