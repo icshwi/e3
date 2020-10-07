@@ -595,7 +595,7 @@ function usage
 	echo "           gmod   : Clone Modules (selected module group)";
 	echo "           imod   : Init  Modules (selected module group)";
 	echo "           bmod   : Build, Install Modules (selected module group)";
-	echo "            mod   : cmod, mod, imod, bmod";
+	echo "            mod   : cmod, gmod, imod, bmod";
 	echo ""
 	echo "        co_base \"_check_out_name_\" : Checkout Base";
 	echo "         co_req \"_check_out_name_\" : Checkout Require";
