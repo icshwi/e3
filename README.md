@@ -1,5 +1,7 @@
 # Deprecation notice
 
+2023-04-03: This is no longer the mechanism intended to deploy e3. Please see https://e3.pages.esss.lu.se/ for more documentation.
+
 2020-08-26: This remote has been deprecated. Moved to https://gitlab.esss.lu.se/e3/e3.
 
 e3 developing environment
